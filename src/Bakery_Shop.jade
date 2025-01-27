@@ -1,0 +1,71 @@
+ontology BakeryOntology
+
+	concept IngredientQuantity(
+	    name as text,
+	    quantity as integer
+	)
+	concept Good(
+		name as text,
+		ingredients as list of IngredientQuantity,
+		bakingTime as duration,
+		preparationTime as duration,
+		batchSize as integer
+	)
+	
+	concept OrderQuantity(
+		good as text,
+		type as text,
+		quantity as integer
+	)
+
+	concept Order(
+		id as text,
+		good as text, #name of good
+		status as text, #pending, in progress, completed, to fix
+		type as text #normal/private
+	)
+	
+	concept GoodsQuantity(
+		good as Good,
+		quantity as integer
+	)
+	
+	concept PackageOfGoods(
+		packageId as text,
+		contents as list of GoodsQuantity,
+		status as text
+	)
+
+	action RequestOrder(agentId as aid) #only if only one order baking and not waiting for ingredients
+	action AssignOrder(agentId as aid, order as Order) #if supervisor asked (or maybe just a tekst what to doo
+	action RequestIngredients(ingredients as list of IngredientQuantity) #not more than 5 of each (to supplier or another baker)
+    action AskForHelpColleague(agentId as aid, ingredients as list of IngredientQuantity)# just if he can help with ingredients
+    action RequestIngredientsColleague(agentId as aid, ingredients as list of IngredientQuantity)# specific give ingredients 
+    action ProvideIngredients(ingredients as list of IngredientQuantity) #may be with delay
+	
+	predicate IngredientAvaliable(id as aid, avaliable as boolean) #wystarczy odjąć u agenta przekazującego i dodać u przyjmującego jeżeli tak
+	
+	
+	
+	action RequestPackingList
+	action ProvidePackingList(packageList as list of PackageOfGoods)#combined of list containing private orders
+	#action NotifyCompletion(orderId as text)
+	action RejectOrAcceptOrder(orderId as text, decision as text) #based on decision accepting the order and deleting the task from queue or order sent to redo
+	action RedoOrder(orderId as text)
+	#action HelpWithIngredients(ingredients as list of IngredientQuantity)
+	action GoodToPack(good as Good) #from baker to packer
+	action SubmitPackage(packageOfGoods as PackageOfGoods)
+	action RejectPackage(packageId as text, reason as text)
+	action RepackedPackage(packageId as text)
+	
+	predicate OrderStatus(orderId as text, status as text) #notification of clompletion
+	predicate PackageStatus(package_ as PackageOfGoods, status as text)
+	#predicate IngredientsShortage(ingredientQuan as IngredientQuantity, quantityNeed as integer)
+	
+	
+	proposition OrderRedoRequired
+	proposition PackageReady
+	proposition PackageRejected
+	proposition EndOfPrivateOrders
+	
+	#statuses: pending (before everything), toPrepare (just send), waitIngredients (if not enought inngredients), preparing, baking, toFix, finished

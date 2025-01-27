@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: Bakery_Shop
+Bundle-ManifestVersion: 2
+Bundle-Name: Bakery_Shop
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: Bakery_Shop; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: it.unipr.ailab.jadescript
+Import-Package: org.apache.log4j,
+ org.apache.commons.logging
+Bundle-RequiredExecutionEnvironment: JavaSE-17
