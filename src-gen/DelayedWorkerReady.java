@@ -57,40 +57,33 @@ public class DelayedWorkerReady extends OneShotBehaviour<Baker> {
     public void run() {
       try {
       	/* 
-      	 * Compiled from source statement at line 116
-      	 * log "Sending WorkerReady: " + WorkerReady(aid of agent, typeBaker of agent)
-      	 */
-      	
-      	jadescript.core.Agent.doLog(jade.util.Logger.INFO, DelayedWorkerReady.this.getClass().getName(), DelayedWorkerReady.this, "on execute", java.lang.String.valueOf(java.lang.String.valueOf("Sending WorkerReady: ") + java.lang.String.valueOf(BakeryOntology.WorkerReady(DelayedWorkerReady.this.getJadescriptAgent().getAID() ,DelayedWorkerReady.this.getJadescriptAgent().getTypeBaker()))));
-      	
-      	/* 
-      	 * Compiled from source statement at line 117
+      	 * Compiled from source statement at line 109
       	 * send message inform WorkerReady(aid of agent, typeBaker of agent) to supervisorName@
       	 */
       	
       	try {
       		jadescript.util.SendMessageUtils.validatePerformative("inform");
       		
-      		java.lang.Object _contentToBeSent1403125994 = BakeryOntology.WorkerReady(DelayedWorkerReady.this.getJadescriptAgent().getAID() ,DelayedWorkerReady.this.getJadescriptAgent().getTypeBaker());
+      		java.lang.Object _contentToBeSent32022206 = BakeryOntology.WorkerReady(DelayedWorkerReady.this.getJadescriptAgent().getAID() ,DelayedWorkerReady.this.getJadescriptAgent().getTypeBaker());
       		
-      		jadescript.core.message.Message _synthesizedMessage1403125994 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      		jadescript.core.message.Message _synthesizedMessage32022206 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       		
-      		_synthesizedMessage1403125994.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1403125994,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      		_synthesizedMessage32022206.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent32022206,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       		
-      		_synthesizedMessage1403125994.setLanguage(__codec.getName());;
+      		_synthesizedMessage32022206.setLanguage(__codec.getName());;
       		
-      		_synthesizedMessage1403125994.addReceiver(new jade.core.AID(java.lang.String.valueOf(DelayedWorkerReady.this._agentEnv.getAgent().getSupervisorName()), false));
+      		_synthesizedMessage32022206.addReceiver(new jade.core.AID(java.lang.String.valueOf(DelayedWorkerReady.this._agentEnv.getAgent().getSupervisorName()), false));
       		
-      		_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1403125994, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1403125994, "inform"));
+      		_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage32022206, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent32022206, "inform"));
       		
-      		_agentEnv.getAgent().send(_synthesizedMessage1403125994);
+      		_agentEnv.getAgent().send(_synthesizedMessage32022206);
       	}
       	catch(java.lang.Throwable _t) {
       		throw jadescript.core.exception.JadescriptException.wrap(_t);
       	}
       	
       	/* 
-      	 * Compiled from source statement at line 118
+      	 * Compiled from source statement at line 110
       	 * log "WorkerReady message sent."
       	 */
       	

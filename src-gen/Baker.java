@@ -186,17 +186,27 @@ public class Baker extends Agent {
     return this.ordersList;
   }
 
+  protected Boolean currentlyAskingForOrder = null;
+
+  public void setCurrentlyAskingForOrder(final Boolean currentlyAskingForOrder) {
+    this.currentlyAskingForOrder = currentlyAskingForOrder;
+  }
+
+  public Boolean getCurrentlyAskingForOrder() {
+    return this.currentlyAskingForOrder;
+  }
+
   public void changeToNormal(final AgentEnv<? extends Baker, ? extends SideEffectsFlag.WithSideEffects> _agentEnv) {
     {
     	/* 
-    	 * Compiled from source statement at line 68
+    	 * Compiled from source statement at line 69
     	 * typeBaker of this = "normal"
     	 */
     	
     	Baker.this.setTypeBaker("normal");
     	
     	/* 
-    	 * Compiled from source statement at line 69
+    	 * Compiled from source statement at line 70
     	 * recipeBook = [bread, bun, cookies]
     	 */
     	
@@ -207,7 +217,7 @@ public class Baker extends Agent {
   public void chnageStatus(final AgentEnv<? extends Baker, ? extends SideEffectsFlag.WithSideEffects> _agentEnv, final String id, final String newStatus) {
     {
     	/* 
-    	 * Compiled from source statement from line 72 to line 75
+    	 * Compiled from source statement from line 73 to line 76
     	 * for i in ordersList do
     	 * 	       if orderId of i = id do
     	 * 	           status of i = newStatus
@@ -216,7 +226,7 @@ public class Baker extends Agent {
     	
     	for ( OrderStatus i : Baker.this.getOrdersList()) {
     		/* 
-    		 * Compiled from source statement from line 73 to line 75
+    		 * Compiled from source statement from line 74 to line 76
     		 * if orderId of i = id do
     		 * 	           status of i = newStatus
     		 * 	           break
@@ -224,14 +234,14 @@ public class Baker extends Agent {
     		
     		if(java.util.Objects.equals(i.getOrderId(), id)) {
     			/* 
-    			 * Compiled from source statement at line 74
+    			 * Compiled from source statement at line 75
     			 * status of i = newStatus
     			 */
     			
     			i.setStatus(newStatus);
     			
     			/* 
-    			 * Compiled from source statement at line 75
+    			 * Compiled from source statement at line 76
     			 * break
     			 */
     			
@@ -247,65 +257,43 @@ public class Baker extends Agent {
     java.lang.String coworker1 = jadescript.util.types.JadescriptValueAdapter.adapt(this.getArguments()[2], new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT));
     try {
     	/* 
-    	 * Compiled from source statement at line 78
+    	 * Compiled from source statement at line 79
     	 * typeBaker of this = type
     	 */
     	
     	Baker.this.setTypeBaker(type);
     	
     	/* 
-    	 * Compiled from source statement at line 79
+    	 * Compiled from source statement at line 80
     	 * supervisorName of this = supervisor
     	 */
     	
     	Baker.this.setSupervisorName(supervisor);
     	
     	/* 
-    	 * Compiled from source statement at line 80
+    	 * Compiled from source statement at line 81
     	 * add coworker1 to listOfCoworkers
     	 */
     	
     	Baker.this.getListOfCoworkers().add(coworker1);
     	
     	/* 
-    	 * Compiled from source statement at line 84
-    	 * log "Agent 'Baker' created with arguments: " + typeBaker + ", " + supervisor
+    	 * Compiled from source statement at line 85
+    	 * log "BAKER created with arguments: " + typeBaker + ", " + supervisor
     	 */
     	
-    	jadescript.core.Agent.doLog(jade.util.Logger.INFO, Baker.this.getClass().getName(), Baker.this, "on create", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Agent 'Baker' created with arguments: ") + java.lang.String.valueOf(Baker.this.getTypeBaker())) + java.lang.String.valueOf(", ")) + java.lang.String.valueOf(supervisor)));
+    	jadescript.core.Agent.doLog(jade.util.Logger.INFO, Baker.this.getClass().getName(), Baker.this, "on create", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER created with arguments: ") + java.lang.String.valueOf(Baker.this.getTypeBaker())) + java.lang.String.valueOf(", ")) + java.lang.String.valueOf(supervisor)));
     	
     	/* 
-    	 * Compiled from source statement from line 92 to line 95
-    	 * if name of agent = "Baker2@172.16.1.17:1099/JADE" do
-    	 *             activate DelayedWorkerReady after "PT2S" as duration
-    	 *         else do
-    	 *             activate DelayedWorkerReady
+    	 * Compiled from source statement at line 88
+    	 * activate DelayedWorkerReady after "PT2S" as duration
     	 */
     	
-    	if(java.util.Objects.equals(_agentEnv.getAgent().getName(), "Baker2@172.16.1.17:1099/JADE")) {
-    		/* 
-    		 * Compiled from source statement at line 93
-    		 * activate DelayedWorkerReady after "PT2S" as duration
-    		 */
-    		
-    		new DelayedWorkerReady(_agentEnv.getAgent().toEnv()).activate_after(_agentEnv.getAgent(), ((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT2S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))));
-    	}
-    	else {
-    		/* 
-    		 * Compiled from source statement at line 95
-    		 * activate DelayedWorkerReady
-    		 */
-    		
-    		new DelayedWorkerReady(_agentEnv.getAgent().toEnv()).activate(_agentEnv.getAgent());
-    	}
+    	new DelayedWorkerReady(_agentEnv.getAgent().toEnv()).activate_after(_agentEnv.getAgent(), ((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT2S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))));
     	
     	/* 
-    	 * Compiled from source statement from line 99 to line 102
-    	 * 
-    	 *         #log "Reported"
-    	 * 
-    	 *         # Assign recipeBook based on type
-    	 *         if type = "normal" do
+    	 * Compiled from source statement from line 94 to line 97
+    	 * if type = "normal" do
     	 *             recipeBook of this = [bread, bun, cookies]
     	 *         else do
     	 *             recipeBook of this= [cake, cupcakes]
@@ -313,7 +301,7 @@ public class Baker extends Agent {
     	
     	if(java.util.Objects.equals(type, "normal")) {
     		/* 
-    		 * Compiled from source statement at line 100
+    		 * Compiled from source statement at line 95
     		 * recipeBook of this = [bread, bun, cookies]
     		 */
     		
@@ -321,7 +309,7 @@ public class Baker extends Agent {
     	}
     	else {
     		/* 
-    		 * Compiled from source statement at line 102
+    		 * Compiled from source statement at line 97
     		 * recipeBook of this= [cake, cupcakes]
     		 */
     		
@@ -329,7 +317,7 @@ public class Baker extends Agent {
     	}
     	
     	/* 
-    	 * Compiled from source statement from line 105 to line 106
+    	 * Compiled from source statement from line 100 to line 101
     	 * 
     	 * 
     	 *         # Log recipes
@@ -339,7 +327,7 @@ public class Baker extends Agent {
     	
     	for ( Good good : Baker.this.getRecipeBook()) {
     		/* 
-    		 * Compiled from source statement at line 106
+    		 * Compiled from source statement at line 101
     		 * log "Known recipe: " + name of good
     		 */
     		
@@ -347,7 +335,7 @@ public class Baker extends Agent {
     	}
     	
     	/* 
-    	 * Compiled from source statement at line 108
+    	 * Compiled from source statement at line 103
     	 * 
     	 *         
     	 *         activate ManageOrders
@@ -356,7 +344,7 @@ public class Baker extends Agent {
     	new ManageOrders(_agentEnv.getAgent().toEnv()).activate(_agentEnv.getAgent());
     	
     	/* 
-    	 * Compiled from source statement at line 110
+    	 * Compiled from source statement at line 104
     	 * activate ListenCoworkers
     	 */
     	
@@ -390,27 +378,27 @@ public class Baker extends Agent {
   private void __initializeProperties() {
     // Initializing properties and event handlers:
     {
-    	Baker.this.bread = BakeryOntology.Good("bread" ,jadescript.util.JadescriptCollections.createList(java.util.List.of(BakeryOntology.IngredientQuantity("flour" ,14), BakeryOntology.IngredientQuantity("water" ,2), BakeryOntology.IngredientQuantity("yeast" ,1))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT40S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT5S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,6);
+    	Baker.this.bread = BakeryOntology.Good("bread" ,jadescript.util.JadescriptCollections.createList(java.util.List.of(BakeryOntology.IngredientQuantity("flour" ,2), BakeryOntology.IngredientQuantity("water" ,2), BakeryOntology.IngredientQuantity("yeast" ,1))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT20S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT10S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,6);
     	
-    	Baker.this.bun = BakeryOntology.Good("bun" ,jadescript.util.JadescriptCollections.createList(java.util.List.of(BakeryOntology.IngredientQuantity("flour" ,2), BakeryOntology.IngredientQuantity("water" ,2), BakeryOntology.IngredientQuantity("yeast" ,1))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT2S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT10S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,8);
+    	Baker.this.bun = BakeryOntology.Good("bun" ,jadescript.util.JadescriptCollections.createList(java.util.List.of(BakeryOntology.IngredientQuantity("flour" ,2), BakeryOntology.IngredientQuantity("water" ,2), BakeryOntology.IngredientQuantity("yeast" ,1))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT25S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT15S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,8);
     	
-    	Baker.this.cookies = BakeryOntology.Good("cookies" ,jadescript.util.JadescriptCollections.createList(java.util.List.of(BakeryOntology.IngredientQuantity("flour" ,2), BakeryOntology.IngredientQuantity("water" ,1), BakeryOntology.IngredientQuantity("eggs" ,2), BakeryOntology.IngredientQuantity("sugar" ,2))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT4S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT8S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,14);
+    	Baker.this.cookies = BakeryOntology.Good("cookies" ,jadescript.util.JadescriptCollections.createList(java.util.List.of(BakeryOntology.IngredientQuantity("flour" ,2), BakeryOntology.IngredientQuantity("water" ,1), BakeryOntology.IngredientQuantity("eggs" ,2), BakeryOntology.IngredientQuantity("sugar" ,2))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT15S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT20S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,14);
     	
-    	Baker.this.cake = BakeryOntology.Good("cake" ,jadescript.util.JadescriptCollections.createList(java.util.List.of(BakeryOntology.IngredientQuantity("flour" ,4), BakeryOntology.IngredientQuantity("water" ,2), BakeryOntology.IngredientQuantity("eggs" ,3), BakeryOntology.IngredientQuantity("sugar" ,2))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT6S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT20S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,1);
+    	Baker.this.cake = BakeryOntology.Good("cake" ,jadescript.util.JadescriptCollections.createList(java.util.List.of(BakeryOntology.IngredientQuantity("flour" ,4), BakeryOntology.IngredientQuantity("water" ,2), BakeryOntology.IngredientQuantity("eggs" ,3), BakeryOntology.IngredientQuantity("sugar" ,2))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT30S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT20S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,1);
     	
-    	Baker.this.cupcakes = BakeryOntology.Good("cupcakes" ,jadescript.util.JadescriptCollections.createList(java.util.List.of(BakeryOntology.IngredientQuantity("flour" ,4), BakeryOntology.IngredientQuantity("sugar" ,2), BakeryOntology.IngredientQuantity("eggs" ,3))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT3S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT12S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,6);
+    	Baker.this.cupcakes = BakeryOntology.Good("cupcakes" ,jadescript.util.JadescriptCollections.createList(java.util.List.of(BakeryOntology.IngredientQuantity("flour" ,4), BakeryOntology.IngredientQuantity("sugar" ,2), BakeryOntology.IngredientQuantity("eggs" ,3))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT10S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT15S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))) ,6);
     	
     	Baker.this.recipeBook = new jadescript.util.JadescriptList<Good>();
     	
-    	Baker.this.flour = BakeryOntology.IngredientQuantity("flour" ,15);
+    	Baker.this.flour = BakeryOntology.IngredientQuantity("flour" ,20);
     	
-    	Baker.this.sugar = BakeryOntology.IngredientQuantity("sugar" ,10);
+    	Baker.this.sugar = BakeryOntology.IngredientQuantity("sugar" ,20);
     	
-    	Baker.this.eggs = BakeryOntology.IngredientQuantity("eggs" ,8);
+    	Baker.this.eggs = BakeryOntology.IngredientQuantity("eggs" ,20);
     	
-    	Baker.this.yeast = BakeryOntology.IngredientQuantity("yeast" ,7);
+    	Baker.this.yeast = BakeryOntology.IngredientQuantity("yeast" ,20);
     	
-    	Baker.this.water = BakeryOntology.IngredientQuantity("water" ,11);
+    	Baker.this.water = BakeryOntology.IngredientQuantity("water" ,20);
     	
     	Baker.this.stock = jadescript.util.JadescriptCollections.createList(java.util.List.of(Baker.this.getFlour(), Baker.this.getSugar(), Baker.this.getEggs(), Baker.this.getYeast(), Baker.this.getWater()));
     	
@@ -421,6 +409,8 @@ public class Baker extends Agent {
     	Baker.this.listOfCoworkers = new jadescript.util.JadescriptList<java.lang.String>();
     	
     	Baker.this.ordersList = new jadescript.util.JadescriptList<OrderStatus>();
+    	
+    	Baker.this.currentlyAskingForOrder = false;
     }
   }
 

@@ -28,12 +28,12 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
   public void doAction(final int _tickCount) {
     this.__ignoreMessageHandlers = false;
     super.doAction(_tickCount);
-    __event2.run();
-    __event3.run();
+    __event4.run();
+    __event5.run();
     if(!this.__ignoreMessageHandlers) {
     	this.__noMessageHandled();
     }
-    if ( true  && !__event2.__eventFired && !__event3.__eventFired) __awaitForEvents();
+    if ( true  && !__event4.__eventFired && !__event5.__eventFired) __awaitForEvents();
   }
 
   public Boolean __hasStaleMessageHandler() {
@@ -73,7 +73,71 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
     return this.providedIngredients;
   }
 
-  private class __Event2 {
+  public void clearProvidedIngredients(final AgentEnv<? extends Baker, ? extends SideEffectsFlag.WithSideEffects> _agentEnv) {
+    {
+    	/* 
+    	 * Compiled from source statement from line 191 to line 193
+    	 * if length of providedIngredients ≠ 0 do
+    	 *             for i in providedIngredients do
+    	 *                 remove i from providedIngredients
+    	 */
+    	
+    	if(!java.util.Objects.equals(ListenCoworkers.this.getProvidedIngredients().size(), 0)) {
+    		/* 
+    		 * Compiled from source statement from line 192 to line 193
+    		 * for i in providedIngredients do
+    		 *                 remove i from providedIngredients
+    		 */
+    		
+    		for ( IngredientQuantity i : ListenCoworkers.this.getProvidedIngredients()) {
+    			/* 
+    			 * Compiled from source statement at line 193
+    			 * remove i from providedIngredients
+    			 */
+    			
+    			ListenCoworkers.this.getProvidedIngredients().remove(i);
+    		}
+    	}
+    }
+  }
+
+  public Boolean duringPreparation(final AgentEnv<? extends Baker, ? extends SideEffectsFlag.WithSideEffects> _agentEnv) {
+    {
+    	/* 
+    	 * Compiled from source statement from line 196 to line 198
+    	 * for order in ordersList do
+    	 *             if status of order = "preparing" do
+    	 *                 return true
+    	 */
+    	
+    	for ( OrderStatus order : ListenCoworkers.this._agentEnv.getAgent().getOrdersList()) {
+    		/* 
+    		 * Compiled from source statement from line 197 to line 198
+    		 * if status of order = "preparing" do
+    		 *                 return true
+    		 */
+    		
+    		if(java.util.Objects.equals(order.getStatus(), "preparing")) {
+    			/* 
+    			 * Compiled from source statement at line 198
+    			 * return true
+    			 */
+    			
+    			return true;
+    		}
+    	}
+    	
+    	/* 
+    	 * Compiled from source statement at line 199
+    	 * 
+    	 *         return false
+    	 */
+    	
+    	return false;
+    }
+  }
+
+  private class __Event4 {
     Boolean __eventFired = false;
 
     public void run() {
@@ -82,12 +146,12 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       	
       	return ;
       }
-       class __PatternMatcher1567269527 {
+       class __PatternMatcher1058577754 {
       	public jade.core.AID agentId;
       	
       	public jadescript.util.JadescriptList<IngredientQuantity> ingredients;
       	
-      	private final __PatternMatcher1567269527 __PatternMatcher1567269527_obj =  this;
+      	private final __PatternMatcher1058577754 __PatternMatcher1058577754_obj =  this;
       	
       	public boolean headerMatch_structterm0_typecast0(java.lang.Object __objx) {
       		jade.core.AID __x;
@@ -183,7 +247,7 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       		return true && headerMatch_structterm0(__x.getAgentId()) && headerMatch_structterm1(__x.getIngredients());
       	}
       }
-      __PatternMatcher1567269527 __PatternMatcher1567269527_obj = new __PatternMatcher1567269527();
+      __PatternMatcher1058577754 __PatternMatcher1058577754_obj = new __PatternMatcher1058577754();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -191,7 +255,7 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1567269527_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher1058577754_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -214,101 +278,139 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement at line 185
+      			 * Compiled from source statement at line 202
       			 * senderAgent = sender of message
       			 */
       			
       			jade.core.AID senderAgent = ((jadescript.core.message.RequestMessage<AskForHelpColleague>) __receivedMessage).getSender();
       			
       			/* 
-      			 * Compiled from source statement at line 187
-      			 * log "Agent: "+name of agent +" received a request for help from "+ name of senderAgent
+      			 * Compiled from source statement at line 203
+      			 * log "BAKER: "+name of agent +" received a request for help from "+ name of senderAgent
       			 */
       			
-      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ListenCoworkers.this.getClass().getName(), ListenCoworkers.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Agent: ") + java.lang.String.valueOf(ListenCoworkers.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" received a request for help from ")) + java.lang.String.valueOf(senderAgent.getName())));
+      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ListenCoworkers.this.getClass().getName(), ListenCoworkers.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER: ") + java.lang.String.valueOf(ListenCoworkers.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" received a request for help from ")) + java.lang.String.valueOf(senderAgent.getName())));
       			
       			/* 
-      			 * Compiled from source statement at line 188
+      			 * Compiled from source statement at line 204
       			 * log "Needed ingredients: "+ingredients
       			 */
       			
-      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ListenCoworkers.this.getClass().getName(), ListenCoworkers.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf("Needed ingredients: ") + java.lang.String.valueOf(__PatternMatcher1567269527_obj.ingredients)));
+      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ListenCoworkers.this.getClass().getName(), ListenCoworkers.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf("Needed ingredients: ") + java.lang.String.valueOf(__PatternMatcher1058577754_obj.ingredients)));
       			
       			/* 
-      			 * Compiled from source statement from line 190 to line 196
-      			 * for ingredient in ingredients do
-      			 *             for item in stock do
-      			 *                 if quantity of ingredient > quantity of item do
-      			 *                    log "Agent wants too much: "+ quantity of ingredient + " but i have "+ quantity of item
-      			 *                    send message inform IngredientAvaliable(aid, false) to senderAgent
-      			 *                    avaliable = false
-      			 *                    break
+      			 * Compiled from source statement from line 206 to line 219
+      			 * if not duringPreparation do
+      			 * 	        for ingredient in ingredients do
+      			 * 	            for item in stock do
+      			 * 	                if quantity of ingredient > quantity of item do
+      			 * 	                   log "Agent wants too much: "+ quantity of ingredient + " when i have "+ quantity of item
+      			 * 	                   send message inform IngredientAvaliable(aid, false) to senderAgent
+      			 * 	                   avaliable = false
+      			 * 	                   break
+      			 * 	            if not avaliable do
+      			 * 	                break
+      			 * 	    else do
+      			 * 	       log "BAKER: "+name of agent+"won't help with ingredients. PREPARING good"
+      			 *            send message inform IngredientAvaliable(aid, false) to senderAgent
+      			 *            avaliable = false
       			 */
       			
-      			for ( IngredientQuantity ingredient : __PatternMatcher1567269527_obj.ingredients) {
+      			if( ! ListenCoworkers.this.duringPreparation(_agentEnv.getAgent().toEnv())) {
       				/* 
-      				 * Compiled from source statement from line 191 to line 196
-      				 * for item in stock do
-      				 *                 if quantity of ingredient > quantity of item do
-      				 *                    log "Agent wants too much: "+ quantity of ingredient + " but i have "+ quantity of item
-      				 *                    send message inform IngredientAvaliable(aid, false) to senderAgent
-      				 *                    avaliable = false
-      				 *                    break
+      				 * Compiled from source statement from line 207 to line 215
+      				 * for ingredient in ingredients do
+      				 * 	            for item in stock do
+      				 * 	                if quantity of ingredient > quantity of item do
+      				 * 	                   log "Agent wants too much: "+ quantity of ingredient + " when i have "+ quantity of item
+      				 * 	                   send message inform IngredientAvaliable(aid, false) to senderAgent
+      				 * 	                   avaliable = false
+      				 * 	                   break
+      				 * 	            if not avaliable do
+      				 * 	                break
       				 */
       				
-      				for ( IngredientQuantity item : ListenCoworkers.this._agentEnv.getAgent().getStock()) {
+      				for ( IngredientQuantity ingredient : __PatternMatcher1058577754_obj.ingredients) {
       					/* 
-      					 * Compiled from source statement from line 192 to line 196
-      					 * if quantity of ingredient > quantity of item do
-      					 *                    log "Agent wants too much: "+ quantity of ingredient + " but i have "+ quantity of item
-      					 *                    send message inform IngredientAvaliable(aid, false) to senderAgent
-      					 *                    avaliable = false
-      					 *                    break
+      					 * Compiled from source statement from line 208 to line 213
+      					 * for item in stock do
+      					 * 	                if quantity of ingredient > quantity of item do
+      					 * 	                   log "Agent wants too much: "+ quantity of ingredient + " when i have "+ quantity of item
+      					 * 	                   send message inform IngredientAvaliable(aid, false) to senderAgent
+      					 * 	                   avaliable = false
+      					 * 	                   break
       					 */
       					
-      					if(ingredient.getQuantity() > item.getQuantity()) {
+      					for ( IngredientQuantity item : ListenCoworkers.this._agentEnv.getAgent().getStock()) {
       						/* 
-      						 * Compiled from source statement at line 193
-      						 * log "Agent wants too much: "+ quantity of ingredient + " but i have "+ quantity of item
+      						 * Compiled from source statement from line 209 to line 213
+      						 * if quantity of ingredient > quantity of item do
+      						 * 	                   log "Agent wants too much: "+ quantity of ingredient + " when i have "+ quantity of item
+      						 * 	                   send message inform IngredientAvaliable(aid, false) to senderAgent
+      						 * 	                   avaliable = false
+      						 * 	                   break
       						 */
       						
-      						jadescript.core.Agent.doLog(jade.util.Logger.INFO, ListenCoworkers.this.getClass().getName(), ListenCoworkers.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Agent wants too much: ") + java.lang.String.valueOf(ingredient.getQuantity())) + java.lang.String.valueOf(" but i have ")) + java.lang.String.valueOf(item.getQuantity())));
-      						
-      						/* 
-      						 * Compiled from source statement at line 194
-      						 * send message inform IngredientAvaliable(aid, false) to senderAgent
-      						 */
-      						
-      						try {
-      							jadescript.util.SendMessageUtils.validatePerformative("inform");
+      						if(ingredient.getQuantity() > item.getQuantity()) {
+      							/* 
+      							 * Compiled from source statement at line 210
+      							 * log "Agent wants too much: "+ quantity of ingredient + " when i have "+ quantity of item
+      							 */
       							
-      							java.lang.Object _contentToBeSent1912752901 = BakeryOntology.IngredientAvaliable(ListenCoworkers.this._agentEnv.getAgent().getAID() ,false);
+      							jadescript.core.Agent.doLog(jade.util.Logger.INFO, ListenCoworkers.this.getClass().getName(), ListenCoworkers.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Agent wants too much: ") + java.lang.String.valueOf(ingredient.getQuantity())) + java.lang.String.valueOf(" when i have ")) + java.lang.String.valueOf(item.getQuantity())));
       							
-      							jadescript.core.message.Message _synthesizedMessage1912752901 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      							/* 
+      							 * Compiled from source statement at line 211
+      							 * send message inform IngredientAvaliable(aid, false) to senderAgent
+      							 */
       							
-      							_synthesizedMessage1912752901.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1912752901,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      							try {
+      								jadescript.util.SendMessageUtils.validatePerformative("inform");
+      								
+      								java.lang.Object _contentToBeSent1812075081 = BakeryOntology.IngredientAvaliable(ListenCoworkers.this._agentEnv.getAgent().getAID() ,false);
+      								
+      								jadescript.core.message.Message _synthesizedMessage1812075081 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      								
+      								_synthesizedMessage1812075081.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1812075081,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      								
+      								_synthesizedMessage1812075081.setLanguage(__codec.getName());;
+      								
+      								_synthesizedMessage1812075081.addReceiver(senderAgent);
+      								
+      								_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1812075081, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1812075081, "inform"));
+      								
+      								_agentEnv.getAgent().send(_synthesizedMessage1812075081);
+      							}
+      							catch(java.lang.Throwable _t) {
+      								throw jadescript.core.exception.JadescriptException.wrap(_t);
+      							}
       							
-      							_synthesizedMessage1912752901.setLanguage(__codec.getName());;
+      							/* 
+      							 * Compiled from source statement at line 212
+      							 * avaliable = false
+      							 */
       							
-      							_synthesizedMessage1912752901.addReceiver(senderAgent);
+      							ListenCoworkers.this.setAvaliable(false);
       							
-      							_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1912752901, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1912752901, "inform"));
+      							/* 
+      							 * Compiled from source statement at line 213
+      							 * break
+      							 */
       							
-      							_agentEnv.getAgent().send(_synthesizedMessage1912752901);
+      							break;
       						}
-      						catch(java.lang.Throwable _t) {
-      							throw jadescript.core.exception.JadescriptException.wrap(_t);
-      						}
-      						
+      					}
+      					
+      					/* 
+      					 * Compiled from source statement from line 214 to line 215
+      					 * 
+      					 * 	            if not avaliable do
+      					 * 	                break
+      					 */
+      					
+      					if( ! ListenCoworkers.this.getAvaliable()) {
       						/* 
-      						 * Compiled from source statement at line 195
-      						 * avaliable = false
-      						 */
-      						
-      						ListenCoworkers.this.setAvaliable(false);
-      						
-      						/* 
-      						 * Compiled from source statement at line 196
+      						 * Compiled from source statement at line 215
       						 * break
       						 */
       						
@@ -316,9 +418,50 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       					}
       				}
       			}
+      			else {
+      				/* 
+      				 * Compiled from source statement at line 217
+      				 * log "BAKER: "+name of agent+"won't help with ingredients. PREPARING good"
+      				 */
+      				
+      				jadescript.core.Agent.doLog(jade.util.Logger.INFO, ListenCoworkers.this.getClass().getName(), ListenCoworkers.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER: ") + java.lang.String.valueOf(ListenCoworkers.this.getJadescriptAgent().getName())) + java.lang.String.valueOf("won't help with ingredients. PREPARING good")));
+      				
+      				/* 
+      				 * Compiled from source statement at line 218
+      				 * send message inform IngredientAvaliable(aid, false) to senderAgent
+      				 */
+      				
+      				try {
+      					jadescript.util.SendMessageUtils.validatePerformative("inform");
+      					
+      					java.lang.Object _contentToBeSent122776497 = BakeryOntology.IngredientAvaliable(ListenCoworkers.this._agentEnv.getAgent().getAID() ,false);
+      					
+      					jadescript.core.message.Message _synthesizedMessage122776497 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      					
+      					_synthesizedMessage122776497.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent122776497,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      					
+      					_synthesizedMessage122776497.setLanguage(__codec.getName());;
+      					
+      					_synthesizedMessage122776497.addReceiver(senderAgent);
+      					
+      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage122776497, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent122776497, "inform"));
+      					
+      					_agentEnv.getAgent().send(_synthesizedMessage122776497);
+      				}
+      				catch(java.lang.Throwable _t) {
+      					throw jadescript.core.exception.JadescriptException.wrap(_t);
+      				}
+      				
+      				/* 
+      				 * Compiled from source statement at line 219
+      				 * avaliable = false
+      				 */
+      				
+      				ListenCoworkers.this.setAvaliable(false);
+      			}
       			
       			/* 
-      			 * Compiled from source statement from line 198 to line 199
+      			 * Compiled from source statement from line 221 to line 222
       			 * 
       			 *         
       			 *         if avaliable do
@@ -327,26 +470,26 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       			
       			if(ListenCoworkers.this.getAvaliable()) {
       				/* 
-      				 * Compiled from source statement at line 199
+      				 * Compiled from source statement at line 222
       				 * send message inform IngredientAvaliable(aid, true) to senderAgent
       				 */
       				
       				try {
       					jadescript.util.SendMessageUtils.validatePerformative("inform");
       					
-      					java.lang.Object _contentToBeSent2134934145 = BakeryOntology.IngredientAvaliable(ListenCoworkers.this._agentEnv.getAgent().getAID() ,true);
+      					java.lang.Object _contentToBeSent1990303237 = BakeryOntology.IngredientAvaliable(ListenCoworkers.this._agentEnv.getAgent().getAID() ,true);
       					
-      					jadescript.core.message.Message _synthesizedMessage2134934145 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      					jadescript.core.message.Message _synthesizedMessage1990303237 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       					
-      					_synthesizedMessage2134934145.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent2134934145,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      					_synthesizedMessage1990303237.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1990303237,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       					
-      					_synthesizedMessage2134934145.setLanguage(__codec.getName());;
+      					_synthesizedMessage1990303237.setLanguage(__codec.getName());;
       					
-      					_synthesizedMessage2134934145.addReceiver(senderAgent);
+      					_synthesizedMessage1990303237.addReceiver(senderAgent);
       					
-      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage2134934145, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent2134934145, "inform"));
+      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1990303237, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1990303237, "inform"));
       					
-      					_agentEnv.getAgent().send(_synthesizedMessage2134934145);
+      					_agentEnv.getAgent().send(_synthesizedMessage1990303237);
       				}
       				catch(java.lang.Throwable _t) {
       					throw jadescript.core.exception.JadescriptException.wrap(_t);
@@ -372,9 +515,9 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
     }
   }
 
-  private ListenCoworkers.__Event2 __event2 = null;
+  private ListenCoworkers.__Event4 __event4 = null;
 
-  private class __Event3 {
+  private class __Event5 {
     Boolean __eventFired = false;
 
     public void run() {
@@ -383,12 +526,12 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       	
       	return ;
       }
-       class __PatternMatcher1399151919 {
+       class __PatternMatcher924516918 {
       	public jade.core.AID id;
       	
       	public jadescript.util.JadescriptList<IngredientQuantity> listIngredientsNeeded;
       	
-      	private final __PatternMatcher1399151919 __PatternMatcher1399151919_obj =  this;
+      	private final __PatternMatcher924516918 __PatternMatcher924516918_obj =  this;
       	
       	public boolean headerMatch_structterm0_typecast0(java.lang.Object __objx) {
       		jade.core.AID __x;
@@ -484,7 +627,7 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       		return true && headerMatch_structterm0(__x.getAgentId()) && headerMatch_structterm1(__x.getIngredients());
       	}
       }
-      __PatternMatcher1399151919 __PatternMatcher1399151919_obj = new __PatternMatcher1399151919();
+      __PatternMatcher924516918 __PatternMatcher924516918_obj = new __PatternMatcher924516918();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -492,7 +635,7 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1399151919_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher924516918_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -515,14 +658,14 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement at line 202
+      			 * Compiled from source statement at line 225
       			 * senderAgent = sender of message
       			 */
       			
       			jade.core.AID senderAgent = ((jadescript.core.message.RequestMessage<RequestIngredientsColleague>) __receivedMessage).getSender();
       			
       			/* 
-      			 * Compiled from source statement from line 204 to line 208
+      			 * Compiled from source statement from line 226 to line 230
       			 * for ingredient in listIngredientsNeeded do
       			 *             for item in stock do
       			 *                 if name of ingredient = name of item do
@@ -530,9 +673,9 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       			 *                    add IngredientQuantity(name of ingredient, quantity of ingredient) to providedIngredients
       			 */
       			
-      			for ( IngredientQuantity ingredient : __PatternMatcher1399151919_obj.listIngredientsNeeded) {
+      			for ( IngredientQuantity ingredient : __PatternMatcher924516918_obj.listIngredientsNeeded) {
       				/* 
-      				 * Compiled from source statement from line 205 to line 208
+      				 * Compiled from source statement from line 227 to line 230
       				 * for item in stock do
       				 *                 if name of ingredient = name of item do
       				 *                    quantity of item = quantity of item - quantity of ingredient
@@ -541,7 +684,7 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       				
       				for ( IngredientQuantity item : ListenCoworkers.this._agentEnv.getAgent().getStock()) {
       					/* 
-      					 * Compiled from source statement from line 206 to line 208
+      					 * Compiled from source statement from line 228 to line 230
       					 * if name of ingredient = name of item do
       					 *                    quantity of item = quantity of item - quantity of ingredient
       					 *                    add IngredientQuantity(name of ingredient, quantity of ingredient) to providedIngredients
@@ -549,14 +692,14 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       					
       					if(java.util.Objects.equals(ingredient.getName(), item.getName())) {
       						/* 
-      						 * Compiled from source statement at line 207
+      						 * Compiled from source statement at line 229
       						 * quantity of item = quantity of item - quantity of ingredient
       						 */
       						
       						item.setQuantity(item.getQuantity() - ingredient.getQuantity());
       						
       						/* 
-      						 * Compiled from source statement at line 208
+      						 * Compiled from source statement at line 230
       						 * add IngredientQuantity(name of ingredient, quantity of ingredient) to providedIngredients
       						 */
       						
@@ -566,7 +709,7 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       			}
       			
       			/* 
-      			 * Compiled from source statement at line 210
+      			 * Compiled from source statement at line 232
       			 * 
       			 *         
       			 *         log "Items that are beeing send: "+providedIngredients +" by: "+name of agent
@@ -575,37 +718,44 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ListenCoworkers.this.getClass().getName(), ListenCoworkers.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Items that are beeing send: ") + java.lang.String.valueOf(ListenCoworkers.this.getProvidedIngredients())) + java.lang.String.valueOf(" by: ")) + java.lang.String.valueOf(ListenCoworkers.this.getJadescriptAgent().getName())));
       			
       			/* 
-      			 * Compiled from source statement at line 211
+      			 * Compiled from source statement at line 233
       			 * log "My current stock after helping: "+stock
       			 */
       			
       			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ListenCoworkers.this.getClass().getName(), ListenCoworkers.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf("My current stock after helping: ") + java.lang.String.valueOf(ListenCoworkers.this._agentEnv.getAgent().getStock())));
       			
       			/* 
-      			 * Compiled from source statement at line 213
+      			 * Compiled from source statement at line 235
       			 * send message request ProvideIngredients(providedIngredients) to senderAgent
       			 */
       			
       			try {
       				jadescript.util.SendMessageUtils.validatePerformative("request");
       				
-      				java.lang.Object _contentToBeSent949325170 = BakeryOntology.ProvideIngredients(ListenCoworkers.this.getProvidedIngredients());
+      				java.lang.Object _contentToBeSent900214321 = BakeryOntology.ProvideIngredients(ListenCoworkers.this.getProvidedIngredients());
       				
-      				jadescript.core.message.Message _synthesizedMessage949325170 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
+      				jadescript.core.message.Message _synthesizedMessage900214321 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
       				
-      				_synthesizedMessage949325170.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent949325170,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      				_synthesizedMessage900214321.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent900214321,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       				
-      				_synthesizedMessage949325170.setLanguage(__codec.getName());;
+      				_synthesizedMessage900214321.setLanguage(__codec.getName());;
       				
-      				_synthesizedMessage949325170.addReceiver(senderAgent);
+      				_synthesizedMessage900214321.addReceiver(senderAgent);
       				
-      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage949325170, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent949325170, "request"));
+      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage900214321, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent900214321, "request"));
       				
-      				_agentEnv.getAgent().send(_synthesizedMessage949325170);
+      				_agentEnv.getAgent().send(_synthesizedMessage900214321);
       			}
       			catch(java.lang.Throwable _t) {
       				throw jadescript.core.exception.JadescriptException.wrap(_t);
       			}
+      			
+      			/* 
+      			 * Compiled from source statement at line 236
+      			 * do clearProvidedIngredients
+      			 */
+      			
+      			ListenCoworkers.this.clearProvidedIngredients(_agentEnv.getAgent().toEnv());
       		}
       		catch(jadescript.core.exception.JadescriptException __throwable) {
       			__handleJadescriptException(__throwable);
@@ -626,7 +776,7 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
     }
   }
 
-  private ListenCoworkers.__Event3 __event3 = null;
+  private ListenCoworkers.__Event5 __event5 = null;
 
   private ExceptionThrower __thrower = jadescript.core.exception.ExceptionThrower.__DEFAULT_THROWER;
 
@@ -645,9 +795,9 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
     	
     	ListenCoworkers.this.providedIngredients = new jadescript.util.JadescriptList<IngredientQuantity>();
     	
-    	__event2 = new ListenCoworkers.__Event2();
+    	__event4 = new ListenCoworkers.__Event4();
     	
-    	__event3 = new ListenCoworkers.__Event3();
+    	__event5 = new ListenCoworkers.__Event5();
     }
   }
 }

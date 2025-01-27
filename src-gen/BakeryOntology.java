@@ -109,6 +109,18 @@ public class BakeryOntology extends Ontology implements BakeryOntology_Vocabular
     return new WorkerReady(workerId, type);
   }
 
+  public static AgentsReported AgentsReported() {
+    return new AgentsReported();
+  }
+
+  public static EndOfPrivateOrders EndOfPrivateOrders() {
+    return new EndOfPrivateOrders();
+  }
+
+  public static EndOfOrders EndOfOrders() {
+    return new EndOfOrders();
+  }
+
   public static RequestPackingList RequestPackingList() {
     return new RequestPackingList();
   }
@@ -159,10 +171,6 @@ public class BakeryOntology extends Ontology implements BakeryOntology_Vocabular
     return new PackageStatus(package_, status);
   }
 
-  public static AgentsReported AgentsReported() {
-    return new AgentsReported();
-  }
-
   public static OrderRedoRequired OrderRedoRequired() {
     return new OrderRedoRequired();
   }
@@ -173,10 +181,6 @@ public class BakeryOntology extends Ontology implements BakeryOntology_Vocabular
 
   public static PackageRejected PackageRejected() {
     return new PackageRejected();
-  }
-
-  public static EndOfPrivateOrders EndOfPrivateOrders() {
-    return new EndOfPrivateOrders();
   }
 
   public BakeryOntology() {
@@ -201,6 +205,9 @@ public class BakeryOntology extends Ontology implements BakeryOntology_Vocabular
     	add(new jade.content.schema.AgentActionSchema(ProvideIngredients), ProvideIngredients.class);
     	add(new jade.content.schema.PredicateSchema(IngredientAvaliable), IngredientAvaliable.class);
     	add(new jade.content.schema.PredicateSchema(WorkerReady), WorkerReady.class);
+    	add(new jade.content.schema.PredicateSchema(AgentsReported), AgentsReported.class);
+    	add(new jade.content.schema.PredicateSchema(EndOfPrivateOrders), EndOfPrivateOrders.class);
+    	add(new jade.content.schema.PredicateSchema(EndOfOrders), EndOfOrders.class);
     	add(new jade.content.schema.AgentActionSchema(RequestPackingList), RequestPackingList.class);
     	add(new jade.content.schema.AgentActionSchema(ProvidePackingList), ProvidePackingList.class);
     	add(new jade.content.schema.AgentActionSchema(RejectOrAcceptOrder), RejectOrAcceptOrder.class);
@@ -211,11 +218,9 @@ public class BakeryOntology extends Ontology implements BakeryOntology_Vocabular
     	add(new jade.content.schema.AgentActionSchema(RepackedPackage), RepackedPackage.class);
     	add(new jade.content.schema.PredicateSchema(OrderStatus), OrderStatus.class);
     	add(new jade.content.schema.PredicateSchema(PackageStatus), PackageStatus.class);
-    	add(new jade.content.schema.PredicateSchema(AgentsReported), AgentsReported.class);
     	add(new jade.content.schema.PredicateSchema(OrderRedoRequired), OrderRedoRequired.class);
     	add(new jade.content.schema.PredicateSchema(PackageReady), PackageReady.class);
     	add(new jade.content.schema.PredicateSchema(PackageRejected), PackageRejected.class);
-    	add(new jade.content.schema.PredicateSchema(EndOfPrivateOrders), EndOfPrivateOrders.class);
     	
     	
     	jadescript.content.onto.Ontology.__populateListSchema((jade.content.schema.TermSchema) getSchema(IngredientQuantity), (jade.content.schema.ConceptSchema) getSchema("__ListClass_IngredientQuantity"));

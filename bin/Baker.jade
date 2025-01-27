@@ -3,11 +3,11 @@ agent Baker uses ontology BakeryOntology
     property bread = Good(
     	"bread",
     	[
-    		IngredientQuantity("flour", 14),
+    		IngredientQuantity("flour", 2),
             IngredientQuantity("water", 2),
             IngredientQuantity("yeast", 1)
     	],
-    	"PT40S" as duration,"PT5S" as duration,6
+    	"PT20S" as duration,"PT10S" as duration,6
     )
     property bun = Good(
         "bun",
@@ -16,7 +16,7 @@ agent Baker uses ontology BakeryOntology
             IngredientQuantity("water", 2),
             IngredientQuantity("yeast", 1)
         ],
-        "PT2S" as duration,"PT10S" as duration,8
+        "PT25S" as duration,"PT15S" as duration,8
     )
     property cookies = Good(
         "cookies",
@@ -26,7 +26,7 @@ agent Baker uses ontology BakeryOntology
             IngredientQuantity("eggs", 2),
             IngredientQuantity("sugar", 2)
         ],
-        "PT4S" as duration,"PT8S" as duration,14
+        "PT15S" as duration,"PT20S" as duration,14
     )
     
     property cake = Good(
@@ -37,7 +37,7 @@ agent Baker uses ontology BakeryOntology
             IngredientQuantity("eggs", 3),
             IngredientQuantity("sugar", 2)
         ],
-        "PT6S" as duration,"PT20S" as duration,1
+        "PT30S" as duration,"PT20S" as duration,1
     )
     property cupcakes = Good(
         "cupcakes",
@@ -46,15 +46,15 @@ agent Baker uses ontology BakeryOntology
             IngredientQuantity("sugar", 2),
             IngredientQuantity("eggs", 3)
         ],
-        "PT3S" as duration,"PT12S" as duration,6
+        "PT10S" as duration,"PT15S" as duration,6
     )
     property recipeBook as list of Good
     
-	property flour = IngredientQuantity("flour",15)
-	property sugar = IngredientQuantity("sugar",10)
-	property eggs = IngredientQuantity("eggs",8)
-	property yeast = IngredientQuantity("yeast",7)
-	property water = IngredientQuantity("water",11)
+	property flour = IngredientQuantity("flour",20)
+	property sugar = IngredientQuantity("sugar",20)
+	property eggs = IngredientQuantity("eggs",20)
+	property yeast = IngredientQuantity("yeast",20)
+	property water = IngredientQuantity("water",20)
 	property stock = [flour,sugar,eggs,yeast,water]
 	
     property typeBaker as text
@@ -62,6 +62,7 @@ agent Baker uses ontology BakeryOntology
     property listOfCoworkers as list of text
     
     property ordersList as list of OrderStatus
+    property currentlyAskingForOrder as boolean
     
 	
 	procedure changeToNormal do
@@ -81,18 +82,12 @@ agent Baker uses ontology BakeryOntology
         #coworker2 as text
         #add coworker2 to listOfCoworkers
         
-        log "Agent 'Baker' created with arguments: " + typeBaker + ", " + supervisor
+        log "BAKER created with arguments: " + typeBaker + ", " + supervisor
         
-        #log "Reporting to: "+supervisorName
-        #log "What I send: "+aid of agent+" __ "+typeBaker of agent+ "__" + supervisorName
-        #log "Content: "+WorkerReady(aid of agent, typeBaker of agent)
-        #if name of agent = "Baker2" do
-        #    sleep(2000) # Delay for 2 seconds
-        #send message inform WorkerReady(aid of this, typeBaker of agent) to supervisorName@ #reporting to supervisor that ready to work
-        if name of agent = "Baker2@172.16.1.17:1099/JADE" do
-            activate DelayedWorkerReady after "PT2S" as duration
-        else do
-            activate DelayedWorkerReady
+        #if (name of agent)@ = "Baker2" do
+        activate DelayedWorkerReady after "PT2S" as duration
+        #else do
+        #    activate DelayedWorkerReady
         #log "Reported"
 
         # Assign recipeBook based on type
@@ -106,101 +101,128 @@ agent Baker uses ontology BakeryOntology
             log "Known recipe: " + name of good
         
         activate ManageOrders
-        #activate WaitForNewOrder
         activate ListenCoworkers
-        #do changeToNormal
-        #log "Agents type:"+typeBaker
 
 one shot behavior DelayedWorkerReady for agent Baker uses ontology BakeryOntology
     on execute do
-        log "Sending WorkerReady: " + WorkerReady(aid of agent, typeBaker of agent)
+        #log "Sending WorkerReady: " + WorkerReady(aid of agent, typeBaker of agent)
         send message inform WorkerReady(aid of agent, typeBaker of agent) to supervisorName@
         log "WorkerReady message sent."
         
 cyclic behaviour ManageOrders for agent Baker uses ontology BakeryOntology
-    #property allAgentsReported
-    #on activate do
-    #    allAgentsReported = false
-        
+    property endOfOrders as boolean
+    
+    on create do
+        endOfOrders = false
+        currentlyAskingForOrder = false
     on execute do
         count = 0
         if length of ordersList ≠ 0 do
-            #log "entered here"
             for i in ordersList do
                 if status of i ≠ "baking" do
                     break
                 else do 
-                    count = count + 1 #we can't ask for new order if we are preparing another one or when we lack of ingredients
-            if count = length of ordersList do #if everything is ONLY baking we can ask for another order to make
+                    count = count + 1 #we cannot ask for new order if we are preparing another one or when we lack of ingredients
+            if count = length of ordersList and not endOfOrders and not currentlyAskingForOrder do #if everything is ONLY baking we can ask for another order to make
+                log "BAKER: "+name of agent+" __ count of ord baking: "+count+" orderList: "+ ordersList+" end orders: "+ endOfOrders
                 activate SendRequest
-    
-    on message inform OrderStatus(id,status) do
-        log "Agent: "+name of agent+" is finished."
-        send message inform OrderStatus(id,status) to supervisorName@
-        remove OrderStatus(id,status) from ordersList
-        log ordersList
-      
-    on message inform EndOfPrivateOrders do
-        #if typeBaker of agent = "private" do
-        do changeToNormal
-        log "Me: "+name of agent+" is changed into normal: "+typeBaker of agent
-            #for i in listOfCoworkers do
-            #   send message inform EndOfPrivateOrders to i@ # -> buuuuut what if baker pracuje akurat nad czymś ??? podmieni mu się reciepe book!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                currentlyAskingForOrder = true
     
     on message inform AgentsReported do
+        currentlyAskingForOrder = true
         activate SendRequest
-        log "activated sendReq"
-        activate WaitForNewOrder
+        activate WaitForNewOrder    
+    
+    on message inform OrderStatus(id,status) do
+        log "BAKER: "+name of agent+" is finished."
+        send message inform OrderStatus(id,status) to supervisorName@
+        remove OrderStatus(id,status) from ordersList
+        #log ordersList
+      
+    on message inform EndOfPrivateOrders do
+        do changeToNormal
+        log "BAKER: "+name of agent+" is changed into normal: "+typeBaker of agent
+    
+    on message inform EndOfOrders do # już się nie będzie pytał przynajmniej
+        deactivate WaitForNewOrder
+        endOfOrders = true
         
     ## here listening for finishing the work!!
+    
+    
+    
 one shot behavior SendRequest for agent Baker uses ontology BakeryOntology
     on execute do
-        log "Agent: "+name of agent + " sending request for an order from: " + supervisorName of agent
-        send message request RequestOrder(aid of agent) to supervisorName@ #Request is send to Supervisor
+        log "BAKER: "+name of agent + " sending request for an order from: " + supervisorName of agent
+        send message request RequestOrder(aid of agent) to supervisorName@
 
 
 cyclic behaviour WaitForNewOrder for agent Baker uses ontology BakeryOntology
+
+    function checkIfKnow(good as text) as boolean do
+        for item in recipeBook do 
+            if name of item = good do
+                return true
+        return false
+        
     on activate do
-        log "Agent: "+name of agent + " is waiting for new order from supervisor: " + supervisorName of agent
+        log "BAKER: "+name of agent + " is waiting for new order from supervisor: " + supervisorName of agent
     
     on message request AssignOrder(agentId as aid, order as Order) do
         senderAgent = sender of message
-        log "Agent: "+name of agent +" received an order for: "+good of order +" from: " + name of senderAgent
         
-        #check if agent have this in his recipe book!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        status of order = "toPrepare"
-        orderWithStatus = OrderStatus(id of order,"toPrepare")
-        add orderWithStatus to ordersList
-        log "OrderList: "+ ordersList
-        #for i in ordersList do
-        #    log i
-        activate PrepareOrder(order)
+        if checkIfKnow(good of order) do
+            currentlyAskingForOrder = false
+	        log "BAKER: "+name of agent +" received an order for: "+good of order +" from: " + name of senderAgent+" and knows the recipe"
+	        status of order = "toPrepare"
+	        orderWithStatus = OrderStatus(id of order,"toPrepare")
+	        add orderWithStatus to ordersList
+	        log "OrderList: "+ ordersList+" of BAKER: "+name of agent
+	        activate PrepareOrder(order)
+	    else do
+	       log "BAKER: "+(name of agent)@+" received an order for: "+good of order +" but does not know the recipe!!"
         
 
 cyclic behaviour ListenCoworkers for agent Baker uses ontology BakeryOntology
     property avaliable = true
     property providedIngredients as list of IngredientQuantity
+    
+    procedure clearProvidedIngredients do
+        if length of providedIngredients ≠ 0 do
+            for i in providedIngredients do
+                remove i from providedIngredients
+    
+    function duringPreparation as boolean do
+        for order in ordersList do
+            if status of order = "preparing" do
+                return true
+        return false
      
     on message request AskForHelpColleague(agentId as aid, ingredients as list of IngredientQuantity) do
         senderAgent = sender of message
-        #listIngredientsNeeded of this = ingredients
-        log "Agent: "+name of agent +" received a request for help from "+ name of senderAgent
+        log "BAKER: "+name of agent +" received a request for help from "+ name of senderAgent
         log "Needed ingredients: "+ingredients
         
-        for ingredient in ingredients do
-            for item in stock do
-                if quantity of ingredient > quantity of item do
-                   log "Agent wants too much: "+ quantity of ingredient + " but i have "+ quantity of item
-                   send message inform IngredientAvaliable(aid, false) to senderAgent
-                   avaliable = false
-                   break
+        if not duringPreparation do
+	        for ingredient in ingredients do
+	            for item in stock do
+	                if quantity of ingredient > quantity of item do
+	                   log "Agent wants too much: "+ quantity of ingredient + " when i have "+ quantity of item
+	                   send message inform IngredientAvaliable(aid, false) to senderAgent
+	                   avaliable = false
+	                   break
+	            if not avaliable do
+	                break
+	    else do
+	       log "BAKER: "+name of agent+"won't help with ingredients. PREPARING good"
+           send message inform IngredientAvaliable(aid, false) to senderAgent
+           avaliable = false
         
         if avaliable do
             send message inform IngredientAvaliable(aid, true) to senderAgent  
         
     on message request RequestIngredientsColleague(id as aid, listIngredientsNeeded as list of IngredientQuantity) do
         senderAgent = sender of message
-        
         for ingredient in listIngredientsNeeded do
             for item in stock do
                 if name of ingredient = name of item do
@@ -211,7 +233,7 @@ cyclic behaviour ListenCoworkers for agent Baker uses ontology BakeryOntology
         log "My current stock after helping: "+stock
         
         send message request ProvideIngredients(providedIngredients) to senderAgent
-
+        do clearProvidedIngredients # -> ################################################################check if correct
 
 cyclic behaviour HandleIngredientsShortage for agent Baker uses ontology BakeryOntology
     property listIngredientsNeeded as list of IngredientQuantity 
@@ -243,6 +265,7 @@ cyclic behaviour HandleIngredientsShortage for agent Baker uses ontology BakeryO
 		    #if noHelpFromCo do send request to supplier!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             
             # then deactivate
+            
     on message request ProvideIngredients(handedIngredients) do 
         senderAgent = sender of message
         log "Just got ingredients from: "+senderAgent
@@ -257,6 +280,8 @@ cyclic behaviour HandleIngredientsShortage for agent Baker uses ontology BakeryO
         deactivate this
         
         #if got deactivate 
+   
+   #on message from supplier with ingredient  or I could use provideIngredients 
                   
 
 
@@ -272,7 +297,6 @@ one shot behaviour PrepareOrder for agent Baker uses ontology BakeryOntology
                     if quantity of item < quantity of ingredientToProduce do
                         ingredientLack = IngredientQuantity(name of ingredientToProduce,(quantity of ingredientToProduce-quantity of item))
                         add ingredientLack to ingredientsNeeded_lack
-                        #log "Requested missing ingredient: " + name of ingredientToProduce
         return ingredientsNeeded_lack
         
     function needRestoreStock as boolean do
@@ -295,7 +319,7 @@ one shot behaviour PrepareOrder for agent Baker uses ontology BakeryOntology
     
     on create with order as Order do
         order of this = order
-        log "Order: "+order
+        #log "Order: "+order
     
        
     on activate do
@@ -323,11 +347,7 @@ one shot behaviour PrepareOrder for agent Baker uses ontology BakeryOntology
 	       for coworker in listOfCoworkers do
 	           #checkedLackOfIngredients = true
 	           send message request AskForHelpColleague(aid,ingredientsNeeded_lack)to coworker@
-	           activate HandleIngredientsShortage(ingredientsNeeded_lack,order)
-	           
-	       
-	
-	#on message from supplier with ingredient         
+	           activate HandleIngredientsShortage(ingredientsNeeded_lack,order)      
         
         
 cyclic behaviour BakingOrderBehavior for agent Baker uses ontology BakeryOntology
@@ -344,7 +364,6 @@ cyclic behaviour BakingOrderBehavior for agent Baker uses ontology BakeryOntolog
         status of order = "baking"
         log "Agent: "+name of agent+" started baking for: " + good of order
         time = now as duration
-        #log time
     
     on execute do
         if (now - time) as duration >= bakingTime as duration do
@@ -353,7 +372,7 @@ cyclic behaviour BakingOrderBehavior for agent Baker uses ontology BakeryOntolog
             status of order = "finished"
             for orderWithStat in ordersList do
                 if id of order = orderId of orderWithStat do
-                    log orderWithStat
+                    #log orderWithStat
                     send message inform orderWithStat to aid
                     deactivate this
                     break

@@ -44,8 +44,14 @@ ontology BakeryOntology
     action ProvideIngredients(ingredients as list of IngredientQuantity) #may be with delay
 	
 	predicate IngredientAvaliable(id as aid, avaliable as boolean) #wystarczy odjąć u agenta przekazującego i dodać u przyjmującego jeżeli tak
-	
 	predicate WorkerReady(workerId as aid, type as text)
+	
+	proposition AgentsReported
+	proposition EndOfPrivateOrders
+    proposition EndOfOrders
+	
+	
+	
 	
 	action RequestPackingList
 	action ProvidePackingList(packageList as list of PackageOfGoods)#combined of list containing private orders
@@ -62,11 +68,9 @@ ontology BakeryOntology
 	predicate PackageStatus(package_ as PackageOfGoods, status as text)
 	#predicate IngredientsShortage(ingredientQuan as IngredientQuantity, quantityNeed as integer)
 	
-	
-	proposition AgentsReported
 	proposition OrderRedoRequired
 	proposition PackageReady
 	proposition PackageRejected
-	proposition EndOfPrivateOrders
+	
 	
 	#statuses: pending (before everything), toPrepare (just send), waitIngredients (if not enought inngredients), preparing, baking, toFix, finished

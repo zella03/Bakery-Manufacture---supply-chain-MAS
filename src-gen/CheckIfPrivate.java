@@ -67,7 +67,7 @@ public class CheckIfPrivate extends CyclicBehaviour<Supervisor> {
     public void run() {
       try {
       	/* 
-      	 * Compiled from source statement from line 151 to line 162
+      	 * Compiled from source statement from line 145 to line 157
       	 * for order in orderList do
       	 *             if type of order = "private" do            
       	 *                 noMorePrivateOrder = false
@@ -79,12 +79,13 @@ public class CheckIfPrivate extends CyclicBehaviour<Supervisor> {
       	 *             
       	 *         
       	 *         #if length of orderList % 8 != 0 do
+      	 *         
       	 *             
       	 */
       	
       	for ( Order order : CheckIfPrivate.this._agentEnv.getAgent().getOrderList()) {
       		/* 
-      		 * Compiled from source statement from line 152 to line 154
+      		 * Compiled from source statement from line 146 to line 148
       		 * if type of order = "private" do            
       		 *                 noMorePrivateOrder = false
       		 *                 break
@@ -92,14 +93,14 @@ public class CheckIfPrivate extends CyclicBehaviour<Supervisor> {
       		
       		if(java.util.Objects.equals(order.getType(), "private")) {
       			/* 
-      			 * Compiled from source statement at line 153
+      			 * Compiled from source statement at line 147
       			 * noMorePrivateOrder = false
       			 */
       			
       			CheckIfPrivate.this.setNoMorePrivateOrder(false);
       			
       			/* 
-      			 * Compiled from source statement at line 154
+      			 * Compiled from source statement at line 148
       			 * break
       			 */
       			

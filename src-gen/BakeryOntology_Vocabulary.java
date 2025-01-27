@@ -94,6 +94,12 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
 
   public static final String WorkerReady_type = "type";
 
+  public static final String AgentsReported = "AgentsReported";
+
+  public static final String EndOfPrivateOrders = "EndOfPrivateOrders";
+
+  public static final String EndOfOrders = "EndOfOrders";
+
   public static final String RequestPackingList = "RequestPackingList";
 
   public static final String ProvidePackingList = "ProvidePackingList";
@@ -140,13 +146,9 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
 
   public static final String PackageStatus_status = "status";
 
-  public static final String AgentsReported = "AgentsReported";
-
   public static final String OrderRedoRequired = "OrderRedoRequired";
 
   public static final String PackageReady = "PackageReady";
 
   public static final String PackageRejected = "PackageRejected";
-
-  public static final String EndOfPrivateOrders = "EndOfPrivateOrders";
 }
