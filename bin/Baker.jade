@@ -48,6 +48,7 @@ agent Baker uses ontology BakeryOntology
         ],
         "PT3S" as duration,"PT12S" as duration,6
     )
+    property recipeBook as list of Good
     
 	property flour = IngredientQuantity("flour",15)
 	property sugar = IngredientQuantity("sugar",10)
@@ -56,11 +57,12 @@ agent Baker uses ontology BakeryOntology
 	property water = IngredientQuantity("water",11)
 	property stock = [flour,sugar,eggs,yeast,water]
 	
-	property recipeBook as list of Good
     property typeBaker as text
     property supervisorName as text
-    property ordersList as list of OrderStatus
     property listOfCoworkers as list of text
+    
+    property ordersList as list of OrderStatus
+    
 	
 	procedure changeToNormal do
 	   typeBaker of this = "normal"
@@ -72,7 +74,6 @@ agent Baker uses ontology BakeryOntology
 	           status of i = newStatus
 	           break
 	
-	
     on create with type as text, supervisor as text, coworker1 as text do
         typeBaker of this = type
         supervisorName of this = supervisor
@@ -81,6 +82,18 @@ agent Baker uses ontology BakeryOntology
         #add coworker2 to listOfCoworkers
         
         log "Agent 'Baker' created with arguments: " + typeBaker + ", " + supervisor
+        
+        #log "Reporting to: "+supervisorName
+        #log "What I send: "+aid of agent+" __ "+typeBaker of agent+ "__" + supervisorName
+        #log "Content: "+WorkerReady(aid of agent, typeBaker of agent)
+        #if name of agent = "Baker2" do
+        #    sleep(2000) # Delay for 2 seconds
+        #send message inform WorkerReady(aid of this, typeBaker of agent) to supervisorName@ #reporting to supervisor that ready to work
+        if name of agent = "Baker2@172.16.1.17:1099/JADE" do
+            activate DelayedWorkerReady after "PT2S" as duration
+        else do
+            activate DelayedWorkerReady
+        #log "Reported"
 
         # Assign recipeBook based on type
         if type = "normal" do
@@ -93,18 +106,26 @@ agent Baker uses ontology BakeryOntology
             log "Known recipe: " + name of good
         
         activate ManageOrders
-        activate WaitForNewOrder
+        #activate WaitForNewOrder
         activate ListenCoworkers
         #do changeToNormal
         #log "Agents type:"+typeBaker
+
+one shot behavior DelayedWorkerReady for agent Baker uses ontology BakeryOntology
+    on execute do
+        log "Sending WorkerReady: " + WorkerReady(aid of agent, typeBaker of agent)
+        send message inform WorkerReady(aid of agent, typeBaker of agent) to supervisorName@
+        log "WorkerReady message sent."
         
 cyclic behaviour ManageOrders for agent Baker uses ontology BakeryOntology
-    property count = 0
-    on activate do
-        activate SendRequest
+    #property allAgentsReported
+    #on activate do
+    #    allAgentsReported = false
         
     on execute do
-        if length of ordersList !=0 do
+        count = 0
+        if length of ordersList ≠ 0 do
+            #log "entered here"
             for i in ordersList do
                 if status of i ≠ "baking" do
                     break
@@ -120,12 +141,41 @@ cyclic behaviour ManageOrders for agent Baker uses ontology BakeryOntology
         log ordersList
       
     on message inform EndOfPrivateOrders do
-        if typeBaker of agent = "private" do
-            do changeToNormal
-            for i in listOfCoworkers do
-                send message inform EndOfPrivateOrders to i@ # -> buuuuut what if baker pracuje akurat nad czymś ??? podmieni mu się reciepe book!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        #if typeBaker of agent = "private" do
+        do changeToNormal
+        log "Me: "+name of agent+" is changed into normal: "+typeBaker of agent
+            #for i in listOfCoworkers do
+            #   send message inform EndOfPrivateOrders to i@ # -> buuuuut what if baker pracuje akurat nad czymś ??? podmieni mu się reciepe book!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
+    on message inform AgentsReported do
+        activate SendRequest
+        log "activated sendReq"
+        activate WaitForNewOrder
+        
     ## here listening for finishing the work!!
+one shot behavior SendRequest for agent Baker uses ontology BakeryOntology
+    on execute do
+        log "Agent: "+name of agent + " sending request for an order from: " + supervisorName of agent
+        send message request RequestOrder(aid of agent) to supervisorName@ #Request is send to Supervisor
+
+
+cyclic behaviour WaitForNewOrder for agent Baker uses ontology BakeryOntology
+    on activate do
+        log "Agent: "+name of agent + " is waiting for new order from supervisor: " + supervisorName of agent
+    
+    on message request AssignOrder(agentId as aid, order as Order) do
+        senderAgent = sender of message
+        log "Agent: "+name of agent +" received an order for: "+good of order +" from: " + name of senderAgent
+        
+        #check if agent have this in his recipe book!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        status of order = "toPrepare"
+        orderWithStatus = OrderStatus(id of order,"toPrepare")
+        add orderWithStatus to ordersList
+        log "OrderList: "+ ordersList
+        #for i in ordersList do
+        #    log i
+        activate PrepareOrder(order)
+        
 
 cyclic behaviour ListenCoworkers for agent Baker uses ontology BakeryOntology
     property avaliable = true
@@ -208,29 +258,6 @@ cyclic behaviour HandleIngredientsShortage for agent Baker uses ontology BakeryO
         
         #if got deactivate 
                   
-                
-    
-one shot behavior SendRequest for agent Baker uses ontology BakeryOntology
-    on execute do
-        log "Agent: "+name of agent + " sending request for an order from: " + supervisorName of agent
-        send message request RequestOrder(aid of agent) to supervisorName@ #Request is send to Supervisor
-
-
-cyclic behaviour WaitForNewOrder for agent Baker uses ontology BakeryOntology
-    on activate do
-        log "Agent: "+name of agent + " is waiting for new order from supervisor: " + supervisorName of agent
-    
-    on message request AssignOrder(agentId as aid, order as Order) do
-        senderAgent = sender of message
-        log "Agent: "+name of agent +" received an order for: "+good of order +" from: " + name of senderAgent
-        
-        status of order = "toPrepare"
-        orderWithStatus = OrderStatus(id of order,"toPrepare")
-        add orderWithStatus to ordersList
-        log "OrderList: "+ ordersList
-        #for i in ordersList do
-        #    log i
-        activate PrepareOrder(order)
 
 
 one shot behaviour PrepareOrder for agent Baker uses ontology BakeryOntology
@@ -298,7 +325,7 @@ one shot behaviour PrepareOrder for agent Baker uses ontology BakeryOntology
 	           send message request AskForHelpColleague(aid,ingredientsNeeded_lack)to coworker@
 	           activate HandleIngredientsShortage(ingredientsNeeded_lack,order)
 	           
-	       #do clearNeededIngredients -> to dopiero jeżeli restock się uda!!!!
+	       
 	
 	#on message from supplier with ingredient         
         
@@ -314,6 +341,7 @@ cyclic behaviour BakingOrderBehavior for agent Baker uses ontology BakeryOntolog
     
     on activate do
         do chnageStatus with id of order,"baking"
+        status of order = "baking"
         log "Agent: "+name of agent+" started baking for: " + good of order
         time = now as duration
         #log time
@@ -322,10 +350,11 @@ cyclic behaviour BakingOrderBehavior for agent Baker uses ontology BakeryOntolog
         if (now - time) as duration >= bakingTime as duration do
             log "Agent: "+name of agent+" finished baking: "+good of order+" of id: "+ id of order
             do chnageStatus with id of order,"finished"
-            for i in ordersList do
-                if id of order = orderId of i do
-                    log i
-                    send message inform i to aid
+            status of order = "finished"
+            for orderWithStat in ordersList do
+                if id of order = orderId of orderWithStat do
+                    log orderWithStat
+                    send message inform orderWithStat to aid
                     deactivate this
                     break
                 

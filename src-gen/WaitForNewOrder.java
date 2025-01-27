@@ -58,7 +58,7 @@ public class WaitForNewOrder extends CyclicBehaviour<Baker> {
     super.doOnActivate();
     try {
     	/* 
-    	 * Compiled from source statement at line 221
+    	 * Compiled from source statement at line 164
     	 * log "Agent: "+name of agent + " is waiting for new order from supervisor: " + supervisorName of agent
     	 */
     	
@@ -81,12 +81,12 @@ public class WaitForNewOrder extends CyclicBehaviour<Baker> {
       	
       	return ;
       }
-       class __PatternMatcher1869990960 {
+       class __PatternMatcher1549932635 {
       	public jade.core.AID agentId;
       	
       	public Order order;
       	
-      	private final __PatternMatcher1869990960 __PatternMatcher1869990960_obj =  this;
+      	private final __PatternMatcher1549932635 __PatternMatcher1549932635_obj =  this;
       	
       	public boolean headerMatch_structterm0_typecast0(java.lang.Object __objx) {
       		jade.core.AID __x;
@@ -182,7 +182,7 @@ public class WaitForNewOrder extends CyclicBehaviour<Baker> {
       		return true && headerMatch_structterm0(__x.getAgentId()) && headerMatch_structterm1(__x.getOrder());
       	}
       }
-      __PatternMatcher1869990960 __PatternMatcher1869990960_obj = new __PatternMatcher1869990960();
+      __PatternMatcher1549932635 __PatternMatcher1549932635_obj = new __PatternMatcher1549932635();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -190,7 +190,7 @@ public class WaitForNewOrder extends CyclicBehaviour<Baker> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1869990960_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher1549932635_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -213,53 +213,53 @@ public class WaitForNewOrder extends CyclicBehaviour<Baker> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement at line 224
+      			 * Compiled from source statement at line 167
       			 * senderAgent = sender of message
       			 */
       			
       			jade.core.AID senderAgent = ((jadescript.core.message.RequestMessage<AssignOrder>) __receivedMessage).getSender();
       			
       			/* 
-      			 * Compiled from source statement at line 225
+      			 * Compiled from source statement at line 168
       			 * log "Agent: "+name of agent +" received an order for: "+good of order +" from: " + name of senderAgent
       			 */
       			
-      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitForNewOrder.this.getClass().getName(), WaitForNewOrder.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Agent: ") + java.lang.String.valueOf(WaitForNewOrder.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" received an order for: ")) + java.lang.String.valueOf(__PatternMatcher1869990960_obj.order.getGood())) + java.lang.String.valueOf(" from: ")) + java.lang.String.valueOf(senderAgent.getName())));
+      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitForNewOrder.this.getClass().getName(), WaitForNewOrder.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Agent: ") + java.lang.String.valueOf(WaitForNewOrder.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" received an order for: ")) + java.lang.String.valueOf(__PatternMatcher1549932635_obj.order.getGood())) + java.lang.String.valueOf(" from: ")) + java.lang.String.valueOf(senderAgent.getName())));
       			
       			/* 
-      			 * Compiled from source statement at line 227
+      			 * Compiled from source statement at line 171
       			 * status of order = "toPrepare"
       			 */
       			
-      			__PatternMatcher1869990960_obj.order.setStatus("toPrepare");
+      			__PatternMatcher1549932635_obj.order.setStatus("toPrepare");
       			
       			/* 
-      			 * Compiled from source statement at line 228
+      			 * Compiled from source statement at line 172
       			 * orderWithStatus = OrderStatus(id of order,"toPrepare")
       			 */
       			
-      			OrderStatus orderWithStatus = BakeryOntology.OrderStatus(__PatternMatcher1869990960_obj.order.getId() ,"toPrepare");
+      			OrderStatus orderWithStatus = BakeryOntology.OrderStatus(__PatternMatcher1549932635_obj.order.getId() ,"toPrepare");
       			
       			/* 
-      			 * Compiled from source statement at line 229
+      			 * Compiled from source statement at line 173
       			 * add orderWithStatus to ordersList
       			 */
       			
       			WaitForNewOrder.this._agentEnv.getAgent().getOrdersList().add(orderWithStatus);
       			
       			/* 
-      			 * Compiled from source statement at line 230
+      			 * Compiled from source statement at line 174
       			 * log "OrderList: "+ ordersList
       			 */
       			
       			jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitForNewOrder.this.getClass().getName(), WaitForNewOrder.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf("OrderList: ") + java.lang.String.valueOf(WaitForNewOrder.this._agentEnv.getAgent().getOrdersList())));
       			
       			/* 
-      			 * Compiled from source statement at line 233
+      			 * Compiled from source statement at line 177
       			 * activate PrepareOrder(order)
       			 */
       			
-      			new PrepareOrder(_agentEnv.getAgent().toEnv() ,__PatternMatcher1869990960_obj.order).activate(_agentEnv.getAgent());
+      			new PrepareOrder(_agentEnv.getAgent().toEnv() ,__PatternMatcher1549932635_obj.order).activate(_agentEnv.getAgent());
       		}
       		catch(jadescript.core.exception.JadescriptException __throwable) {
       			__handleJadescriptException(__throwable);

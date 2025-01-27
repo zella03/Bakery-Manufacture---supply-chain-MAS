@@ -45,7 +45,7 @@ ontology BakeryOntology
 	
 	predicate IngredientAvaliable(id as aid, avaliable as boolean) #wystarczy odjąć u agenta przekazującego i dodać u przyjmującego jeżeli tak
 	
-	
+	predicate WorkerReady(workerId as aid, type as text)
 	
 	action RequestPackingList
 	action ProvidePackingList(packageList as list of PackageOfGoods)#combined of list containing private orders
@@ -63,6 +63,7 @@ ontology BakeryOntology
 	#predicate IngredientsShortage(ingredientQuan as IngredientQuantity, quantityNeed as integer)
 	
 	
+	proposition AgentsReported
 	proposition OrderRedoRequired
 	proposition PackageReady
 	proposition PackageRejected

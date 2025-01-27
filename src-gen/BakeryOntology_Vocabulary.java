@@ -88,6 +88,12 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
 
   public static final String IngredientAvaliable_avaliable = "avaliable";
 
+  public static final String WorkerReady = "WorkerReady";
+
+  public static final String WorkerReady_workerId = "workerId";
+
+  public static final String WorkerReady_type = "type";
+
   public static final String RequestPackingList = "RequestPackingList";
 
   public static final String ProvidePackingList = "ProvidePackingList";
@@ -133,6 +139,8 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
   public static final String PackageStatus_package_ = "package_";
 
   public static final String PackageStatus_status = "status";
+
+  public static final String AgentsReported = "AgentsReported";
 
   public static final String OrderRedoRequired = "OrderRedoRequired";
 

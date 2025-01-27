@@ -12,19 +12,13 @@ agent Supervisor uses ontology BakeryOntology
     
     property privateOrders = [orderCake, orderCupcake]
     property normalOrders = [orderBread, orderBun, orderCookies]
-    #property ordersToGive as list of OrderQuantity
     
     property orderList as list of Order
     property pendingOrders as list of OrderStatus
     property type as text
     property orderCount as integer
+    property listOfWorkers as list of WorkerReady
     
-    #procedure SplitOrdersByType do
-    #    for i in orderList do
-    #        if type of i = "normal" do
-    #            add i to normalOrders
-    #        else do
-    #            add i to privateOrders
     
     procedure SplitIntoOrders with listOfOrders as list of OrderQuantity,ratio as integer do
         for i in listOfOrders do
@@ -44,44 +38,101 @@ agent Supervisor uses ontology BakeryOntology
         #log orderList
         #log pendingOrders
         
-        #do SplitOrdersByType
         
         if type of agent = "normal" do
             do SplitIntoOrders with normalOrders,1
         else do
             do SplitIntoOrders with privateOrders,1
             
-        activate SendOrder
-        
+        activate ReportingWorkers
 
-cyclic behaviour SendOrder for agent Supervisor
+cyclic behaviour ReportingWorkers for agent Supervisor uses ontology BakeryOntology
+    property count as integer
+    property allReported as boolean
+    on create do
+        count = 0
+        allReported = false
+        log count
+        
+    on execute do
+        if allReported do
+	        for worker in listOfWorkers do
+	            log "problem here"
+	            send message inform AgentsReported to workerId of worker
+	        activate SendOrder
+	        deactivate this
+        
+    
+    on message inform WorkerReady(id, workerType) do
+        log "problem here"
+        add WorkerReady(id,workerType) to listOfWorkers
+        log "workers which reported: "+listOfWorkers
+        count = count + 1
+
+        if count = 2 do
+           allReported = true
+
+cyclic behaviour SendOrder for agent Supervisor uses ontology BakeryOntology
+    property currentWorkerType as text
+    property eandOfPrivateOrders as boolean
+    
+    function checkIfWorkerReported(id as aid) as boolean do
+        if length of listOfWorkers ≠ 0 do
+	        for worker in listOfWorkers do
+	            if workerId of worker = id do
+	                currentWorkerType = type of worker
+	                return true
+        return false
+        
+    procedure ChangeTypeOfAgent with id as aid do
+        if length of listOfWorkers ≠ 0 do
+	        for worker in listOfWorkers do
+	            if workerId of worker = id do
+	                log worker
+	                type of worker = "normal"
+	                log worker
+	                break
         
     on activate do
+        eandOfPrivateOrders = false
         activate WaitingForFinishedOrders
         
     on message request RequestOrder(id) do
-        #order = Order("1","bread","pending")
         senderAgent = sender of message
         
-        if length of orderList ≠ 0 do
-	       order = orderList[0]
-	       orderStatus = OrderStatus(id of order, status of order)
-           remove order from orderList
-           add orderStatus to pendingOrders
+        if checkIfWorkerReported(id) do #should check if agent is on the list of working bakers
+            if currentWorkerType = "private" and (length of orderList = 0) do #first time asking if eand of private
+               log "End of private orders. Lets do some normal orders."
+               do SplitIntoOrders with normalOrders,1
+               eandOfPrivateOrders = true
+               
+            if currentWorkerType = "private" and eandOfPrivateOrders do
+                log "I have to change: "+senderAgent+" into normal agent"
+                send message inform EndOfPrivateOrders to senderAgent
+                do ChangeTypeOfAgent with id
+               
             
-           log orderList
-           log pendingOrders
-        
-	       log "Agent: "+name of agent+" received request for order from agent: " + name of sender
-	       send message request AssignOrder(id,order) to senderAgent
-	    else if type of agent = "private" do
-	       type of agent = "normal"
-	       log "End of private orders. Lets do some normal orders."
-	       do SplitIntoOrders with normalOrders,1 #private have to do 2 time less that normal had to do normal orders (plan 3x less)
-	       send message inform EndOfPrivateOrders to senderAgent
-	    else do
-	       log "No more orders"
-	       deactivate this
+	        if length of orderList ≠ 0 do
+		       order = orderList[0]
+		       orderStatus = OrderStatus(id of order, status of order)
+	           remove order from orderList
+	           add orderStatus to pendingOrders
+	            
+	           log orderList
+	           log pendingOrders
+	        
+		       log "Agent: "+name of agent+" received request for order from agent: " + name of sender
+		       send message request AssignOrder(id,order) to senderAgent
+		    #else if currentWorkerType = "private" do #-> if baker private!!!!
+		       #type of agent = "normal"
+		    #   log "End of private orders. Lets do some normal orders."
+		    #   do SplitIntoOrders with normalOrders,1 #private have to do 2 time less that normal had to do normal orders (plan 3x less)
+		    #   send message inform EndOfPrivateOrders to senderAgent
+		    else do
+		       log "No more orders"
+		       deactivate this
+		else do
+		  log "not yet reported"
 
 cyclic behaviour WaitingForFinishedOrders for agent Supervisor uses ontology BakeryOntology
     on message inform OrderStatus(orderId,orderStatus) do

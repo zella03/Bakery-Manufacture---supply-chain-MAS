@@ -82,14 +82,14 @@ public class BakingOrderBehavior extends CyclicBehaviour<Baker> {
     __initializeProperties();
     try {
     	/* 
-    	 * Compiled from source statement at line 312
+    	 * Compiled from source statement at line 339
     	 * order of this = order
     	 */
     	
     	BakingOrderBehavior.this.setOrder(order);
     	
     	/* 
-    	 * Compiled from source statement at line 313
+    	 * Compiled from source statement at line 340
     	 * bakingTime of this = bakingTime
     	 */
     	
@@ -110,21 +110,28 @@ public class BakingOrderBehavior extends CyclicBehaviour<Baker> {
     super.doOnActivate();
     try {
     	/* 
-    	 * Compiled from source statement at line 316
+    	 * Compiled from source statement at line 343
     	 * do chnageStatus with id of order,"baking"
     	 */
     	
     	BakingOrderBehavior.this._agentEnv.getAgent().chnageStatus(_agentEnv.getAgent().toEnv() ,BakingOrderBehavior.this.getOrder().getId() ,"baking");
     	
     	/* 
-    	 * Compiled from source statement at line 317
+    	 * Compiled from source statement at line 344
+    	 * status of order = "baking"
+    	 */
+    	
+    	BakingOrderBehavior.this.getOrder().setStatus("baking");
+    	
+    	/* 
+    	 * Compiled from source statement at line 345
     	 * log "Agent: "+name of agent+" started baking for: " + good of order
     	 */
     	
     	jadescript.core.Agent.doLog(jade.util.Logger.INFO, BakingOrderBehavior.this.getClass().getName(), BakingOrderBehavior.this, "on activate", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Agent: ") + java.lang.String.valueOf(BakingOrderBehavior.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" started baking for: ")) + java.lang.String.valueOf(BakingOrderBehavior.this.getOrder().getGood())));
     	
     	/* 
-    	 * Compiled from source statement at line 318
+    	 * Compiled from source statement at line 346
     	 * time = now as duration
     	 */
     	
@@ -144,96 +151,104 @@ public class BakingOrderBehavior extends CyclicBehaviour<Baker> {
     public void run() {
       try {
       	/* 
-      	 * Compiled from source statement from line 322 to line 330
+      	 * Compiled from source statement from line 350 to line 359
       	 * if (now - time) as duration >= bakingTime as duration do
       	 *             log "Agent: "+name of agent+" finished baking: "+good of order+" of id: "+ id of order
       	 *             do chnageStatus with id of order,"finished"
-      	 *             for i in ordersList do
-      	 *                 if id of order = orderId of i do
-      	 *                     log i
-      	 *                     send message inform i to aid
+      	 *             status of order = "finished"
+      	 *             for orderWithStat in ordersList do
+      	 *                 if id of order = orderId of orderWithStat do
+      	 *                     log orderWithStat
+      	 *                     send message inform orderWithStat to aid
       	 *                     deactivate this
       	 *                     break
       	 */
       	
       	if(jadescript.lang.Duration.compare(((jadescript.lang.Duration) jadescript.util.types.Converter.convert((jadescript.lang.Timestamp.minus(jadescript.lang.Timestamp.now(), BakingOrderBehavior.this.getTime())), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TIMESTAMP), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))), ((jadescript.lang.Duration) jadescript.util.types.Converter.convert(BakingOrderBehavior.this.getBakingTime(), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION)))) >= 0) {
       		/* 
-      		 * Compiled from source statement at line 323
+      		 * Compiled from source statement at line 351
       		 * log "Agent: "+name of agent+" finished baking: "+good of order+" of id: "+ id of order
       		 */
       		
       		jadescript.core.Agent.doLog(jade.util.Logger.INFO, BakingOrderBehavior.this.getClass().getName(), BakingOrderBehavior.this, "on execute", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Agent: ") + java.lang.String.valueOf(BakingOrderBehavior.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" finished baking: ")) + java.lang.String.valueOf(BakingOrderBehavior.this.getOrder().getGood())) + java.lang.String.valueOf(" of id: ")) + java.lang.String.valueOf(BakingOrderBehavior.this.getOrder().getId())));
       		
       		/* 
-      		 * Compiled from source statement at line 324
+      		 * Compiled from source statement at line 352
       		 * do chnageStatus with id of order,"finished"
       		 */
       		
       		BakingOrderBehavior.this._agentEnv.getAgent().chnageStatus(_agentEnv.getAgent().toEnv() ,BakingOrderBehavior.this.getOrder().getId() ,"finished");
       		
       		/* 
-      		 * Compiled from source statement from line 325 to line 330
-      		 * for i in ordersList do
-      		 *                 if id of order = orderId of i do
-      		 *                     log i
-      		 *                     send message inform i to aid
+      		 * Compiled from source statement at line 353
+      		 * status of order = "finished"
+      		 */
+      		
+      		BakingOrderBehavior.this.getOrder().setStatus("finished");
+      		
+      		/* 
+      		 * Compiled from source statement from line 354 to line 359
+      		 * for orderWithStat in ordersList do
+      		 *                 if id of order = orderId of orderWithStat do
+      		 *                     log orderWithStat
+      		 *                     send message inform orderWithStat to aid
       		 *                     deactivate this
       		 *                     break
       		 */
       		
-      		for ( OrderStatus i : BakingOrderBehavior.this._agentEnv.getAgent().getOrdersList()) {
+      		for ( OrderStatus orderWithStat : BakingOrderBehavior.this._agentEnv.getAgent().getOrdersList()) {
       			/* 
-      			 * Compiled from source statement from line 326 to line 330
-      			 * if id of order = orderId of i do
-      			 *                     log i
-      			 *                     send message inform i to aid
+      			 * Compiled from source statement from line 355 to line 359
+      			 * if id of order = orderId of orderWithStat do
+      			 *                     log orderWithStat
+      			 *                     send message inform orderWithStat to aid
       			 *                     deactivate this
       			 *                     break
       			 */
       			
-      			if(java.util.Objects.equals(BakingOrderBehavior.this.getOrder().getId(), i.getOrderId())) {
+      			if(java.util.Objects.equals(BakingOrderBehavior.this.getOrder().getId(), orderWithStat.getOrderId())) {
       				/* 
-      				 * Compiled from source statement at line 327
-      				 * log i
+      				 * Compiled from source statement at line 356
+      				 * log orderWithStat
       				 */
       				
-      				jadescript.core.Agent.doLog(jade.util.Logger.INFO, BakingOrderBehavior.this.getClass().getName(), BakingOrderBehavior.this, "on execute", java.lang.String.valueOf(i));
+      				jadescript.core.Agent.doLog(jade.util.Logger.INFO, BakingOrderBehavior.this.getClass().getName(), BakingOrderBehavior.this, "on execute", java.lang.String.valueOf(orderWithStat));
       				
       				/* 
-      				 * Compiled from source statement at line 328
-      				 * send message inform i to aid
+      				 * Compiled from source statement at line 357
+      				 * send message inform orderWithStat to aid
       				 */
       				
       				try {
       					jadescript.util.SendMessageUtils.validatePerformative("inform");
       					
-      					java.lang.Object _contentToBeSent672318229 = i;
+      					java.lang.Object _contentToBeSent1869150912 = orderWithStat;
       					
-      					jadescript.core.message.Message _synthesizedMessage672318229 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      					jadescript.core.message.Message _synthesizedMessage1869150912 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       					
-      					_synthesizedMessage672318229.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent672318229,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      					_synthesizedMessage1869150912.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1869150912,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       					
-      					_synthesizedMessage672318229.setLanguage(__codec.getName());;
+      					_synthesizedMessage1869150912.setLanguage(__codec.getName());;
       					
-      					_synthesizedMessage672318229.addReceiver(BakingOrderBehavior.this._agentEnv.getAgent().getAID());
+      					_synthesizedMessage1869150912.addReceiver(BakingOrderBehavior.this._agentEnv.getAgent().getAID());
       					
-      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage672318229, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent672318229, "inform"));
+      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1869150912, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1869150912, "inform"));
       					
-      					_agentEnv.getAgent().send(_synthesizedMessage672318229);
+      					_agentEnv.getAgent().send(_synthesizedMessage1869150912);
       				}
       				catch(java.lang.Throwable _t) {
       					throw jadescript.core.exception.JadescriptException.wrap(_t);
       				}
       				
       				/* 
-      				 * Compiled from source statement at line 329
+      				 * Compiled from source statement at line 358
       				 * deactivate this
       				 */
       				
       				BakingOrderBehavior.this.deactivate();
       				
       				/* 
-      				 * Compiled from source statement at line 330
+      				 * Compiled from source statement at line 359
       				 * break
       				 */
       				
