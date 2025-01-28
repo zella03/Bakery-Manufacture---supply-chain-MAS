@@ -3,14 +3,14 @@ import jadescript.content.JadescriptConcept;
 
 @SuppressWarnings("all")
 public class IngredientQuantity implements JadescriptConcept {
-  private String name;
+  private String ingredientName;
 
-  public String getName() {
-    return this.name;
+  public String getIngredientName() {
+    return this.ingredientName;
   }
 
-  public void setName(final String name) {
-    this.name = name;
+  public void setIngredientName(final String ingredientName) {
+    this.ingredientName = ingredientName;
   }
 
   private Integer quantity;
@@ -27,7 +27,7 @@ public class IngredientQuantity implements JadescriptConcept {
     java.lang.StringBuilder _sb = new java.lang.StringBuilder();
     _sb.append("IngredientQuantity");
     _sb.append("(");
-    _sb.append("\"" + java.lang.String.valueOf(getName()) + "\"");
+    _sb.append("\"" + java.lang.String.valueOf(getIngredientName()) + "\"");
     _sb.append(", ");
     _sb.append(java.lang.String.valueOf(getQuantity()));
     _sb.append(")");
@@ -37,7 +37,7 @@ public class IngredientQuantity implements JadescriptConcept {
   public boolean equals(final Object obj) {
     if(obj instanceof IngredientQuantity) {
     	IngredientQuantity o = (IngredientQuantity) obj;
-    	return true && java.util.Objects.equals(this.getName(), o.getName()) && java.util.Objects.equals(this.getQuantity(), o.getQuantity());
+    	return true && java.util.Objects.equals(this.getIngredientName(), o.getIngredientName()) && java.util.Objects.equals(this.getQuantity(), o.getQuantity());
     } else {
     	return super.equals(obj);
     }
@@ -45,16 +45,16 @@ public class IngredientQuantity implements JadescriptConcept {
 
   public IngredientQuantity() {
     {
-    	this.setName("");
+    	this.setIngredientName("");
     	
     	this.setQuantity(0);
     }
   }
 
-  public IngredientQuantity(final String name, final Integer quantity) {
+  public IngredientQuantity(final String ingredientName, final Integer quantity) {
     super();
     
-    this.setName(name);
+    this.setIngredientName(ingredientName);
     this.setQuantity(quantity);
   }
 
@@ -62,7 +62,7 @@ public class IngredientQuantity implements JadescriptConcept {
     return BakeryOntology.getInstance();
   }
 
-  private BakeryOntology __metadata_IngredientQuantity(final String name, final Integer quantity) {
+  private BakeryOntology __metadata_IngredientQuantity(final String ingredientName, final Integer quantity) {
     return null;
   }
 }

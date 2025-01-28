@@ -1,9 +1,20 @@
 import jade.content.onto.Ontology;
+import jade.core.AID;
 import jadescript.content.JadescriptAction;
 import jadescript.util.JadescriptList;
 
 @SuppressWarnings("all")
 public class RequestIngredients implements JadescriptAction {
+  private AID agentId;
+
+  public AID getAgentId() {
+    return this.agentId;
+  }
+
+  public void setAgentId(final AID agentId) {
+    this.agentId = agentId;
+  }
+
   private JadescriptList<IngredientQuantity> ingredients;
 
   public JadescriptList<IngredientQuantity> getIngredients() {
@@ -18,6 +29,8 @@ public class RequestIngredients implements JadescriptAction {
     java.lang.StringBuilder _sb = new java.lang.StringBuilder();
     _sb.append("RequestIngredients");
     _sb.append("(");
+    _sb.append(java.lang.String.valueOf(getAgentId()));
+    _sb.append(", ");
     _sb.append(java.lang.String.valueOf(getIngredients()));
     _sb.append(")");
     return _sb.toString();
@@ -26,7 +39,7 @@ public class RequestIngredients implements JadescriptAction {
   public boolean equals(final Object obj) {
     if(obj instanceof RequestIngredients) {
     	RequestIngredients o = (RequestIngredients) obj;
-    	return true && java.util.Objects.equals(this.getIngredients(), o.getIngredients());
+    	return true && java.util.Objects.equals(this.getAgentId(), o.getAgentId()) && java.util.Objects.equals(this.getIngredients(), o.getIngredients());
     } else {
     	return super.equals(obj);
     }
@@ -34,13 +47,16 @@ public class RequestIngredients implements JadescriptAction {
 
   public RequestIngredients() {
     {
+    	this.setAgentId(new jade.core.AID());
+    	
     	this.setIngredients(new jadescript.util.JadescriptList<IngredientQuantity>());
     }
   }
 
-  public RequestIngredients(final JadescriptList<IngredientQuantity> ingredients) {
+  public RequestIngredients(final AID agentId, final JadescriptList<IngredientQuantity> ingredients) {
     super();
     
+    this.setAgentId(agentId);
     this.setIngredients(ingredients);
   }
 
@@ -48,7 +64,7 @@ public class RequestIngredients implements JadescriptAction {
     return BakeryOntology.getInstance();
   }
 
-  private BakeryOntology __metadata_RequestIngredients(final JadescriptList<IngredientQuantity> ingredients) {
+  private BakeryOntology __metadata_RequestIngredients(final AID agentId, final JadescriptList<IngredientQuantity> ingredients) {
     return null;
   }
 }

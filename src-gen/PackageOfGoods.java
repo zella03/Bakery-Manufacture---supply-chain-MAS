@@ -14,14 +14,14 @@ public class PackageOfGoods implements JadescriptConcept {
     this.packageId = packageId;
   }
 
-  private JadescriptList<GoodsQuantity> contents;
+  private JadescriptList<OrderQuantity> ordersInPackage;
 
-  public JadescriptList<GoodsQuantity> getContents() {
-    return this.contents;
+  public JadescriptList<OrderQuantity> getOrdersInPackage() {
+    return this.ordersInPackage;
   }
 
-  public void setContents(final JadescriptList<GoodsQuantity> contents) {
-    this.contents = contents;
+  public void setOrdersInPackage(final JadescriptList<OrderQuantity> ordersInPackage) {
+    this.ordersInPackage = ordersInPackage;
   }
 
   private String status;
@@ -40,7 +40,7 @@ public class PackageOfGoods implements JadescriptConcept {
     _sb.append("(");
     _sb.append("\"" + java.lang.String.valueOf(getPackageId()) + "\"");
     _sb.append(", ");
-    _sb.append(java.lang.String.valueOf(getContents()));
+    _sb.append(java.lang.String.valueOf(getOrdersInPackage()));
     _sb.append(", ");
     _sb.append("\"" + java.lang.String.valueOf(getStatus()) + "\"");
     _sb.append(")");
@@ -50,7 +50,7 @@ public class PackageOfGoods implements JadescriptConcept {
   public boolean equals(final Object obj) {
     if(obj instanceof PackageOfGoods) {
     	PackageOfGoods o = (PackageOfGoods) obj;
-    	return true && java.util.Objects.equals(this.getPackageId(), o.getPackageId()) && java.util.Objects.equals(this.getContents(), o.getContents()) && java.util.Objects.equals(this.getStatus(), o.getStatus());
+    	return true && java.util.Objects.equals(this.getPackageId(), o.getPackageId()) && java.util.Objects.equals(this.getOrdersInPackage(), o.getOrdersInPackage()) && java.util.Objects.equals(this.getStatus(), o.getStatus());
     } else {
     	return super.equals(obj);
     }
@@ -60,17 +60,17 @@ public class PackageOfGoods implements JadescriptConcept {
     {
     	this.setPackageId("");
     	
-    	this.setContents(new jadescript.util.JadescriptList<GoodsQuantity>());
+    	this.setOrdersInPackage(new jadescript.util.JadescriptList<OrderQuantity>());
     	
     	this.setStatus("");
     }
   }
 
-  public PackageOfGoods(final String packageId, final JadescriptList<GoodsQuantity> contents, final String status) {
+  public PackageOfGoods(final String packageId, final JadescriptList<OrderQuantity> ordersInPackage, final String status) {
     super();
     
     this.setPackageId(packageId);
-    this.setContents(contents);
+    this.setOrdersInPackage(ordersInPackage);
     this.setStatus(status);
   }
 
@@ -78,7 +78,7 @@ public class PackageOfGoods implements JadescriptConcept {
     return BakeryOntology.getInstance();
   }
 
-  private BakeryOntology __metadata_PackageOfGoods(final String packageId, final JadescriptList<GoodsQuantity> contents, final String status) {
+  private BakeryOntology __metadata_PackageOfGoods(final String packageId, final JadescriptList<OrderQuantity> ordersInPackage, final String status) {
     return null;
   }
 }

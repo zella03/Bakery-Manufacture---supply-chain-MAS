@@ -1,7 +1,7 @@
 ontology BakeryOntology
 
 	concept IngredientQuantity(
-	    name as text,
+	    ingredientName as text,
 	    quantity as integer
 	)
 	concept Good(
@@ -25,36 +25,39 @@ ontology BakeryOntology
 		type as text #normal/private
 	)
 	
-	concept GoodsQuantity(
-		good as Good,
-		quantity as integer
-	)
+	#concept GoodsQuantity(
+	#	good as text,
+	#	quantity as integer
+	#)
 	
 	concept PackageOfGoods(
 		packageId as text,
-		contents as list of GoodsQuantity,
+		ordersInPackage as list of OrderQuantity,
 		status as text
 	)
 
 	action RequestOrder(agentId as aid) #only if only one order baking and not waiting for ingredients
 	action AssignOrder(agentId as aid, order as Order) #if supervisor asked (or maybe just a tekst what to doo
-	action RequestIngredients(ingredients as list of IngredientQuantity) #not more than 5 of each (to supplier or another baker)
+	action RequestIngredients(agentId as aid,ingredients as list of IngredientQuantity) # request send to supplier
     action AskForHelpColleague(agentId as aid, ingredients as list of IngredientQuantity)# just if he can help with ingredients
-    action RequestIngredientsColleague(agentId as aid, ingredients as list of IngredientQuantity)# specific give ingredients 
-    action ProvideIngredients(ingredients as list of IngredientQuantity) #may be with delay
+    action RequestIngredientsColleague(agentId as aid, ingredients as list of IngredientQuantity)# specific give ingredients from celleague
+    action ProvideIngredients(ingredients as list of IngredientQuantity, whileProparing as boolean) #may be with delay
+	action NeedRestock(agentId as aid, ingredients as list of IngredientQuantity,whileProparing as boolean)
+	action ProvidePackingList(packageList as list of PackageOfGoods)#combined of list containing private orders
 	
-	predicate IngredientAvaliable(id as aid, avaliable as boolean) #wystarczy odjąć u agenta przekazującego i dodać u przyjmującego jeżeli tak
+	predicate IngredientAvaliable(id as aid, avaliable as boolean,ingredients as list of IngredientQuantity) #wystarczy odjąć u agenta przekazującego i dodać u przyjmującego jeżeli tak
 	predicate WorkerReady(workerId as aid, type as text)
+	predicate PackerReady(workerId as aid)
+	predicate SupplierRunOutSupply(bakerWhileProparing as boolean)
+	predicate OrderStatus(orderId as text, status as text) #notification of clompletion
 	
 	proposition AgentsReported
 	proposition EndOfPrivateOrders
     proposition EndOfOrders
+    #proposition SupplierRunOutSupply
+    
+    
 	
-	
-	
-	
-	action RequestPackingList
-	action ProvidePackingList(packageList as list of PackageOfGoods)#combined of list containing private orders
 	#action NotifyCompletion(orderId as text)
 	action RejectOrAcceptOrder(orderId as text, decision as text) #based on decision accepting the order and deleting the task from queue or order sent to redo
 	action RedoOrder(orderId as text)
@@ -64,7 +67,7 @@ ontology BakeryOntology
 	action RejectPackage(packageId as text, reason as text)
 	action RepackedPackage(packageId as text)
 	
-	predicate OrderStatus(orderId as text, status as text) #notification of clompletion
+	
 	predicate PackageStatus(package_ as PackageOfGoods, status as text)
 	#predicate IngredientsShortage(ingredientQuan as IngredientQuantity, quantityNeed as integer)
 	

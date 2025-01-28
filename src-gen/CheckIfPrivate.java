@@ -67,40 +67,31 @@ public class CheckIfPrivate extends CyclicBehaviour<Supervisor> {
     public void run() {
       try {
       	/* 
-      	 * Compiled from source statement from line 145 to line 157
+      	 * Compiled from source statement from line 167 to line 170
       	 * for order in orderList do
       	 *             if type of order = "private" do            
       	 *                 noMorePrivateOrder = false
-      	 *                 break
-      	 *                 
-      	 *         # jednak może zrobić tak że jeżeli jest private Baker to on przed zapytaniem najpierw się pyta czy są jeszcze jakieś nowe private
-      	 *         # jeżeli nie to się zamienia w normalsa
-      	 *         # aaaaalbo Supervisor jeżeli pyta się private to wyśle wiadomość z nowym orderem i kontentem ze nie ma już private !!!!
-      	 *             
-      	 *         
-      	 *         #if length of orderList % 8 != 0 do
-      	 *         
-      	 *             
+      	 *                 break            
       	 */
       	
       	for ( Order order : CheckIfPrivate.this._agentEnv.getAgent().getOrderList()) {
       		/* 
-      		 * Compiled from source statement from line 146 to line 148
+      		 * Compiled from source statement from line 168 to line 170
       		 * if type of order = "private" do            
       		 *                 noMorePrivateOrder = false
-      		 *                 break
+      		 *                 break            
       		 */
       		
       		if(java.util.Objects.equals(order.getType(), "private")) {
       			/* 
-      			 * Compiled from source statement at line 147
+      			 * Compiled from source statement at line 169
       			 * noMorePrivateOrder = false
       			 */
       			
       			CheckIfPrivate.this.setNoMorePrivateOrder(false);
       			
       			/* 
-      			 * Compiled from source statement at line 148
+      			 * Compiled from source statement at line 170
       			 * break
       			 */
       			

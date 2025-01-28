@@ -65,14 +65,14 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
     __initializeProperties();
     try {
     	/* 
-    	 * Compiled from source statement at line 116
+    	 * Compiled from source statement at line 113
     	 * endOfOrders = false
     	 */
     	
     	ManageOrders.this.setEndOfOrders(false);
     	
     	/* 
-    	 * Compiled from source statement at line 117
+    	 * Compiled from source statement at line 114
     	 * currentlyAskingForOrder = false
     	 */
     	
@@ -92,14 +92,14 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
     public void run() {
       try {
       	/* 
-      	 * Compiled from source statement at line 119
+      	 * Compiled from source statement at line 116
       	 * count = 0
       	 */
       	
       	java.lang.Integer count = 0;
       	
       	/* 
-      	 * Compiled from source statement from line 120 to line 129
+      	 * Compiled from source statement from line 117 to line 126
       	 * if length of ordersList ≠ 0 do
       	 *             for i in ordersList do
       	 *                 if status of i ≠ "baking" do
@@ -114,7 +114,7 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       	
       	if(!java.util.Objects.equals(ManageOrders.this._agentEnv.getAgent().getOrdersList().size(), 0)) {
       		/* 
-      		 * Compiled from source statement from line 121 to line 125
+      		 * Compiled from source statement from line 118 to line 122
       		 * for i in ordersList do
       		 *                 if status of i ≠ "baking" do
       		 *                     break
@@ -124,7 +124,7 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       		
       		for ( OrderStatus i : ManageOrders.this._agentEnv.getAgent().getOrdersList()) {
       			/* 
-      			 * Compiled from source statement from line 122 to line 125
+      			 * Compiled from source statement from line 119 to line 122
       			 * if status of i ≠ "baking" do
       			 *                     break
       			 *                 else do 
@@ -133,7 +133,7 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       			
       			if(!java.util.Objects.equals(i.getStatus(), "baking")) {
       				/* 
-      				 * Compiled from source statement at line 123
+      				 * Compiled from source statement at line 120
       				 * break
       				 */
       				
@@ -141,7 +141,7 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       			}
       			else {
       				/* 
-      				 * Compiled from source statement at line 125
+      				 * Compiled from source statement at line 122
       				 * count = count + 1
       				 */
       				
@@ -150,7 +150,7 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       		}
       		
       		/* 
-      		 * Compiled from source statement from line 126 to line 129
+      		 * Compiled from source statement from line 123 to line 126
       		 *  #we cannot ask for new order if we are preparing another one or when we lack of ingredients
       		 *             if count = length of ordersList and not endOfOrders and not currentlyAskingForOrder do #if everything is ONLY baking we can ask for another order to make
       		 *                 log "BAKER: "+name of agent+" __ count of ord baking: "+count+" orderList: "+ ordersList+" end orders: "+ endOfOrders
@@ -160,21 +160,21 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       		
       		if(java.util.Objects.equals(count, ManageOrders.this._agentEnv.getAgent().getOrdersList().size()) &&  ! ManageOrders.this.getEndOfOrders() &&  ! ManageOrders.this._agentEnv.getAgent().getCurrentlyAskingForOrder()) {
       			/* 
-      			 * Compiled from source statement at line 127
+      			 * Compiled from source statement at line 124
       			 * log "BAKER: "+name of agent+" __ count of ord baking: "+count+" orderList: "+ ordersList+" end orders: "+ endOfOrders
       			 */
       			
       			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ManageOrders.this.getClass().getName(), ManageOrders.this, "on execute", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER: ") + java.lang.String.valueOf(ManageOrders.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" __ count of ord baking: ")) + java.lang.String.valueOf(count)) + java.lang.String.valueOf(" orderList: ")) + java.lang.String.valueOf(ManageOrders.this._agentEnv.getAgent().getOrdersList())) + java.lang.String.valueOf(" end orders: ")) + java.lang.String.valueOf(ManageOrders.this.getEndOfOrders())));
       			
       			/* 
-      			 * Compiled from source statement at line 128
+      			 * Compiled from source statement at line 125
       			 * activate SendRequest
       			 */
       			
       			new SendRequest(_agentEnv.getAgent().toEnv()).activate(_agentEnv.getAgent());
       			
       			/* 
-      			 * Compiled from source statement at line 129
+      			 * Compiled from source statement at line 126
       			 * currentlyAskingForOrder = true
       			 */
       			
@@ -202,8 +202,8 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       	
       	return ;
       }
-       class __PatternMatcher923437519 {
-      	private final __PatternMatcher923437519 __PatternMatcher923437519_obj =  this;
+       class __PatternMatcher95579104 {
+      	private final __PatternMatcher95579104 __PatternMatcher95579104_obj =  this;
       	
       	public boolean headerMatch(java.lang.Object __objx) {
       		AgentsReported __x;
@@ -223,7 +223,7 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       		return java.util.Objects.equals(__x,BakeryOntology.AgentsReported());
       	}
       }
-      __PatternMatcher923437519 __PatternMatcher923437519_obj = new __PatternMatcher923437519();
+      __PatternMatcher95579104 __PatternMatcher95579104_obj = new __PatternMatcher95579104();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -231,7 +231,7 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher923437519_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher95579104_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -254,21 +254,21 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement at line 132
+      			 * Compiled from source statement at line 129
       			 * currentlyAskingForOrder = true
       			 */
       			
       			ManageOrders.this._agentEnv.getAgent().setCurrentlyAskingForOrder(true);
       			
       			/* 
-      			 * Compiled from source statement at line 133
+      			 * Compiled from source statement at line 130
       			 * activate SendRequest
       			 */
       			
       			new SendRequest(_agentEnv.getAgent().toEnv()).activate(_agentEnv.getAgent());
       			
       			/* 
-      			 * Compiled from source statement at line 134
+      			 * Compiled from source statement at line 131
       			 * activate WaitForNewOrder
       			 */
       			
@@ -304,12 +304,12 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       	
       	return ;
       }
-       class __PatternMatcher56094268 {
+       class __PatternMatcher867775356 {
       	public java.lang.String id;
       	
       	public java.lang.String status;
       	
-      	private final __PatternMatcher56094268 __PatternMatcher56094268_obj =  this;
+      	private final __PatternMatcher867775356 __PatternMatcher867775356_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		java.lang.String __x;
@@ -369,7 +369,7 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       		return true && headerMatch_structterm0(__x.getOrderId()) && headerMatch_structterm1(__x.getStatus());
       	}
       }
-      __PatternMatcher56094268 __PatternMatcher56094268_obj = new __PatternMatcher56094268();
+      __PatternMatcher867775356 __PatternMatcher867775356_obj = new __PatternMatcher867775356();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -377,7 +377,7 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher56094268_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher867775356_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -400,44 +400,44 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement at line 137
+      			 * Compiled from source statement at line 134
       			 * log "BAKER: "+name of agent+" is finished."
       			 */
       			
       			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ManageOrders.this.getClass().getName(), ManageOrders.this, "on inform", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER: ") + java.lang.String.valueOf(ManageOrders.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" is finished.")));
       			
       			/* 
-      			 * Compiled from source statement at line 138
+      			 * Compiled from source statement at line 135
       			 * send message inform OrderStatus(id,status) to supervisorName@
       			 */
       			
       			try {
       				jadescript.util.SendMessageUtils.validatePerformative("inform");
       				
-      				java.lang.Object _contentToBeSent730065173 = BakeryOntology.OrderStatus(__PatternMatcher56094268_obj.id ,__PatternMatcher56094268_obj.status);
+      				java.lang.Object _contentToBeSent156188091 = BakeryOntology.OrderStatus(__PatternMatcher867775356_obj.id ,__PatternMatcher867775356_obj.status);
       				
-      				jadescript.core.message.Message _synthesizedMessage730065173 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      				jadescript.core.message.Message _synthesizedMessage156188091 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       				
-      				_synthesizedMessage730065173.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent730065173,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      				_synthesizedMessage156188091.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent156188091,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       				
-      				_synthesizedMessage730065173.setLanguage(__codec.getName());;
+      				_synthesizedMessage156188091.setLanguage(__codec.getName());;
       				
-      				_synthesizedMessage730065173.addReceiver(new jade.core.AID(java.lang.String.valueOf(ManageOrders.this._agentEnv.getAgent().getSupervisorName()), false));
+      				_synthesizedMessage156188091.addReceiver(new jade.core.AID(java.lang.String.valueOf(ManageOrders.this._agentEnv.getAgent().getSupervisorName()), false));
       				
-      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage730065173, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent730065173, "inform"));
+      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage156188091, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent156188091, "inform"));
       				
-      				_agentEnv.getAgent().send(_synthesizedMessage730065173);
+      				_agentEnv.getAgent().send(_synthesizedMessage156188091);
       			}
       			catch(java.lang.Throwable _t) {
       				throw jadescript.core.exception.JadescriptException.wrap(_t);
       			}
       			
       			/* 
-      			 * Compiled from source statement at line 139
+      			 * Compiled from source statement at line 136
       			 * remove OrderStatus(id,status) from ordersList
       			 */
       			
-      			ManageOrders.this._agentEnv.getAgent().getOrdersList().remove(BakeryOntology.OrderStatus(__PatternMatcher56094268_obj.id ,__PatternMatcher56094268_obj.status));
+      			ManageOrders.this._agentEnv.getAgent().getOrdersList().remove(BakeryOntology.OrderStatus(__PatternMatcher867775356_obj.id ,__PatternMatcher867775356_obj.status));
       		}
       		catch(jadescript.core.exception.JadescriptException __throwable) {
       			__handleJadescriptException(__throwable);
@@ -469,8 +469,8 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       	
       	return ;
       }
-       class __PatternMatcher1622342635 {
-      	private final __PatternMatcher1622342635 __PatternMatcher1622342635_obj =  this;
+       class __PatternMatcher1299810377 {
+      	private final __PatternMatcher1299810377 __PatternMatcher1299810377_obj =  this;
       	
       	public boolean headerMatch(java.lang.Object __objx) {
       		EndOfPrivateOrders __x;
@@ -490,7 +490,7 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       		return java.util.Objects.equals(__x,BakeryOntology.EndOfPrivateOrders());
       	}
       }
-      __PatternMatcher1622342635 __PatternMatcher1622342635_obj = new __PatternMatcher1622342635();
+      __PatternMatcher1299810377 __PatternMatcher1299810377_obj = new __PatternMatcher1299810377();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -498,7 +498,7 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1622342635_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher1299810377_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -521,18 +521,32 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement at line 143
+      			 * Compiled from source statement at line 139
       			 * do changeToNormal
       			 */
       			
       			ManageOrders.this._agentEnv.getAgent().changeToNormal(_agentEnv.getAgent().toEnv());
       			
       			/* 
-      			 * Compiled from source statement at line 144
+      			 * Compiled from source statement at line 140
       			 * log "BAKER: "+name of agent+" is changed into normal: "+typeBaker of agent
       			 */
       			
       			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ManageOrders.this.getClass().getName(), ManageOrders.this, "on inform", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER: ") + java.lang.String.valueOf(ManageOrders.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" is changed into normal: ")) + java.lang.String.valueOf(ManageOrders.this.getJadescriptAgent().getTypeBaker())));
+      			
+      			/* 
+      			 * Compiled from source statement at line 141
+      			 * currentlyAskingForOrder = true
+      			 */
+      			
+      			ManageOrders.this._agentEnv.getAgent().setCurrentlyAskingForOrder(true);
+      			
+      			/* 
+      			 * Compiled from source statement at line 142
+      			 * activate SendRequest
+      			 */
+      			
+      			new SendRequest(_agentEnv.getAgent().toEnv()).activate(_agentEnv.getAgent());
       		}
       		catch(jadescript.core.exception.JadescriptException __throwable) {
       			__handleJadescriptException(__throwable);
@@ -564,8 +578,8 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       	
       	return ;
       }
-       class __PatternMatcher835742011 {
-      	private final __PatternMatcher835742011 __PatternMatcher835742011_obj =  this;
+       class __PatternMatcher1615467811 {
+      	private final __PatternMatcher1615467811 __PatternMatcher1615467811_obj =  this;
       	
       	public boolean headerMatch(java.lang.Object __objx) {
       		EndOfOrders __x;
@@ -585,7 +599,7 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       		return java.util.Objects.equals(__x,BakeryOntology.EndOfOrders());
       	}
       }
-      __PatternMatcher835742011 __PatternMatcher835742011_obj = new __PatternMatcher835742011();
+      __PatternMatcher1615467811 __PatternMatcher1615467811_obj = new __PatternMatcher1615467811();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -593,7 +607,7 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher835742011_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher1615467811_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -616,14 +630,21 @@ public class ManageOrders extends CyclicBehaviour<Baker> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement at line 147
+      			 * Compiled from source statement at line 145
+      			 * log "BAKER HAS STILL TO DO: "+ordersList+" but finished"
+      			 */
+      			
+      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ManageOrders.this.getClass().getName(), ManageOrders.this, "on inform", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER HAS STILL TO DO: ") + java.lang.String.valueOf(ManageOrders.this._agentEnv.getAgent().getOrdersList())) + java.lang.String.valueOf(" but finished")));
+      			
+      			/* 
+      			 * Compiled from source statement at line 146
       			 * deactivate WaitForNewOrder
       			 */
       			
       			new WaitForNewOrder(_agentEnv.getAgent().toEnv()).deactivate();
       			
       			/* 
-      			 * Compiled from source statement at line 148
+      			 * Compiled from source statement at line 147
       			 * endOfOrders = true
       			 */
       			

@@ -166,6 +166,16 @@ public class Baker extends Agent {
     return this.supervisorName;
   }
 
+  protected JadescriptList<String> listOfSuppliers = null;
+
+  public void setListOfSuppliers(final JadescriptList<String> listOfSuppliers) {
+    this.listOfSuppliers = listOfSuppliers;
+  }
+
+  public JadescriptList<String> getListOfSuppliers() {
+    return this.listOfSuppliers;
+  }
+
   protected JadescriptList<String> listOfCoworkers = null;
 
   public void setListOfCoworkers(final JadescriptList<String> listOfCoworkers) {
@@ -186,6 +196,16 @@ public class Baker extends Agent {
     return this.ordersList;
   }
 
+  protected JadescriptList<Order> fullOrderList = null;
+
+  public void setFullOrderList(final JadescriptList<Order> fullOrderList) {
+    this.fullOrderList = fullOrderList;
+  }
+
+  public JadescriptList<Order> getFullOrderList() {
+    return this.fullOrderList;
+  }
+
   protected Boolean currentlyAskingForOrder = null;
 
   public void setCurrentlyAskingForOrder(final Boolean currentlyAskingForOrder) {
@@ -199,14 +219,14 @@ public class Baker extends Agent {
   public void changeToNormal(final AgentEnv<? extends Baker, ? extends SideEffectsFlag.WithSideEffects> _agentEnv) {
     {
     	/* 
-    	 * Compiled from source statement at line 69
+    	 * Compiled from source statement at line 70
     	 * typeBaker of this = "normal"
     	 */
     	
     	Baker.this.setTypeBaker("normal");
     	
     	/* 
-    	 * Compiled from source statement at line 70
+    	 * Compiled from source statement at line 71
     	 * recipeBook = [bread, bun, cookies]
     	 */
     	
@@ -217,7 +237,7 @@ public class Baker extends Agent {
   public void chnageStatus(final AgentEnv<? extends Baker, ? extends SideEffectsFlag.WithSideEffects> _agentEnv, final String id, final String newStatus) {
     {
     	/* 
-    	 * Compiled from source statement from line 73 to line 76
+    	 * Compiled from source statement from line 74 to line 77
     	 * for i in ordersList do
     	 * 	       if orderId of i = id do
     	 * 	           status of i = newStatus
@@ -226,7 +246,7 @@ public class Baker extends Agent {
     	
     	for ( OrderStatus i : Baker.this.getOrdersList()) {
     		/* 
-    		 * Compiled from source statement from line 74 to line 76
+    		 * Compiled from source statement from line 75 to line 77
     		 * if orderId of i = id do
     		 * 	           status of i = newStatus
     		 * 	           break
@@ -234,14 +254,48 @@ public class Baker extends Agent {
     		
     		if(java.util.Objects.equals(i.getOrderId(), id)) {
     			/* 
-    			 * Compiled from source statement at line 75
+    			 * Compiled from source statement at line 76
     			 * status of i = newStatus
     			 */
     			
     			i.setStatus(newStatus);
     			
     			/* 
-    			 * Compiled from source statement at line 76
+    			 * Compiled from source statement at line 77
+    			 * break
+    			 */
+    			
+    			break;
+    		}
+    	}
+    	
+    	/* 
+    	 * Compiled from source statement from line 78 to line 81
+    	 * 
+    	 * 	   for i in fullOrderList do
+    	 * 	       if id of i = id do
+    	 * 	           status of i = newStatus
+    	 * 	           break
+    	 */
+    	
+    	for ( Order i : Baker.this.getFullOrderList()) {
+    		/* 
+    		 * Compiled from source statement from line 79 to line 81
+    		 * if id of i = id do
+    		 * 	           status of i = newStatus
+    		 * 	           break
+    		 */
+    		
+    		if(java.util.Objects.equals(i.getId(), id)) {
+    			/* 
+    			 * Compiled from source statement at line 80
+    			 * status of i = newStatus
+    			 */
+    			
+    			i.setStatus(newStatus);
+    			
+    			/* 
+    			 * Compiled from source statement at line 81
     			 * break
     			 */
     			
@@ -255,37 +309,53 @@ public class Baker extends Agent {
     java.lang.String type = jadescript.util.types.JadescriptValueAdapter.adapt(this.getArguments()[0], new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT));
     java.lang.String supervisor = jadescript.util.types.JadescriptValueAdapter.adapt(this.getArguments()[1], new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT));
     java.lang.String coworker1 = jadescript.util.types.JadescriptValueAdapter.adapt(this.getArguments()[2], new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT));
+    java.lang.String supplier1 = jadescript.util.types.JadescriptValueAdapter.adapt(this.getArguments()[3], new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT));
+    java.lang.String supplier2 = jadescript.util.types.JadescriptValueAdapter.adapt(this.getArguments()[4], new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT));
     try {
     	/* 
-    	 * Compiled from source statement at line 79
+    	 * Compiled from source statement at line 84
     	 * typeBaker of this = type
     	 */
     	
     	Baker.this.setTypeBaker(type);
     	
     	/* 
-    	 * Compiled from source statement at line 80
+    	 * Compiled from source statement at line 85
     	 * supervisorName of this = supervisor
     	 */
     	
     	Baker.this.setSupervisorName(supervisor);
     	
     	/* 
-    	 * Compiled from source statement at line 81
+    	 * Compiled from source statement at line 86
     	 * add coworker1 to listOfCoworkers
     	 */
     	
     	Baker.this.getListOfCoworkers().add(coworker1);
     	
     	/* 
-    	 * Compiled from source statement at line 85
+    	 * Compiled from source statement at line 87
+    	 * add supplier1 to listOfSuppliers
+    	 */
+    	
+    	Baker.this.getListOfSuppliers().add(supplier1);
+    	
+    	/* 
+    	 * Compiled from source statement at line 88
+    	 * add supplier2 to listOfSuppliers
+    	 */
+    	
+    	Baker.this.getListOfSuppliers().add(supplier2);
+    	
+    	/* 
+    	 * Compiled from source statement at line 89
     	 * log "BAKER created with arguments: " + typeBaker + ", " + supervisor
     	 */
     	
     	jadescript.core.Agent.doLog(jade.util.Logger.INFO, Baker.this.getClass().getName(), Baker.this, "on create", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER created with arguments: ") + java.lang.String.valueOf(Baker.this.getTypeBaker())) + java.lang.String.valueOf(", ")) + java.lang.String.valueOf(supervisor)));
     	
     	/* 
-    	 * Compiled from source statement at line 88
+    	 * Compiled from source statement at line 91
     	 * activate DelayedWorkerReady after "PT2S" as duration
     	 */
     	
@@ -317,34 +387,22 @@ public class Baker extends Agent {
     	}
     	
     	/* 
-    	 * Compiled from source statement from line 100 to line 101
+    	 * Compiled from source statement at line 98
     	 * 
-    	 * 
-    	 *         # Log recipes
-    	 *         for good in recipeBook of this do
-    	 *             log "Known recipe: " + name of good
+    	 *         log "BAKER knowledge RECIPE_BOOK: "+recipeBook
     	 */
     	
-    	for ( Good good : Baker.this.getRecipeBook()) {
-    		/* 
-    		 * Compiled from source statement at line 101
-    		 * log "Known recipe: " + name of good
-    		 */
-    		
-    		jadescript.core.Agent.doLog(jade.util.Logger.INFO, Baker.this.getClass().getName(), Baker.this, "on create", java.lang.String.valueOf(java.lang.String.valueOf("Known recipe: ") + java.lang.String.valueOf(good.getName())));
-    	}
+    	jadescript.core.Agent.doLog(jade.util.Logger.INFO, Baker.this.getClass().getName(), Baker.this, "on create", java.lang.String.valueOf(java.lang.String.valueOf("BAKER knowledge RECIPE_BOOK: ") + java.lang.String.valueOf(Baker.this.getRecipeBook())));
     	
     	/* 
-    	 * Compiled from source statement at line 103
-    	 * 
-    	 *         
-    	 *         activate ManageOrders
+    	 * Compiled from source statement at line 100
+    	 * activate ManageOrders
     	 */
     	
     	new ManageOrders(_agentEnv.getAgent().toEnv()).activate(_agentEnv.getAgent());
     	
     	/* 
-    	 * Compiled from source statement at line 104
+    	 * Compiled from source statement at line 101
     	 * activate ListenCoworkers
     	 */
     	
@@ -390,7 +448,7 @@ public class Baker extends Agent {
     	
     	Baker.this.recipeBook = new jadescript.util.JadescriptList<Good>();
     	
-    	Baker.this.flour = BakeryOntology.IngredientQuantity("flour" ,20);
+    	Baker.this.flour = BakeryOntology.IngredientQuantity("flour" ,15);
     	
     	Baker.this.sugar = BakeryOntology.IngredientQuantity("sugar" ,20);
     	
@@ -406,9 +464,13 @@ public class Baker extends Agent {
     	
     	Baker.this.supervisorName = "";
     	
+    	Baker.this.listOfSuppliers = new jadescript.util.JadescriptList<java.lang.String>();
+    	
     	Baker.this.listOfCoworkers = new jadescript.util.JadescriptList<java.lang.String>();
     	
     	Baker.this.ordersList = new jadescript.util.JadescriptList<OrderStatus>();
+    	
+    	Baker.this.fullOrderList = new jadescript.util.JadescriptList<Order>();
     	
     	Baker.this.currentlyAskingForOrder = false;
     }
@@ -434,7 +496,7 @@ public class Baker extends Agent {
     cm.registerLanguage(__codec);
   }
 
-  public static JadescriptAgentController create(final ContainerController _container, final String _agentName, final String type, final String supervisor, final String coworker1) throws StaleProxyException {
-    return jadescript.java.JadescriptAgentController.createRaw(_container, _agentName, Baker.class, type, supervisor, coworker1);
+  public static JadescriptAgentController create(final ContainerController _container, final String _agentName, final String type, final String supervisor, final String coworker1, final String supplier1, final String supplier2) throws StaleProxyException {
+    return jadescript.java.JadescriptAgentController.createRaw(_container, _agentName, Baker.class, type, supervisor, coworker1, supplier1, supplier2);
   }
 }

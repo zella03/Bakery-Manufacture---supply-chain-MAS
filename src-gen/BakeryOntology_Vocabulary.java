@@ -4,7 +4,7 @@ import jadescript.content.onto.Ontology_Vocabulary;
 public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
   public static final String IngredientQuantity = "IngredientQuantity";
 
-  public static final String IngredientQuantity_name = "name";
+  public static final String IngredientQuantity_ingredientName = "ingredientName";
 
   public static final String IngredientQuantity_quantity = "quantity";
 
@@ -38,17 +38,11 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
 
   public static final String Order_type = "type";
 
-  public static final String GoodsQuantity = "GoodsQuantity";
-
-  public static final String GoodsQuantity_good = "good";
-
-  public static final String GoodsQuantity_quantity = "quantity";
-
   public static final String PackageOfGoods = "PackageOfGoods";
 
   public static final String PackageOfGoods_packageId = "packageId";
 
-  public static final String PackageOfGoods_contents = "contents";
+  public static final String PackageOfGoods_ordersInPackage = "ordersInPackage";
 
   public static final String PackageOfGoods_status = "status";
 
@@ -63,6 +57,8 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
   public static final String AssignOrder_order = "order";
 
   public static final String RequestIngredients = "RequestIngredients";
+
+  public static final String RequestIngredients_agentId = "agentId";
 
   public static final String RequestIngredients_ingredients = "ingredients";
 
@@ -82,11 +78,27 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
 
   public static final String ProvideIngredients_ingredients = "ingredients";
 
+  public static final String ProvideIngredients_whileProparing = "whileProparing";
+
+  public static final String NeedRestock = "NeedRestock";
+
+  public static final String NeedRestock_agentId = "agentId";
+
+  public static final String NeedRestock_ingredients = "ingredients";
+
+  public static final String NeedRestock_whileProparing = "whileProparing";
+
+  public static final String ProvidePackingList = "ProvidePackingList";
+
+  public static final String ProvidePackingList_packageList = "packageList";
+
   public static final String IngredientAvaliable = "IngredientAvaliable";
 
   public static final String IngredientAvaliable_id = "id";
 
   public static final String IngredientAvaliable_avaliable = "avaliable";
+
+  public static final String IngredientAvaliable_ingredients = "ingredients";
 
   public static final String WorkerReady = "WorkerReady";
 
@@ -94,17 +106,25 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
 
   public static final String WorkerReady_type = "type";
 
+  public static final String PackerReady = "PackerReady";
+
+  public static final String PackerReady_workerId = "workerId";
+
+  public static final String SupplierRunOutSupply = "SupplierRunOutSupply";
+
+  public static final String SupplierRunOutSupply_bakerWhileProparing = "bakerWhileProparing";
+
+  public static final String OrderStatus = "OrderStatus";
+
+  public static final String OrderStatus_orderId = "orderId";
+
+  public static final String OrderStatus_status = "status";
+
   public static final String AgentsReported = "AgentsReported";
 
   public static final String EndOfPrivateOrders = "EndOfPrivateOrders";
 
   public static final String EndOfOrders = "EndOfOrders";
-
-  public static final String RequestPackingList = "RequestPackingList";
-
-  public static final String ProvidePackingList = "ProvidePackingList";
-
-  public static final String ProvidePackingList_packageList = "packageList";
 
   public static final String RejectOrAcceptOrder = "RejectOrAcceptOrder";
 
@@ -133,12 +153,6 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
   public static final String RepackedPackage = "RepackedPackage";
 
   public static final String RepackedPackage_packageId = "packageId";
-
-  public static final String OrderStatus = "OrderStatus";
-
-  public static final String OrderStatus_orderId = "orderId";
-
-  public static final String OrderStatus_status = "status";
 
   public static final String PackageStatus = "PackageStatus";
 

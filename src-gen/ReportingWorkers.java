@@ -21,12 +21,13 @@ public class ReportingWorkers extends CyclicBehaviour<Supervisor> {
   public void doAction(final int _tickCount) {
     this.__ignoreMessageHandlers = false;
     super.doAction(_tickCount);
-    __event3.run();
     __event4.run();
+    __event5.run();
+    __event6.run();
     if(!this.__ignoreMessageHandlers) {
     	this.__noMessageHandled();
     }
-    if ( true  && !__event3.__eventFired && !__event4.__eventFired) __awaitForEvents();
+    if ( true  && !__event4.__eventFired && !__event5.__eventFired && !__event6.__eventFired) __awaitForEvents();
   }
 
   public Boolean __hasStaleMessageHandler() {
@@ -66,24 +67,59 @@ public class ReportingWorkers extends CyclicBehaviour<Supervisor> {
     return this.allReported;
   }
 
+  protected Boolean packerReady = null;
+
+  public void setPackerReady(final Boolean packerReady) {
+    this.packerReady = packerReady;
+  }
+
+  public Boolean getPackerReady() {
+    return this.packerReady;
+  }
+
   public ReportingWorkers(final AgentEnv<? extends Supervisor, ? extends SideEffectsFlag.WithSideEffects> _agentEnv) {
     super(_agentEnv);
     __initializeAgentEnv();
     __initializeProperties();
     try {
     	/* 
-    	 * Compiled from source statement at line 55
+    	 * Compiled from source statement at line 67
     	 * count = 0
     	 */
     	
     	ReportingWorkers.this.setCount(0);
     	
     	/* 
-    	 * Compiled from source statement at line 56
+    	 * Compiled from source statement at line 68
     	 * allReported = false
     	 */
     	
     	ReportingWorkers.this.setAllReported(false);
+    	
+    	/* 
+    	 * Compiled from source statement from line 69 to line 72
+    	 * if type = "private" do
+    	 *             packerReady = false
+    	 *         else do
+    	 *             packerReady = true
+    	 */
+    	
+    	if(java.util.Objects.equals(ReportingWorkers.this._agentEnv.getAgent().getType(), "private")) {
+    		/* 
+    		 * Compiled from source statement at line 70
+    		 * packerReady = false
+    		 */
+    		
+    		ReportingWorkers.this.setPackerReady(false);
+    	}
+    	else {
+    		/* 
+    		 * Compiled from source statement at line 72
+    		 * packerReady = true
+    		 */
+    		
+    		ReportingWorkers.this.setPackerReady(true);
+    	}
     }
     catch(jadescript.core.exception.JadescriptException __throwable) {
     	__handleJadescriptException(__throwable);
@@ -93,49 +129,49 @@ public class ReportingWorkers extends CyclicBehaviour<Supervisor> {
     }
   }
 
-  private class __Event3 {
+  private class __Event4 {
     Boolean __eventFired = true;
 
     public void run() {
       try {
       	/* 
-      	 * Compiled from source statement from line 59 to line 63
-      	 * if allReported do
+      	 * Compiled from source statement from line 75 to line 79
+      	 * if allReported and packerReady do
       	 * 	        for worker in listOfWorkers do
       	 * 	            send message inform AgentsReported to workerId of worker
       	 * 	        activate SendOrder
       	 * 	        deactivate this
       	 */
       	
-      	if(ReportingWorkers.this.getAllReported()) {
+      	if(ReportingWorkers.this.getAllReported() && ReportingWorkers.this.getPackerReady()) {
       		/* 
-      		 * Compiled from source statement from line 60 to line 61
+      		 * Compiled from source statement from line 76 to line 77
       		 * for worker in listOfWorkers do
       		 * 	            send message inform AgentsReported to workerId of worker
       		 */
       		
       		for ( WorkerReady worker : ReportingWorkers.this._agentEnv.getAgent().getListOfWorkers()) {
       			/* 
-      			 * Compiled from source statement at line 61
+      			 * Compiled from source statement at line 77
       			 * send message inform AgentsReported to workerId of worker
       			 */
       			
       			try {
       				jadescript.util.SendMessageUtils.validatePerformative("inform");
       				
-      				java.lang.Object _contentToBeSent918933091 = BakeryOntology.AgentsReported();
+      				java.lang.Object _contentToBeSent1048672461 = BakeryOntology.AgentsReported();
       				
-      				jadescript.core.message.Message _synthesizedMessage918933091 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      				jadescript.core.message.Message _synthesizedMessage1048672461 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       				
-      				_synthesizedMessage918933091.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent918933091,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      				_synthesizedMessage1048672461.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1048672461,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       				
-      				_synthesizedMessage918933091.setLanguage(__codec.getName());;
+      				_synthesizedMessage1048672461.setLanguage(__codec.getName());;
       				
-      				_synthesizedMessage918933091.addReceiver(worker.getWorkerId());
+      				_synthesizedMessage1048672461.addReceiver(worker.getWorkerId());
       				
-      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage918933091, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent918933091, "inform"));
+      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1048672461, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1048672461, "inform"));
       				
-      				_agentEnv.getAgent().send(_synthesizedMessage918933091);
+      				_agentEnv.getAgent().send(_synthesizedMessage1048672461);
       			}
       			catch(java.lang.Throwable _t) {
       				throw jadescript.core.exception.JadescriptException.wrap(_t);
@@ -143,7 +179,7 @@ public class ReportingWorkers extends CyclicBehaviour<Supervisor> {
       		}
       		
       		/* 
-      		 * Compiled from source statement at line 62
+      		 * Compiled from source statement at line 78
       		 * 
       		 * 	        activate SendOrder
       		 */
@@ -151,7 +187,7 @@ public class ReportingWorkers extends CyclicBehaviour<Supervisor> {
       		new SendOrder(_agentEnv.getAgent().toEnv()).activate(_agentEnv.getAgent());
       		
       		/* 
-      		 * Compiled from source statement at line 63
+      		 * Compiled from source statement at line 79
       		 * deactivate this
       		 */
       		
@@ -167,9 +203,9 @@ public class ReportingWorkers extends CyclicBehaviour<Supervisor> {
     }
   }
 
-  private ReportingWorkers.__Event3 __event3 =  new ReportingWorkers.__Event3();
+  private ReportingWorkers.__Event4 __event4 =  new ReportingWorkers.__Event4();
 
-  private class __Event4 {
+  private class __Event5 {
     Boolean __eventFired = false;
 
     public void run() {
@@ -178,12 +214,155 @@ public class ReportingWorkers extends CyclicBehaviour<Supervisor> {
       	
       	return ;
       }
-       class __PatternMatcher302901110 {
+       class __PatternMatcher1122638665 {
+      	public jade.core.AID id;
+      	
+      	private final __PatternMatcher1122638665 __PatternMatcher1122638665_obj =  this;
+      	
+      	public boolean headerMatch_structterm0(java.lang.Object __objx) {
+      		jade.core.AID __x;
+      		
+      		try {
+      			if(__objx instanceof jade.core.AID) {
+      				__x = (jade.core.AID) __objx;
+      			}
+      			else {
+      				return false;
+      			}
+      		}
+      		catch(java.lang.ClassCastException ignored) {
+      			return false;
+      		}
+      		
+      		id = __x;
+      		
+      		return true;
+      	}
+      	
+      	public boolean headerMatch(java.lang.Object __objx) {
+      		PackerReady __x;
+      		
+      		try {
+      			if(__objx instanceof PackerReady) {
+      				__x = (PackerReady) __objx;
+      			}
+      			else {
+      				return false;
+      			}
+      		}
+      		catch(java.lang.ClassCastException ignored) {
+      			return false;
+      		}
+      		
+      		return true && headerMatch_structterm0(__x.getWorkerId());
+      	}
+      }
+      __PatternMatcher1122638665 __PatternMatcher1122638665_obj = new __PatternMatcher1122638665();
+      jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
+      	return true;
+      }
+      }))), jade.lang.acl.MessageTemplate.MatchPerformative(jadescript.core.message.Message.INFORM)), jadescript.core.nativeevent.NotNativeEventTemplate.MatchNotNative(_agentEnv.getAgent().getContentManager())), new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__templMsg) -> {{
+      	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
+      	
+      	try {
+      		return __PatternMatcher1122638665_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      	}
+      	catch(java.lang.Throwable _e) {
+      		_e.printStackTrace();
+      		
+      		return false;
+      	}
+      }
+      }))));
+      jadescript.core.message.Message __receivedMessage = null;
+      if(myAgent!=null) {
+      	__receivedMessage = jadescript.core.message.Message.wrap(myAgent.receive(__mt));
+      }
+      if(__receivedMessage != null) {
+      	ReportingWorkers.this.__ignoreMessageHandlers = true;
+      	
+      	_agentEnv.getAgent().__cleanIgnoredFlagForMessage(__receivedMessage);
+      	
+      	this.__eventFired = true;
+      	
+      	try {
+      		try {
+      			/* 
+      			 * Compiled from source statement at line 82
+      			 * packer of agent = id
+      			 */
+      			
+      			ReportingWorkers.this.getJadescriptAgent().setPacker(__PatternMatcher1122638665_obj.id);
+      			
+      			/* 
+      			 * Compiled from source statement at line 83
+      			 * packerReady = true
+      			 */
+      			
+      			ReportingWorkers.this.setPackerReady(true);
+      			
+      			/* 
+      			 * Compiled from source statement at line 84
+      			 * send message request ProvidePackingList(privateOrders) to packer
+      			 */
+      			
+      			try {
+      				jadescript.util.SendMessageUtils.validatePerformative("request");
+      				
+      				java.lang.Object _contentToBeSent708560848 = BakeryOntology.ProvidePackingList(ReportingWorkers.this._agentEnv.getAgent().getPrivateOrders());
+      				
+      				jadescript.core.message.Message _synthesizedMessage708560848 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
+      				
+      				_synthesizedMessage708560848.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent708560848,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      				
+      				_synthesizedMessage708560848.setLanguage(__codec.getName());;
+      				
+      				_synthesizedMessage708560848.addReceiver(ReportingWorkers.this._agentEnv.getAgent().getPacker());
+      				
+      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage708560848, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent708560848, "request"));
+      				
+      				_agentEnv.getAgent().send(_synthesizedMessage708560848);
+      			}
+      			catch(java.lang.Throwable _t) {
+      				throw jadescript.core.exception.JadescriptException.wrap(_t);
+      			}
+      		}
+      		catch(jadescript.core.exception.JadescriptException __throwable) {
+      			__handleJadescriptException(__throwable);
+      		}
+      		catch(java.lang.Throwable __throwable) {
+      			__handleJadescriptException(jadescript.core.exception.JadescriptException.wrap(__throwable));
+      		}
+      		
+      		__receivedMessage = null;
+      	}
+      	catch(Exception _e) {
+      		_e.printStackTrace();
+      	}
+      }
+      else {
+      	this.__eventFired = false;
+      }
+    }
+  }
+
+  private ReportingWorkers.__Event5 __event5 = null;
+
+  private class __Event6 {
+    Boolean __eventFired = false;
+
+    public void run() {
+      if(ReportingWorkers.this.__ignoreMessageHandlers) {
+      	this.__eventFired = false;
+      	
+      	return ;
+      }
+       class __PatternMatcher830540391 {
       	public jade.core.AID id;
       	
       	public java.lang.String workerType;
       	
-      	private final __PatternMatcher302901110 __PatternMatcher302901110_obj =  this;
+      	private final __PatternMatcher830540391 __PatternMatcher830540391_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		jade.core.AID __x;
@@ -243,7 +422,7 @@ public class ReportingWorkers extends CyclicBehaviour<Supervisor> {
       		return true && headerMatch_structterm0(__x.getWorkerId()) && headerMatch_structterm1(__x.getType());
       	}
       }
-      __PatternMatcher302901110 __PatternMatcher302901110_obj = new __PatternMatcher302901110();
+      __PatternMatcher830540391 __PatternMatcher830540391_obj = new __PatternMatcher830540391();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -251,7 +430,7 @@ public class ReportingWorkers extends CyclicBehaviour<Supervisor> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher302901110_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher830540391_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -274,35 +453,35 @@ public class ReportingWorkers extends CyclicBehaviour<Supervisor> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement at line 67
+      			 * Compiled from source statement at line 87
       			 * add WorkerReady(id,workerType) to listOfWorkers
       			 */
       			
-      			ReportingWorkers.this._agentEnv.getAgent().getListOfWorkers().add(BakeryOntology.WorkerReady(__PatternMatcher302901110_obj.id ,__PatternMatcher302901110_obj.workerType));
+      			ReportingWorkers.this._agentEnv.getAgent().getListOfWorkers().add(BakeryOntology.WorkerReady(__PatternMatcher830540391_obj.id ,__PatternMatcher830540391_obj.workerType));
       			
       			/* 
-      			 * Compiled from source statement at line 68
+      			 * Compiled from source statement at line 88
       			 * log "BAKERS which reported - ready to work: "+listOfWorkers
       			 */
       			
       			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ReportingWorkers.this.getClass().getName(), ReportingWorkers.this, "on inform", java.lang.String.valueOf(java.lang.String.valueOf("BAKERS which reported - ready to work: ") + java.lang.String.valueOf(ReportingWorkers.this._agentEnv.getAgent().getListOfWorkers())));
       			
       			/* 
-      			 * Compiled from source statement at line 69
+      			 * Compiled from source statement at line 89
       			 * count = count + 1
       			 */
       			
       			ReportingWorkers.this.setCount(ReportingWorkers.this.getCount() + 1);
       			
       			/* 
-      			 * Compiled from source statement from line 71 to line 72
+      			 * Compiled from source statement from line 91 to line 92
       			 * if count = numOfWorkers do
       			 *            allReported = true
       			 */
       			
       			if(java.util.Objects.equals(ReportingWorkers.this.getCount(), ReportingWorkers.this._agentEnv.getAgent().getNumOfWorkers())) {
       				/* 
-      				 * Compiled from source statement at line 72
+      				 * Compiled from source statement at line 92
       				 * allReported = true
       				 */
       				
@@ -328,7 +507,7 @@ public class ReportingWorkers extends CyclicBehaviour<Supervisor> {
     }
   }
 
-  private ReportingWorkers.__Event4 __event4 = null;
+  private ReportingWorkers.__Event6 __event6 = null;
 
   private ExceptionThrower __thrower = jadescript.core.exception.ExceptionThrower.__DEFAULT_THROWER;
 
@@ -347,7 +526,11 @@ public class ReportingWorkers extends CyclicBehaviour<Supervisor> {
     	
     	ReportingWorkers.this.allReported = false;
     	
-    	__event4 = new ReportingWorkers.__Event4();
+    	ReportingWorkers.this.packerReady = false;
+    	
+    	__event5 = new ReportingWorkers.__Event5();
+    	
+    	__event6 = new ReportingWorkers.__Event6();
     }
   }
 }

@@ -60,12 +60,12 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
       	
       	return ;
       }
-       class __PatternMatcher1183303400 {
+       class __PatternMatcher67689085 {
       	public java.lang.String orderId;
       	
       	public java.lang.String orderStatus;
       	
-      	private final __PatternMatcher1183303400 __PatternMatcher1183303400_obj =  this;
+      	private final __PatternMatcher67689085 __PatternMatcher67689085_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		java.lang.String __x;
@@ -125,7 +125,7 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
       		return true && headerMatch_structterm0(__x.getOrderId()) && headerMatch_structterm1(__x.getStatus());
       	}
       }
-      __PatternMatcher1183303400 __PatternMatcher1183303400_obj = new __PatternMatcher1183303400();
+      __PatternMatcher67689085 __PatternMatcher67689085_obj = new __PatternMatcher67689085();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -133,7 +133,7 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1183303400_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher67689085_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -156,7 +156,7 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement from line 134 to line 137
+      			 * Compiled from source statement from line 156 to line 159
       			 * for i in pendingOrders do
       			 *             if orderId of i = orderId do
       			 *                 status of i = orderStatus
@@ -165,22 +165,22 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
       			
       			for ( OrderStatus i : WaitingForFinishedOrders.this._agentEnv.getAgent().getPendingOrders()) {
       				/* 
-      				 * Compiled from source statement from line 135 to line 137
+      				 * Compiled from source statement from line 157 to line 159
       				 * if orderId of i = orderId do
       				 *                 status of i = orderStatus
       				 *                 break
       				 */
       				
-      				if(java.util.Objects.equals(i.getOrderId(), __PatternMatcher1183303400_obj.orderId)) {
+      				if(java.util.Objects.equals(i.getOrderId(), __PatternMatcher67689085_obj.orderId)) {
       					/* 
-      					 * Compiled from source statement at line 136
+      					 * Compiled from source statement at line 158
       					 * status of i = orderStatus
       					 */
       					
-      					i.setStatus(__PatternMatcher1183303400_obj.orderStatus);
+      					i.setStatus(__PatternMatcher67689085_obj.orderStatus);
       					
       					/* 
-      					 * Compiled from source statement at line 137
+      					 * Compiled from source statement at line 159
       					 * break
       					 */
       					
@@ -189,7 +189,7 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
       			}
       			
       			/* 
-      			 * Compiled from source statement at line 138
+      			 * Compiled from source statement at line 160
       			 * 
       			 *         log "FINISHING - Orders to make under SUPERVISOR"+ name of agent+" list: "+orderList
       			 */
@@ -197,7 +197,7 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
       			jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitingForFinishedOrders.this.getClass().getName(), WaitingForFinishedOrders.this, "on inform", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("FINISHING - Orders to make under SUPERVISOR") + java.lang.String.valueOf(WaitingForFinishedOrders.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" list: ")) + java.lang.String.valueOf(WaitingForFinishedOrders.this._agentEnv.getAgent().getOrderList())));
       			
       			/* 
-      			 * Compiled from source statement at line 139
+      			 * Compiled from source statement at line 161
       			 * log "FINISHING - Orders PENDING under SUPERVISOR"+ name of agent+" list: "+pendingOrders
       			 */
       			

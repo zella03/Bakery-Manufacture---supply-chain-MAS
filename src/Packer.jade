@@ -1,0 +1,20 @@
+agent Packer uses ontology BakeryOntology
+    property supervisorName as text
+    property packageList as list of PackageOfGoods
+    
+    on create with supervisor as text do
+        supervisorName = supervisor
+        log "PACKER created with arguments: "+supervisor
+        
+        activate DelayedPackerReady after "PT1S" as duration
+        
+one shot behavior DelayedPackerReady for agent Packer uses ontology BakeryOntology
+    on execute do
+        send message inform PackerReady(aid of agent) to supervisorName@
+        log "PACKER: "+name of agent+" READY TO WORK"
+
+cyclic behaviour WaitForListWithPackages for agent Packer uses ontology BakeryOntology
+    on message request ProvidePackingList(pcgList) do
+        packageList = pcgList
+        deactivate this
+

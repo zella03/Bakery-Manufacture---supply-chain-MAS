@@ -1,0 +1,78 @@
+agent Supplier uses ontology BakeryOntology
+    property flour = IngredientQuantity("flour",10)
+    property sugar = IngredientQuantity("sugar",10)
+    property eggs = IngredientQuantity("eggs",10)
+    property yeast = IngredientQuantity("yeast",10)
+    property water = IngredientQuantity("water",10)
+    property supplies1 = [flour,eggs]
+    property supplies2 = [sugar,yeast,water]
+    property listOfAvSupplies as list of IngredientQuantity
+    
+    property supplierType as text
+    property runOutSupply as boolean
+    
+    on create with type as text do
+        supplierType of agent = type
+        runOutSupply = false
+        
+        log "SUPPLIER created with arguments: "+supplierType
+        
+        if supplierType = "supplierType1" do
+             listOfAvSupplies = supplies1
+        else do
+            listOfAvSupplies = supplies2
+        
+        log "SUPPLIER'S list of supplies: "+listOfAvSupplies
+        activate ProvidingRestock
+
+cyclic behaviour ProvidingRestock for agent Supplier uses ontology BakeryOntology
+    property itemsToProvide as list of IngredientQuantity
+      
+    on message request NeedRestock(id, stock, whilePreparing) do
+        senderAgent = sender of message
+        
+        if length of stock = 0 do
+	        log "ERROR: Received empty stock from " + sender of message
+	        return
+	    log "Received NeedRestock from " + sender of message + " with stock: " + stock
+        
+        for item in stock do
+            for ingredient in listOfAvSupplies do
+	            if ingredientName of item = ingredientName of ingredient and quantity of item < 3 and quantity of ingredient ≥ 6 do
+	               quantity of ingredient = quantity of ingredient - 6
+	               add IngredientQuantity(ingredientName of item,6) to itemsToProvide
+	            
+	            if quantity of ingredient < 6 do
+	               runOutSupply = true
+        
+        if length of itemsToProvide ≠ 0 do
+            log "SUPPLIER sends supplies: "+itemsToProvide
+            send message request ProvideIngredients(itemsToProvide,false) to senderAgent
+            itemsToProvide = [] of IngredientQuantity
+        
+        log "Supplier list av: "+listOfAvSupplies
+        log "Supplier run out: "+runOutSupply
+        if runOutSupply do
+            activate GoForSupplies
+            #send message inform SupplierRunOutSupply to aid of agent
+            deactivate this
+
+one shot behaviour GoForSupplies for agent Supplier uses ontology BakeryOntology
+    on execute do
+        activate CurrentlyRestocking
+        log "SUPPLIER'S STOCK before: "+listOfAvSupplies
+	    for item in listOfAvSupplies do
+	        if quantity of item < 5 do
+	            quantity of item = 10 # restock for supplier
+	    
+	    runOutSupply = false
+	    log "SUPPLIER'S STOCK after: "+listOfAvSupplies
+	    activate ProvidingRestock after "PT2S" as duration
+	    deactivate CurrentlyRestocking after "PT2S" as duration
+
+
+cyclic behaviour CurrentlyRestocking for agent Supplier uses ontology BakeryOntology
+    on message request NeedRestock(id, stock, bakerWhileProparing) do
+        log "Sorry but SUPPLIER: "+name of agent+" is restocking supplies"
+        send message inform SupplierRunOutSupply(bakerWhileProparing) to sender
+        
