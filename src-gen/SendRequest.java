@@ -71,19 +71,19 @@ public class SendRequest extends OneShotBehaviour<Baker> {
       	try {
       		jadescript.util.SendMessageUtils.validatePerformative("request");
       		
-      		java.lang.Object _contentToBeSent1006085436 = BakeryOntology.RequestOrder(SendRequest.this.getJadescriptAgent().getAID());
+      		java.lang.Object _contentToBeSent798359536 = BakeryOntology.RequestOrder(SendRequest.this.getJadescriptAgent().getAID());
       		
-      		jadescript.core.message.Message _synthesizedMessage1006085436 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
+      		jadescript.core.message.Message _synthesizedMessage798359536 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
       		
-      		_synthesizedMessage1006085436.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1006085436,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      		_synthesizedMessage798359536.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent798359536,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       		
-      		_synthesizedMessage1006085436.setLanguage(__codec.getName());;
+      		_synthesizedMessage798359536.setLanguage(__codec.getName());;
       		
-      		_synthesizedMessage1006085436.addReceiver(new jade.core.AID(java.lang.String.valueOf(SendRequest.this._agentEnv.getAgent().getSupervisorName()), false));
+      		_synthesizedMessage798359536.addReceiver(new jade.core.AID(java.lang.String.valueOf(SendRequest.this._agentEnv.getAgent().getSupervisorName()), false));
       		
-      		_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1006085436, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1006085436, "request"));
+      		_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage798359536, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent798359536, "request"));
       		
-      		_agentEnv.getAgent().send(_synthesizedMessage1006085436);
+      		_agentEnv.getAgent().send(_synthesizedMessage798359536);
       	}
       	catch(java.lang.Throwable _t) {
       		throw jadescript.core.exception.JadescriptException.wrap(_t);

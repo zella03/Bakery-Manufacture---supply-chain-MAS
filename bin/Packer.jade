@@ -12,9 +12,11 @@ one shot behavior DelayedPackerReady for agent Packer uses ontology BakeryOntolo
     on execute do
         send message inform PackerReady(aid of agent) to supervisorName@
         log "PACKER: "+name of agent+" READY TO WORK"
+        activate WaitForListWithPackages
 
 cyclic behaviour WaitForListWithPackages for agent Packer uses ontology BakeryOntology
     on message request ProvidePackingList(pcgList) do
         packageList = pcgList
+        log "PACKER list of packages: "+packageList
         deactivate this
 

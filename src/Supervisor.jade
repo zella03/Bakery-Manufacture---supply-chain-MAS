@@ -151,14 +151,21 @@ cyclic behaviour SendOrder for agent Supervisor uses ontology BakeryOntology
 		  log "not yet reported"
 
 cyclic behaviour WaitingForFinishedOrders for agent Supervisor uses ontology BakeryOntology
+    property count as integer
+    on create do
+        count = 0
+        
     on message inform OrderStatus(orderId,orderStatus) do
         #if wylosowane odesłane do poprawki -> albo jednak ktoryś z kolei taki
-        for i in pendingOrders do
-            if orderId of i = orderId do
-                status of i = orderStatus
-                break
-        log "FINISHING - Orders to make under SUPERVISOR"+ name of agent+" list: "+orderList
-        log "FINISHING - Orders PENDING under SUPERVISOR"+ name of agent+" list: "+pendingOrders
+        #if count % 10 != 0 do #each 10th should be send to redo
+	        for i in pendingOrders do
+	            if orderId of i = orderId do
+	                status of i = orderStatus
+	                break
+	        log "FINISHING - Orders to make under SUPERVISOR"+ name of agent+" list: "+orderList
+	        log "FINISHING - Orders PENDING under SUPERVISOR"+ name of agent+" list: "+pendingOrders
+        
+        #count = count + 1
         
 cyclic behaviour CheckIfPrivate for agent Supervisor uses ontology BakeryOntology
     property noMorePrivateOrder = true

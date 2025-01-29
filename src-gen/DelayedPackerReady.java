@@ -64,19 +64,19 @@ public class DelayedPackerReady extends OneShotBehaviour<Packer> {
       	try {
       		jadescript.util.SendMessageUtils.validatePerformative("inform");
       		
-      		java.lang.Object _contentToBeSent1121818147 = BakeryOntology.PackerReady(DelayedPackerReady.this.getJadescriptAgent().getAID());
+      		java.lang.Object _contentToBeSent317041658 = BakeryOntology.PackerReady(DelayedPackerReady.this.getJadescriptAgent().getAID());
       		
-      		jadescript.core.message.Message _synthesizedMessage1121818147 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      		jadescript.core.message.Message _synthesizedMessage317041658 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       		
-      		_synthesizedMessage1121818147.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1121818147,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      		_synthesizedMessage317041658.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent317041658,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       		
-      		_synthesizedMessage1121818147.setLanguage(__codec.getName());;
+      		_synthesizedMessage317041658.setLanguage(__codec.getName());;
       		
-      		_synthesizedMessage1121818147.addReceiver(new jade.core.AID(java.lang.String.valueOf(DelayedPackerReady.this._agentEnv.getAgent().getSupervisorName()), false));
+      		_synthesizedMessage317041658.addReceiver(new jade.core.AID(java.lang.String.valueOf(DelayedPackerReady.this._agentEnv.getAgent().getSupervisorName()), false));
       		
-      		_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1121818147, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1121818147, "inform"));
+      		_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage317041658, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent317041658, "inform"));
       		
-      		_agentEnv.getAgent().send(_synthesizedMessage1121818147);
+      		_agentEnv.getAgent().send(_synthesizedMessage317041658);
       	}
       	catch(java.lang.Throwable _t) {
       		throw jadescript.core.exception.JadescriptException.wrap(_t);
@@ -88,6 +88,13 @@ public class DelayedPackerReady extends OneShotBehaviour<Packer> {
       	 */
       	
       	jadescript.core.Agent.doLog(jade.util.Logger.INFO, DelayedPackerReady.this.getClass().getName(), DelayedPackerReady.this, "on execute", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("PACKER: ") + java.lang.String.valueOf(DelayedPackerReady.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" READY TO WORK")));
+      	
+      	/* 
+      	 * Compiled from source statement at line 15
+      	 * activate WaitForListWithPackages
+      	 */
+      	
+      	new WaitForListWithPackages(_agentEnv.getAgent().toEnv()).activate(_agentEnv.getAgent());
       }
       catch(jadescript.core.exception.JadescriptException __throwable) {
       	__handleJadescriptException(__throwable);

@@ -81,21 +81,21 @@ public class DelayedRestockQuestion extends OneShotBehaviour<Baker> {
     __initializeProperties();
     try {
     	/* 
-    	 * Compiled from source statement at line 383
+    	 * Compiled from source statement at line 392
     	 * supplier of this = supplier
     	 */
     	
     	DelayedRestockQuestion.this.setSupplier(supplier);
     	
     	/* 
-    	 * Compiled from source statement at line 384
+    	 * Compiled from source statement at line 393
     	 * order of this = order
     	 */
     	
     	DelayedRestockQuestion.this.setOrder(order);
     	
     	/* 
-    	 * Compiled from source statement at line 385
+    	 * Compiled from source statement at line 394
     	 * bakerWhileProparing of this = bakerWhileProparing
     	 */
     	
@@ -115,40 +115,40 @@ public class DelayedRestockQuestion extends OneShotBehaviour<Baker> {
     public void run() {
       try {
       	/* 
-      	 * Compiled from source statement at line 387
+      	 * Compiled from source statement at line 396
       	 * log "BAKER need RESTOCK. ask "+supplier+" having stock: "+stock
       	 */
       	
       	jadescript.core.Agent.doLog(jade.util.Logger.INFO, DelayedRestockQuestion.this.getClass().getName(), DelayedRestockQuestion.this, "on execute", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER need RESTOCK. ask ") + java.lang.String.valueOf(DelayedRestockQuestion.this.getSupplier())) + java.lang.String.valueOf(" having stock: ")) + java.lang.String.valueOf(DelayedRestockQuestion.this._agentEnv.getAgent().getStock())));
       	
       	/* 
-      	 * Compiled from source statement at line 388
+      	 * Compiled from source statement at line 397
       	 * send message request NeedRestock(aid of agent, stock, bakerWhileProparing) to supplier@
       	 */
       	
       	try {
       		jadescript.util.SendMessageUtils.validatePerformative("request");
       		
-      		java.lang.Object _contentToBeSent489585986 = BakeryOntology.NeedRestock(DelayedRestockQuestion.this.getJadescriptAgent().getAID() ,DelayedRestockQuestion.this._agentEnv.getAgent().getStock() ,DelayedRestockQuestion.this.getBakerWhileProparing());
+      		java.lang.Object _contentToBeSent2085412473 = BakeryOntology.NeedRestock(DelayedRestockQuestion.this.getJadescriptAgent().getAID() ,DelayedRestockQuestion.this._agentEnv.getAgent().getStock() ,DelayedRestockQuestion.this.getBakerWhileProparing());
       		
-      		jadescript.core.message.Message _synthesizedMessage489585986 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
+      		jadescript.core.message.Message _synthesizedMessage2085412473 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
       		
-      		_synthesizedMessage489585986.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent489585986,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      		_synthesizedMessage2085412473.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent2085412473,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       		
-      		_synthesizedMessage489585986.setLanguage(__codec.getName());;
+      		_synthesizedMessage2085412473.setLanguage(__codec.getName());;
       		
-      		_synthesizedMessage489585986.addReceiver(new jade.core.AID(java.lang.String.valueOf(DelayedRestockQuestion.this.getSupplier()), false));
+      		_synthesizedMessage2085412473.addReceiver(new jade.core.AID(java.lang.String.valueOf(DelayedRestockQuestion.this.getSupplier()), false));
       		
-      		_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage489585986, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent489585986, "request"));
+      		_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage2085412473, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent2085412473, "request"));
       		
-      		_agentEnv.getAgent().send(_synthesizedMessage489585986);
+      		_agentEnv.getAgent().send(_synthesizedMessage2085412473);
       	}
       	catch(java.lang.Throwable _t) {
       		throw jadescript.core.exception.JadescriptException.wrap(_t);
       	}
       	
       	/* 
-      	 * Compiled from source statement at line 389
+      	 * Compiled from source statement at line 398
       	 * activate HandleIngredientsShortage(stock,order)
       	 */
       	

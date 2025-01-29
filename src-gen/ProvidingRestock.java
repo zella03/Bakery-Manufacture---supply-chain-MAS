@@ -71,14 +71,14 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       	
       	return ;
       }
-       class __PatternMatcher1871722249 {
+       class __PatternMatcher832243071 {
       	public jade.core.AID id;
       	
       	public jadescript.util.JadescriptList<IngredientQuantity> stock;
       	
       	public java.lang.Boolean whilePreparing;
       	
-      	private final __PatternMatcher1871722249 __PatternMatcher1871722249_obj =  this;
+      	private final __PatternMatcher832243071 __PatternMatcher832243071_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		jade.core.AID __x;
@@ -158,7 +158,7 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       		return true && headerMatch_structterm0(__x.getAgentId()) && headerMatch_structterm1(__x.getIngredients()) && headerMatch_structterm2(__x.getWhileProparing());
       	}
       }
-      __PatternMatcher1871722249 __PatternMatcher1871722249_obj = new __PatternMatcher1871722249();
+      __PatternMatcher832243071 __PatternMatcher832243071_obj = new __PatternMatcher832243071();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -166,7 +166,7 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1871722249_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher832243071_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -202,7 +202,7 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       			 * 	        return
       			 */
       			
-      			if(java.util.Objects.equals(__PatternMatcher1871722249_obj.stock.size(), 0)) {
+      			if(java.util.Objects.equals(__PatternMatcher832243071_obj.stock.size(), 0)) {
       				/* 
       				 * Compiled from source statement at line 35
       				 * log "ERROR: Received empty stock from " + sender of message
@@ -224,13 +224,13 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       			 * 	    log "Received NeedRestock from " + sender of message + " with stock: " + stock
       			 */
       			
-      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ProvidingRestock.this.getClass().getName(), ProvidingRestock.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Received NeedRestock from ") + java.lang.String.valueOf(((jadescript.core.message.RequestMessage<NeedRestock>) __receivedMessage).getSender())) + java.lang.String.valueOf(" with stock: ")) + java.lang.String.valueOf(__PatternMatcher1871722249_obj.stock)));
+      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ProvidingRestock.this.getClass().getName(), ProvidingRestock.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Received NeedRestock from ") + java.lang.String.valueOf(((jadescript.core.message.RequestMessage<NeedRestock>) __receivedMessage).getSender())) + java.lang.String.valueOf(" with stock: ")) + java.lang.String.valueOf(__PatternMatcher832243071_obj.stock)));
       			
       			/* 
       			 * Compiled from source statement from line 39 to line 46
       			 * for item in stock do
       			 *             for ingredient in listOfAvSupplies do
-      			 * 	            if ingredientName of item = ingredientName of ingredient and quantity of item < 3 and quantity of ingredient ≥ 6 do
+      			 * 	            if ingredientName of item = ingredientName of ingredient and quantity of item ≤ 4 and quantity of ingredient ≥ 6 do
       			 * 	               quantity of ingredient = quantity of ingredient - 6
       			 * 	               add IngredientQuantity(ingredientName of item,6) to itemsToProvide
       			 * 	            
@@ -238,11 +238,11 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       			 * 	               runOutSupply = true
       			 */
       			
-      			for ( IngredientQuantity item : __PatternMatcher1871722249_obj.stock) {
+      			for ( IngredientQuantity item : __PatternMatcher832243071_obj.stock) {
       				/* 
       				 * Compiled from source statement from line 40 to line 46
       				 * for ingredient in listOfAvSupplies do
-      				 * 	            if ingredientName of item = ingredientName of ingredient and quantity of item < 3 and quantity of ingredient ≥ 6 do
+      				 * 	            if ingredientName of item = ingredientName of ingredient and quantity of item ≤ 4 and quantity of ingredient ≥ 6 do
       				 * 	               quantity of ingredient = quantity of ingredient - 6
       				 * 	               add IngredientQuantity(ingredientName of item,6) to itemsToProvide
       				 * 	            
@@ -253,12 +253,12 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       				for ( IngredientQuantity ingredient : ProvidingRestock.this._agentEnv.getAgent().getListOfAvSupplies()) {
       					/* 
       					 * Compiled from source statement from line 41 to line 43
-      					 * if ingredientName of item = ingredientName of ingredient and quantity of item < 3 and quantity of ingredient ≥ 6 do
+      					 * if ingredientName of item = ingredientName of ingredient and quantity of item ≤ 4 and quantity of ingredient ≥ 6 do
       					 * 	               quantity of ingredient = quantity of ingredient - 6
       					 * 	               add IngredientQuantity(ingredientName of item,6) to itemsToProvide
       					 */
       					
-      					if(java.util.Objects.equals(item.getIngredientName(), ingredient.getIngredientName()) && item.getQuantity() < 3 && ingredient.getQuantity() >= 6) {
+      					if(java.util.Objects.equals(item.getIngredientName(), ingredient.getIngredientName()) && item.getQuantity() <= 4 && ingredient.getQuantity() >= 6) {
       						/* 
       						 * Compiled from source statement at line 42
       						 * quantity of ingredient = quantity of ingredient - 6
@@ -299,7 +299,7 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       			 *         
       			 *         if length of itemsToProvide ≠ 0 do
       			 *             log "SUPPLIER sends supplies: "+itemsToProvide
-      			 *             send message request ProvideIngredients(itemsToProvide,false) to senderAgent
+      			 *             send message request ProvideIngredients(itemsToProvide,whilePreparing) to senderAgent
       			 *             itemsToProvide = [] of IngredientQuantity
       			 */
       			
@@ -313,25 +313,25 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       				
       				/* 
       				 * Compiled from source statement at line 50
-      				 * send message request ProvideIngredients(itemsToProvide,false) to senderAgent
+      				 * send message request ProvideIngredients(itemsToProvide,whilePreparing) to senderAgent
       				 */
       				
       				try {
       					jadescript.util.SendMessageUtils.validatePerformative("request");
       					
-      					java.lang.Object _contentToBeSent2031498882 = BakeryOntology.ProvideIngredients(ProvidingRestock.this.getItemsToProvide() ,false);
+      					java.lang.Object _contentToBeSent1309635823 = BakeryOntology.ProvideIngredients(ProvidingRestock.this.getItemsToProvide() ,__PatternMatcher832243071_obj.whilePreparing);
       					
-      					jadescript.core.message.Message _synthesizedMessage2031498882 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
+      					jadescript.core.message.Message _synthesizedMessage1309635823 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
       					
-      					_synthesizedMessage2031498882.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent2031498882,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      					_synthesizedMessage1309635823.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1309635823,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       					
-      					_synthesizedMessage2031498882.setLanguage(__codec.getName());;
+      					_synthesizedMessage1309635823.setLanguage(__codec.getName());;
       					
-      					_synthesizedMessage2031498882.addReceiver(senderAgent);
+      					_synthesizedMessage1309635823.addReceiver(senderAgent);
       					
-      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage2031498882, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent2031498882, "request"));
+      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1309635823, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1309635823, "request"));
       					
-      					_agentEnv.getAgent().send(_synthesizedMessage2031498882);
+      					_agentEnv.getAgent().send(_synthesizedMessage1309635823);
       				}
       				catch(java.lang.Throwable _t) {
       					throw jadescript.core.exception.JadescriptException.wrap(_t);

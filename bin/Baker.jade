@@ -133,7 +133,7 @@ cyclic behaviour ManageOrders for agent Baker uses ontology BakeryOntology
     on message inform OrderStatus(id,status) do
         log "BAKER: "+name of agent+" is finished."
         send message inform OrderStatus(id,status) to supervisorName@
-        remove OrderStatus(id,status) from ordersList
+        remove OrderStatus(id,status) from ordersList #this if zaakceptuje!!!
       
     on message inform EndOfPrivateOrders do
         do changeToNormal
@@ -183,7 +183,7 @@ cyclic behaviour WaitForNewOrder for agent Baker uses ontology BakeryOntology
         
 
 cyclic behaviour ListenCoworkers for agent Baker uses ontology BakeryOntology
-    property avaliable = true
+    property avaliable as boolean
     property providedIngredients as list of IngredientQuantity
     
     procedure clearProvidedIngredients do
@@ -198,11 +198,15 @@ cyclic behaviour ListenCoworkers for agent Baker uses ontology BakeryOntology
         return false
      
     on message request AskForHelpColleague(agentId as aid, ingredients as list of IngredientQuantity) do
+        avaliable = true
         senderAgent = sender of message
         log "BAKER: "+name of agent +" received a request for help from "+ name of senderAgent
         log "Needed ingredients: "+ingredients
         
+        log "during prep: "+duringPreparation
+        
         if not duringPreparation do
+            log "not in prep"
 	        for ingredient in ingredients do
 	            for item in stock do
 	                if quantity of ingredient > quantity of item do
@@ -217,8 +221,11 @@ cyclic behaviour ListenCoworkers for agent Baker uses ontology BakeryOntology
            send message inform IngredientAvaliable(aid, false,ingredients) to senderAgent
            avaliable = false
         
+        log "hello im here"
         if avaliable do
+            log "entered here"
             send message inform IngredientAvaliable(aid, true,ingredients) to senderAgent  
+            #czy tu avaliable=true????
         
     on message request RequestIngredientsColleague(id as aid, listIngredientsNeeded as list of IngredientQuantity) do
         senderAgent = sender of message
@@ -299,6 +306,8 @@ cyclic behaviour HandleIngredientsShortage for agent Baker uses ontology BakeryO
                    quantity of item = quantity of item + quantity of ingredient
         
         log "Fixed stock: "+stock
+        #log "Good turn to check for preparing: "+order
+        log "while preparing: "+whileProparing
         if whileProparing do
             do LookOrderUp
             log "Good turn to check for preparing: "+order
@@ -324,7 +333,7 @@ one shot behaviour PrepareOrder for agent Baker uses ontology BakeryOntology
         
     function needRestoreStock as boolean do
         for item in stock do
-            if quantity of item <= 2 do
+            if quantity of item <3 do
                 return true
         return false
     

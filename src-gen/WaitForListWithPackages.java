@@ -60,10 +60,10 @@ public class WaitForListWithPackages extends CyclicBehaviour<Packer> {
       	
       	return ;
       }
-       class __PatternMatcher885531008 {
+       class __PatternMatcher367915357 {
       	public jadescript.util.JadescriptList<PackageOfGoods> pcgList;
       	
-      	private final __PatternMatcher885531008 __PatternMatcher885531008_obj =  this;
+      	private final __PatternMatcher367915357 __PatternMatcher367915357_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		jadescript.util.JadescriptList<PackageOfGoods> __x;
@@ -103,7 +103,7 @@ public class WaitForListWithPackages extends CyclicBehaviour<Packer> {
       		return true && headerMatch_structterm0(__x.getPackageList());
       	}
       }
-      __PatternMatcher885531008 __PatternMatcher885531008_obj = new __PatternMatcher885531008();
+      __PatternMatcher367915357 __PatternMatcher367915357_obj = new __PatternMatcher367915357();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -111,7 +111,7 @@ public class WaitForListWithPackages extends CyclicBehaviour<Packer> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher885531008_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher367915357_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -134,14 +134,21 @@ public class WaitForListWithPackages extends CyclicBehaviour<Packer> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement at line 18
+      			 * Compiled from source statement at line 19
       			 * packageList = pcgList
       			 */
       			
-      			WaitForListWithPackages.this._agentEnv.getAgent().setPackageList(__PatternMatcher885531008_obj.pcgList);
+      			WaitForListWithPackages.this._agentEnv.getAgent().setPackageList(__PatternMatcher367915357_obj.pcgList);
       			
       			/* 
-      			 * Compiled from source statement at line 19
+      			 * Compiled from source statement at line 20
+      			 * log "PACKER list of packages: "+packageList
+      			 */
+      			
+      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitForListWithPackages.this.getClass().getName(), WaitForListWithPackages.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf("PACKER list of packages: ") + java.lang.String.valueOf(WaitForListWithPackages.this._agentEnv.getAgent().getPackageList())));
+      			
+      			/* 
+      			 * Compiled from source statement at line 21
       			 * deactivate this
       			 */
       			

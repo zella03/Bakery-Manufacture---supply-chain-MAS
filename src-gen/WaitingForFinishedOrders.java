@@ -12,12 +12,6 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
 
   private AgentEnv<Supervisor, SideEffectsFlag.AnySideEffectFlag> _agentEnv = null;
 
-  public WaitingForFinishedOrders(final AgentEnv<? extends Supervisor, ? extends SideEffectsFlag.WithSideEffects> _agentEnv) {
-    super(_agentEnv);
-    __initializeAgentEnv();
-    __initializeProperties();
-  }
-
   public static WaitingForFinishedOrders __createEmpty(final AgentEnv<? extends Supervisor, ? extends SideEffectsFlag.WithSideEffects> _agentEnv) {
     return new WaitingForFinishedOrders(_agentEnv);
   }
@@ -27,11 +21,11 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
   public void doAction(final int _tickCount) {
     this.__ignoreMessageHandlers = false;
     super.doAction(_tickCount);
-    __event0.run();
+    __event2.run();
     if(!this.__ignoreMessageHandlers) {
     	this.__noMessageHandled();
     }
-    if ( true  && !__event0.__eventFired) __awaitForEvents();
+    if ( true  && !__event2.__eventFired) __awaitForEvents();
   }
 
   public Boolean __hasStaleMessageHandler() {
@@ -51,7 +45,37 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
 
   public Codec __codec = new jade.content.lang.leap.LEAPCodec();
 
-  private class __Event0 {
+  protected Integer count = null;
+
+  public void setCount(final Integer count) {
+    this.count = count;
+  }
+
+  public Integer getCount() {
+    return this.count;
+  }
+
+  public WaitingForFinishedOrders(final AgentEnv<? extends Supervisor, ? extends SideEffectsFlag.WithSideEffects> _agentEnv) {
+    super(_agentEnv);
+    __initializeAgentEnv();
+    __initializeProperties();
+    try {
+    	/* 
+    	 * Compiled from source statement at line 156
+    	 * count = 0
+    	 */
+    	
+    	WaitingForFinishedOrders.this.setCount(0);
+    }
+    catch(jadescript.core.exception.JadescriptException __throwable) {
+    	__handleJadescriptException(__throwable);
+    }
+    catch(java.lang.Throwable __throwable) {
+    	__handleJadescriptException(jadescript.core.exception.JadescriptException.wrap(__throwable));
+    }
+  }
+
+  private class __Event2 {
     Boolean __eventFired = false;
 
     public void run() {
@@ -60,12 +84,12 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
       	
       	return ;
       }
-       class __PatternMatcher67689085 {
+       class __PatternMatcher2066715262 {
       	public java.lang.String orderId;
       	
       	public java.lang.String orderStatus;
       	
-      	private final __PatternMatcher67689085 __PatternMatcher67689085_obj =  this;
+      	private final __PatternMatcher2066715262 __PatternMatcher2066715262_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		java.lang.String __x;
@@ -125,7 +149,7 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
       		return true && headerMatch_structterm0(__x.getOrderId()) && headerMatch_structterm1(__x.getStatus());
       	}
       }
-      __PatternMatcher67689085 __PatternMatcher67689085_obj = new __PatternMatcher67689085();
+      __PatternMatcher2066715262 __PatternMatcher2066715262_obj = new __PatternMatcher2066715262();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -133,7 +157,7 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher67689085_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher2066715262_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -156,31 +180,31 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement from line 156 to line 159
+      			 * Compiled from source statement from line 161 to line 164
       			 * for i in pendingOrders do
-      			 *             if orderId of i = orderId do
-      			 *                 status of i = orderStatus
-      			 *                 break
+      			 * 	            if orderId of i = orderId do
+      			 * 	                status of i = orderStatus
+      			 * 	                break
       			 */
       			
       			for ( OrderStatus i : WaitingForFinishedOrders.this._agentEnv.getAgent().getPendingOrders()) {
       				/* 
-      				 * Compiled from source statement from line 157 to line 159
+      				 * Compiled from source statement from line 162 to line 164
       				 * if orderId of i = orderId do
-      				 *                 status of i = orderStatus
-      				 *                 break
+      				 * 	                status of i = orderStatus
+      				 * 	                break
       				 */
       				
-      				if(java.util.Objects.equals(i.getOrderId(), __PatternMatcher67689085_obj.orderId)) {
+      				if(java.util.Objects.equals(i.getOrderId(), __PatternMatcher2066715262_obj.orderId)) {
       					/* 
-      					 * Compiled from source statement at line 158
+      					 * Compiled from source statement at line 163
       					 * status of i = orderStatus
       					 */
       					
-      					i.setStatus(__PatternMatcher67689085_obj.orderStatus);
+      					i.setStatus(__PatternMatcher2066715262_obj.orderStatus);
       					
       					/* 
-      					 * Compiled from source statement at line 159
+      					 * Compiled from source statement at line 164
       					 * break
       					 */
       					
@@ -189,15 +213,15 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
       			}
       			
       			/* 
-      			 * Compiled from source statement at line 160
+      			 * Compiled from source statement at line 165
       			 * 
-      			 *         log "FINISHING - Orders to make under SUPERVISOR"+ name of agent+" list: "+orderList
+      			 * 	        log "FINISHING - Orders to make under SUPERVISOR"+ name of agent+" list: "+orderList
       			 */
       			
       			jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitingForFinishedOrders.this.getClass().getName(), WaitingForFinishedOrders.this, "on inform", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("FINISHING - Orders to make under SUPERVISOR") + java.lang.String.valueOf(WaitingForFinishedOrders.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" list: ")) + java.lang.String.valueOf(WaitingForFinishedOrders.this._agentEnv.getAgent().getOrderList())));
       			
       			/* 
-      			 * Compiled from source statement at line 161
+      			 * Compiled from source statement at line 166
       			 * log "FINISHING - Orders PENDING under SUPERVISOR"+ name of agent+" list: "+pendingOrders
       			 */
       			
@@ -222,7 +246,7 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
     }
   }
 
-  private WaitingForFinishedOrders.__Event0 __event0 = null;
+  private WaitingForFinishedOrders.__Event2 __event2 = null;
 
   private ExceptionThrower __thrower = jadescript.core.exception.ExceptionThrower.__DEFAULT_THROWER;
 
@@ -237,7 +261,9 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
   private void __initializeProperties() {
     // Initializing properties and event handlers:
     {
-    	__event0 = new WaitingForFinishedOrders.__Event0();
+    	WaitingForFinishedOrders.this.count = 0;
+    	
+    	__event2 = new WaitingForFinishedOrders.__Event2();
     }
   }
 }

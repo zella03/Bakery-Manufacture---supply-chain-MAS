@@ -38,7 +38,7 @@ cyclic behaviour ProvidingRestock for agent Supplier uses ontology BakeryOntolog
         
         for item in stock do
             for ingredient in listOfAvSupplies do
-	            if ingredientName of item = ingredientName of ingredient and quantity of item < 3 and quantity of ingredient ≥ 6 do
+	            if ingredientName of item = ingredientName of ingredient and quantity of item ≤ 4 and quantity of ingredient ≥ 6 do
 	               quantity of ingredient = quantity of ingredient - 6
 	               add IngredientQuantity(ingredientName of item,6) to itemsToProvide
 	            
@@ -47,7 +47,7 @@ cyclic behaviour ProvidingRestock for agent Supplier uses ontology BakeryOntolog
         
         if length of itemsToProvide ≠ 0 do
             log "SUPPLIER sends supplies: "+itemsToProvide
-            send message request ProvideIngredients(itemsToProvide,false) to senderAgent
+            send message request ProvideIngredients(itemsToProvide,whilePreparing) to senderAgent
             itemsToProvide = [] of IngredientQuantity
         
         log "Supplier list av: "+listOfAvSupplies

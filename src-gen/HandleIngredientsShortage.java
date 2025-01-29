@@ -81,7 +81,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
   public void LookOrderUp(final AgentEnv<? extends Baker, ? extends SideEffectsFlag.WithSideEffects> _agentEnv) {
     {
     	/* 
-    	 * Compiled from source statement from line 245 to line 248
+    	 * Compiled from source statement from line 252 to line 255
     	 * for i in fullOrderList do
     	 *             if status of i ≠ "baking" and status of i ≠ "finished" do
     	 *                 order = i
@@ -90,7 +90,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
     	
     	for ( Order i : HandleIngredientsShortage.this._agentEnv.getAgent().getFullOrderList()) {
     		/* 
-    		 * Compiled from source statement from line 246 to line 248
+    		 * Compiled from source statement from line 253 to line 255
     		 * if status of i ≠ "baking" and status of i ≠ "finished" do
     		 *                 order = i
     		 *                 break
@@ -98,14 +98,14 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
     		
     		if(!java.util.Objects.equals(i.getStatus(), "baking") && !java.util.Objects.equals(i.getStatus(), "finished")) {
     			/* 
-    			 * Compiled from source statement at line 247
+    			 * Compiled from source statement at line 254
     			 * order = i
     			 */
     			
     			HandleIngredientsShortage.this.setOrder(i);
     			
     			/* 
-    			 * Compiled from source statement at line 248
+    			 * Compiled from source statement at line 255
     			 * break
     			 */
     			
@@ -121,7 +121,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
     __initializeProperties();
     try {
     	/* 
-    	 * Compiled from source statement at line 254
+    	 * Compiled from source statement at line 261
     	 * noHelpFromCo = true
     	 */
     	
@@ -144,14 +144,14 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       	
       	return ;
       }
-       class __PatternMatcher1878558256 {
+       class __PatternMatcher1164581623 {
       	public jade.core.AID id;
       	
       	public java.lang.Boolean avaliable;
       	
       	public jadescript.util.JadescriptList<IngredientQuantity> ingredients;
       	
-      	private final __PatternMatcher1878558256 __PatternMatcher1878558256_obj =  this;
+      	private final __PatternMatcher1164581623 __PatternMatcher1164581623_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		jade.core.AID __x;
@@ -231,7 +231,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       		return true && headerMatch_structterm0(__x.getId()) && headerMatch_structterm1(__x.getAvaliable()) && headerMatch_structterm2(__x.getIngredients());
       	}
       }
-      __PatternMatcher1878558256 __PatternMatcher1878558256_obj = new __PatternMatcher1878558256();
+      __PatternMatcher1164581623 __PatternMatcher1164581623_obj = new __PatternMatcher1164581623();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -239,7 +239,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1878558256_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher1164581623_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -262,30 +262,30 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement at line 257
+      			 * Compiled from source statement at line 264
       			 * senderAgent = sender of message
       			 */
       			
       			jade.core.AID senderAgent = ((jadescript.core.message.InformMessage<IngredientAvaliable>) __receivedMessage).getSender();
       			
       			/* 
-      			 * Compiled from source statement at line 258
+      			 * Compiled from source statement at line 265
       			 * respond = IngredientAvaliable(id,avaliable,ingredients)
       			 */
       			
-      			IngredientAvaliable respond = BakeryOntology.IngredientAvaliable(__PatternMatcher1878558256_obj.id ,__PatternMatcher1878558256_obj.avaliable ,__PatternMatcher1878558256_obj.ingredients);
+      			IngredientAvaliable respond = BakeryOntology.IngredientAvaliable(__PatternMatcher1164581623_obj.id ,__PatternMatcher1164581623_obj.avaliable ,__PatternMatcher1164581623_obj.ingredients);
       			
       			/* 
-      			 * Compiled from source statement from line 259 to line 262
+      			 * Compiled from source statement from line 266 to line 269
       			 * if avaliable do
       			 *             log "Agent: "+ name of senderAgent + "has avaliable ingredients for :"+name of agent
       			 *         else do
       			 *             log "Agent: "+ name of senderAgent + "does NOT have avaliable ingredients for :"+name of agent
       			 */
       			
-      			if(__PatternMatcher1878558256_obj.avaliable) {
+      			if(__PatternMatcher1164581623_obj.avaliable) {
       				/* 
-      				 * Compiled from source statement at line 260
+      				 * Compiled from source statement at line 267
       				 * log "Agent: "+ name of senderAgent + "has avaliable ingredients for :"+name of agent
       				 */
       				
@@ -293,7 +293,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       			}
       			else {
       				/* 
-      				 * Compiled from source statement at line 262
+      				 * Compiled from source statement at line 269
       				 * log "Agent: "+ name of senderAgent + "does NOT have avaliable ingredients for :"+name of agent
       				 */
       				
@@ -301,7 +301,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       			}
       			
       			/* 
-      			 * Compiled from source statement at line 264
+      			 * Compiled from source statement at line 271
       			 * 
       			 *         
       			 *         add respond to responds
@@ -310,7 +310,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       			HandleIngredientsShortage.this.getResponds().add(respond);
       			
       			/* 
-      			 * Compiled from source statement from line 265 to line 279
+      			 * Compiled from source statement from line 272 to line 286
       			 * if length of responds = length of listOfCoworkers do
       			 *             for i in responds do
       			 * 		        if avaliable of i do
@@ -330,7 +330,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       			
       			if(java.util.Objects.equals(HandleIngredientsShortage.this.getResponds().size(), HandleIngredientsShortage.this._agentEnv.getAgent().getListOfCoworkers().size())) {
       				/* 
-      				 * Compiled from source statement from line 266 to line 271
+      				 * Compiled from source statement from line 273 to line 278
       				 * for i in responds do
       				 * 		        if avaliable of i do
       				 * 		            log "Asking agent: "+ name of id of i + "for his avaliable ingredients for :"+name of agent +" asked list: "+ingredients
@@ -341,7 +341,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       				
       				for ( IngredientAvaliable i : HandleIngredientsShortage.this.getResponds()) {
       					/* 
-      					 * Compiled from source statement from line 267 to line 271
+      					 * Compiled from source statement from line 274 to line 278
       					 * if avaliable of i do
       					 * 		            log "Asking agent: "+ name of id of i + "for his avaliable ingredients for :"+name of agent +" asked list: "+ingredients
       					 * 		            send message request RequestIngredientsColleague(aid, ingredients) to id of i
@@ -351,47 +351,47 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       					
       					if(i.getAvaliable()) {
       						/* 
-      						 * Compiled from source statement at line 268
+      						 * Compiled from source statement at line 275
       						 * log "Asking agent: "+ name of id of i + "for his avaliable ingredients for :"+name of agent +" asked list: "+ingredients
       						 */
       						
-      						jadescript.core.Agent.doLog(jade.util.Logger.INFO, HandleIngredientsShortage.this.getClass().getName(), HandleIngredientsShortage.this, "on inform", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Asking agent: ") + java.lang.String.valueOf(i.getId().getName())) + java.lang.String.valueOf("for his avaliable ingredients for :")) + java.lang.String.valueOf(HandleIngredientsShortage.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" asked list: ")) + java.lang.String.valueOf(__PatternMatcher1878558256_obj.ingredients)));
+      						jadescript.core.Agent.doLog(jade.util.Logger.INFO, HandleIngredientsShortage.this.getClass().getName(), HandleIngredientsShortage.this, "on inform", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Asking agent: ") + java.lang.String.valueOf(i.getId().getName())) + java.lang.String.valueOf("for his avaliable ingredients for :")) + java.lang.String.valueOf(HandleIngredientsShortage.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" asked list: ")) + java.lang.String.valueOf(__PatternMatcher1164581623_obj.ingredients)));
       						
       						/* 
-      						 * Compiled from source statement at line 269
+      						 * Compiled from source statement at line 276
       						 * send message request RequestIngredientsColleague(aid, ingredients) to id of i
       						 */
       						
       						try {
       							jadescript.util.SendMessageUtils.validatePerformative("request");
       							
-      							java.lang.Object _contentToBeSent1473755253 = BakeryOntology.RequestIngredientsColleague(HandleIngredientsShortage.this._agentEnv.getAgent().getAID() ,__PatternMatcher1878558256_obj.ingredients);
+      							java.lang.Object _contentToBeSent625095266 = BakeryOntology.RequestIngredientsColleague(HandleIngredientsShortage.this._agentEnv.getAgent().getAID() ,__PatternMatcher1164581623_obj.ingredients);
       							
-      							jadescript.core.message.Message _synthesizedMessage1473755253 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
+      							jadescript.core.message.Message _synthesizedMessage625095266 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
       							
-      							_synthesizedMessage1473755253.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1473755253,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      							_synthesizedMessage625095266.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent625095266,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       							
-      							_synthesizedMessage1473755253.setLanguage(__codec.getName());;
+      							_synthesizedMessage625095266.setLanguage(__codec.getName());;
       							
-      							_synthesizedMessage1473755253.addReceiver(i.getId());
+      							_synthesizedMessage625095266.addReceiver(i.getId());
       							
-      							_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1473755253, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1473755253, "request"));
+      							_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage625095266, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent625095266, "request"));
       							
-      							_agentEnv.getAgent().send(_synthesizedMessage1473755253);
+      							_agentEnv.getAgent().send(_synthesizedMessage625095266);
       						}
       						catch(java.lang.Throwable _t) {
       							throw jadescript.core.exception.JadescriptException.wrap(_t);
       						}
       						
       						/* 
-      						 * Compiled from source statement at line 270
+      						 * Compiled from source statement at line 277
       						 * noHelpFromCo = false
       						 */
       						
       						HandleIngredientsShortage.this.setNoHelpFromCo(false);
       						
       						/* 
-      						 * Compiled from source statement at line 271
+      						 * Compiled from source statement at line 278
       						 * break
       						 */
       						
@@ -400,7 +400,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       				}
       				
       				/* 
-      				 * Compiled from source statement from line 273 to line 278
+      				 * Compiled from source statement from line 280 to line 285
       				 * 
       				 * 		
       				 * 	        if noHelpFromCo do
@@ -413,14 +413,14 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       				
       				if(HandleIngredientsShortage.this.getNoHelpFromCo()) {
       					/* 
-      					 * Compiled from source statement at line 274
+      					 * Compiled from source statement at line 281
       					 * log "NOBODY can help baker: "+name of agent+" call for supplier"
       					 */
       					
       					jadescript.core.Agent.doLog(jade.util.Logger.INFO, HandleIngredientsShortage.this.getClass().getName(), HandleIngredientsShortage.this, "on inform", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("NOBODY can help baker: ") + java.lang.String.valueOf(HandleIngredientsShortage.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" call for supplier")));
       					
       					/* 
-      					 * Compiled from source statement from line 275 to line 278
+      					 * Compiled from source statement from line 282 to line 285
       					 * for supplier in listOfSuppliers do
       					 * 		           #send message request RequestIngredients(aid,listIngredientsNeeded) to supplier@ #idk czy potrzebne delay
       					 * 		            do LookOrderUp
@@ -429,14 +429,14 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       					
       					for ( java.lang.String supplier : HandleIngredientsShortage.this._agentEnv.getAgent().getListOfSuppliers()) {
       						/* 
-      						 * Compiled from source statement at line 277
+      						 * Compiled from source statement at line 284
       						 * do LookOrderUp
       						 */
       						
       						HandleIngredientsShortage.this.LookOrderUp(_agentEnv.getAgent().toEnv());
       						
       						/* 
-      						 * Compiled from source statement at line 278
+      						 * Compiled from source statement at line 285
       						 * activate DelayedRestockQuestion(supplier,order,true) after "PT2S" as duration
       						 */
       						
@@ -445,7 +445,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       				}
       				
       				/* 
-      				 * Compiled from source statement at line 279
+      				 * Compiled from source statement at line 286
       				 * 
       				 * 		    responds = [] of IngredientAvaliable
       				 */
@@ -483,10 +483,10 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       	
       	return ;
       }
-       class __PatternMatcher296931311 {
+       class __PatternMatcher234308489 {
       	public java.lang.Boolean bakerWhileProparing;
       	
-      	private final __PatternMatcher296931311 __PatternMatcher296931311_obj =  this;
+      	private final __PatternMatcher234308489 __PatternMatcher234308489_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		java.lang.Boolean __x;
@@ -526,7 +526,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       		return true && headerMatch_structterm0(__x.getBakerWhileProparing());
       	}
       }
-      __PatternMatcher296931311 __PatternMatcher296931311_obj = new __PatternMatcher296931311();
+      __PatternMatcher234308489 __PatternMatcher234308489_obj = new __PatternMatcher234308489();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -534,7 +534,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher296931311_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher234308489_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -557,30 +557,30 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement from line 286 to line 289
+      			 * Compiled from source statement from line 293 to line 296
       			 * if bakerWhileProparing do
       			 *             do LookOrderUp
       			 *             log "Good turn to check for preparing: "+order
       			 *             activate PrepareOrder(order)
       			 */
       			
-      			if(__PatternMatcher296931311_obj.bakerWhileProparing) {
+      			if(__PatternMatcher234308489_obj.bakerWhileProparing) {
       				/* 
-      				 * Compiled from source statement at line 287
+      				 * Compiled from source statement at line 294
       				 * do LookOrderUp
       				 */
       				
       				HandleIngredientsShortage.this.LookOrderUp(_agentEnv.getAgent().toEnv());
       				
       				/* 
-      				 * Compiled from source statement at line 288
+      				 * Compiled from source statement at line 295
       				 * log "Good turn to check for preparing: "+order
       				 */
       				
       				jadescript.core.Agent.doLog(jade.util.Logger.INFO, HandleIngredientsShortage.this.getClass().getName(), HandleIngredientsShortage.this, "on inform", java.lang.String.valueOf(java.lang.String.valueOf("Good turn to check for preparing: ") + java.lang.String.valueOf(HandleIngredientsShortage.this.getOrder())));
       				
       				/* 
-      				 * Compiled from source statement at line 289
+      				 * Compiled from source statement at line 296
       				 * activate PrepareOrder(order)
       				 */
       				
@@ -588,7 +588,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       			}
       			
       			/* 
-      			 * Compiled from source statement at line 290
+      			 * Compiled from source statement at line 297
       			 * 
       			 *         deactivate this
       			 */
@@ -625,12 +625,12 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       	
       	return ;
       }
-       class __PatternMatcher1329852047 {
+       class __PatternMatcher1896404650 {
       	public jadescript.util.JadescriptList<IngredientQuantity> handedIngredients;
       	
       	public java.lang.Boolean whileProparing;
       	
-      	private final __PatternMatcher1329852047 __PatternMatcher1329852047_obj =  this;
+      	private final __PatternMatcher1896404650 __PatternMatcher1896404650_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		jadescript.util.JadescriptList<IngredientQuantity> __x;
@@ -690,7 +690,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       		return true && headerMatch_structterm0(__x.getIngredients()) && headerMatch_structterm1(__x.getWhileProparing());
       	}
       }
-      __PatternMatcher1329852047 __PatternMatcher1329852047_obj = new __PatternMatcher1329852047();
+      __PatternMatcher1896404650 __PatternMatcher1896404650_obj = new __PatternMatcher1896404650();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -698,7 +698,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1329852047_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher1896404650_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -721,30 +721,30 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement at line 293
+      			 * Compiled from source statement at line 300
       			 * senderAgent = sender of message
       			 */
       			
       			jade.core.AID senderAgent = ((jadescript.core.message.RequestMessage<ProvideIngredients>) __receivedMessage).getSender();
       			
       			/* 
-      			 * Compiled from source statement at line 294
+      			 * Compiled from source statement at line 301
       			 * log "Just got ingredients from: "+senderAgent
       			 */
       			
       			jadescript.core.Agent.doLog(jade.util.Logger.INFO, HandleIngredientsShortage.this.getClass().getName(), HandleIngredientsShortage.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf("Just got ingredients from: ") + java.lang.String.valueOf(senderAgent)));
       			
       			/* 
-      			 * Compiled from source statement from line 296 to line 299
+      			 * Compiled from source statement from line 303 to line 306
       			 * for ingredient in handedIngredients do
       			 *             for item in stock do
       			 *                 if ingredientName of ingredient = ingredientName of item do
       			 *                    quantity of item = quantity of item + quantity of ingredient
       			 */
       			
-      			for ( IngredientQuantity ingredient : __PatternMatcher1329852047_obj.handedIngredients) {
+      			for ( IngredientQuantity ingredient : __PatternMatcher1896404650_obj.handedIngredients) {
       				/* 
-      				 * Compiled from source statement from line 297 to line 299
+      				 * Compiled from source statement from line 304 to line 306
       				 * for item in stock do
       				 *                 if ingredientName of ingredient = ingredientName of item do
       				 *                    quantity of item = quantity of item + quantity of ingredient
@@ -752,14 +752,14 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       				
       				for ( IngredientQuantity item : HandleIngredientsShortage.this._agentEnv.getAgent().getStock()) {
       					/* 
-      					 * Compiled from source statement from line 298 to line 299
+      					 * Compiled from source statement from line 305 to line 306
       					 * if ingredientName of ingredient = ingredientName of item do
       					 *                    quantity of item = quantity of item + quantity of ingredient
       					 */
       					
       					if(java.util.Objects.equals(ingredient.getIngredientName(), item.getIngredientName())) {
       						/* 
-      						 * Compiled from source statement at line 299
+      						 * Compiled from source statement at line 306
       						 * quantity of item = quantity of item + quantity of ingredient
       						 */
       						
@@ -769,7 +769,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       			}
       			
       			/* 
-      			 * Compiled from source statement at line 301
+      			 * Compiled from source statement at line 308
       			 * 
       			 *         
       			 *         log "Fixed stock: "+stock
@@ -778,30 +778,37 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       			jadescript.core.Agent.doLog(jade.util.Logger.INFO, HandleIngredientsShortage.this.getClass().getName(), HandleIngredientsShortage.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf("Fixed stock: ") + java.lang.String.valueOf(HandleIngredientsShortage.this._agentEnv.getAgent().getStock())));
       			
       			/* 
-      			 * Compiled from source statement from line 302 to line 305
+      			 * Compiled from source statement at line 310
+      			 * log "while preparing: "+whileProparing
+      			 */
+      			
+      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, HandleIngredientsShortage.this.getClass().getName(), HandleIngredientsShortage.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf("while preparing: ") + java.lang.String.valueOf(__PatternMatcher1896404650_obj.whileProparing)));
+      			
+      			/* 
+      			 * Compiled from source statement from line 311 to line 314
       			 * if whileProparing do
       			 *             do LookOrderUp
       			 *             log "Good turn to check for preparing: "+order
       			 *             activate PrepareOrder(order)
       			 */
       			
-      			if(__PatternMatcher1329852047_obj.whileProparing) {
+      			if(__PatternMatcher1896404650_obj.whileProparing) {
       				/* 
-      				 * Compiled from source statement at line 303
+      				 * Compiled from source statement at line 312
       				 * do LookOrderUp
       				 */
       				
       				HandleIngredientsShortage.this.LookOrderUp(_agentEnv.getAgent().toEnv());
       				
       				/* 
-      				 * Compiled from source statement at line 304
+      				 * Compiled from source statement at line 313
       				 * log "Good turn to check for preparing: "+order
       				 */
       				
       				jadescript.core.Agent.doLog(jade.util.Logger.INFO, HandleIngredientsShortage.this.getClass().getName(), HandleIngredientsShortage.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf("Good turn to check for preparing: ") + java.lang.String.valueOf(HandleIngredientsShortage.this.getOrder())));
       				
       				/* 
-      				 * Compiled from source statement at line 305
+      				 * Compiled from source statement at line 314
       				 * activate PrepareOrder(order)
       				 */
       				
@@ -809,7 +816,7 @@ public class HandleIngredientsShortage extends CyclicBehaviour<Baker> {
       			}
       			
       			/* 
-      			 * Compiled from source statement at line 306
+      			 * Compiled from source statement at line 315
       			 * 
       			 *         deactivate this
       			 */
