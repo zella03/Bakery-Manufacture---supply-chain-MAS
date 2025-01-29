@@ -84,12 +84,12 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
       	
       	return ;
       }
-       class __PatternMatcher2066715262 {
+       class __PatternMatcher1214340500 {
       	public java.lang.String orderId;
       	
       	public java.lang.String orderStatus;
       	
-      	private final __PatternMatcher2066715262 __PatternMatcher2066715262_obj =  this;
+      	private final __PatternMatcher1214340500 __PatternMatcher1214340500_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		java.lang.String __x;
@@ -149,7 +149,7 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
       		return true && headerMatch_structterm0(__x.getOrderId()) && headerMatch_structterm1(__x.getStatus());
       	}
       }
-      __PatternMatcher2066715262 __PatternMatcher2066715262_obj = new __PatternMatcher2066715262();
+      __PatternMatcher1214340500 __PatternMatcher1214340500_obj = new __PatternMatcher1214340500();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -157,7 +157,7 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher2066715262_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher1214340500_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -180,52 +180,139 @@ public class WaitingForFinishedOrders extends CyclicBehaviour<Supervisor> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement from line 161 to line 164
-      			 * for i in pendingOrders do
+      			 * Compiled from source statement at line 159
+      			 * senderAgent = sender of message
+      			 */
+      			
+      			jade.core.AID senderAgent = ((jadescript.core.message.InformMessage<OrderStatus>) __receivedMessage).getSender();
+      			
+      			/* 
+      			 * Compiled from source statement from line 161 to line 173
+      			 * if count % 5 ≠ 0 do #each 10th should be send to redo
+      			 * 	        for i in pendingOrders do
       			 * 	            if orderId of i = orderId do
       			 * 	                status of i = orderStatus
       			 * 	                break
+      			 * 	        log "FINISHING - Orders to make under SUPERVISOR"+ name of agent+" list: "+orderList
+      			 * 	        log "FINISHING - Orders PENDING under SUPERVISOR"+ name of agent+" list: "+pendingOrders
+      			 * 	        
+      			 * 	        #send message request_when (RedoOrder(orderId,"No need"),OrderCorrect) to senderAgent
+      			 * 	        send message request RedoOrder(orderId,"No need") to senderAgent
+      			 *         else do
+      			 *             #send message request_when (RedoOrder(orderId,"Order not done correctly"),OrderRedoRequired) to senderAgent
+      			 *             send message request RedoOrder(orderId,"Order not done correctly") to senderAgent
       			 */
       			
-      			for ( OrderStatus i : WaitingForFinishedOrders.this._agentEnv.getAgent().getPendingOrders()) {
+      			if(!java.util.Objects.equals(WaitingForFinishedOrders.this.getCount() % 5, 0)) {
       				/* 
-      				 * Compiled from source statement from line 162 to line 164
-      				 * if orderId of i = orderId do
+      				 * Compiled from source statement from line 162 to line 165
+      				 * for i in pendingOrders do
+      				 * 	            if orderId of i = orderId do
       				 * 	                status of i = orderStatus
       				 * 	                break
       				 */
       				
-      				if(java.util.Objects.equals(i.getOrderId(), __PatternMatcher2066715262_obj.orderId)) {
+      				for ( OrderStatus i : WaitingForFinishedOrders.this._agentEnv.getAgent().getPendingOrders()) {
       					/* 
-      					 * Compiled from source statement at line 163
-      					 * status of i = orderStatus
+      					 * Compiled from source statement from line 163 to line 165
+      					 * if orderId of i = orderId do
+      					 * 	                status of i = orderStatus
+      					 * 	                break
       					 */
       					
-      					i.setStatus(__PatternMatcher2066715262_obj.orderStatus);
+      					if(java.util.Objects.equals(i.getOrderId(), __PatternMatcher1214340500_obj.orderId)) {
+      						/* 
+      						 * Compiled from source statement at line 164
+      						 * status of i = orderStatus
+      						 */
+      						
+      						i.setStatus(__PatternMatcher1214340500_obj.orderStatus);
+      						
+      						/* 
+      						 * Compiled from source statement at line 165
+      						 * break
+      						 */
+      						
+      						break;
+      					}
+      				}
+      				
+      				/* 
+      				 * Compiled from source statement at line 166
+      				 * 
+      				 * 	        log "FINISHING - Orders to make under SUPERVISOR"+ name of agent+" list: "+orderList
+      				 */
+      				
+      				jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitingForFinishedOrders.this.getClass().getName(), WaitingForFinishedOrders.this, "on inform", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("FINISHING - Orders to make under SUPERVISOR") + java.lang.String.valueOf(WaitingForFinishedOrders.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" list: ")) + java.lang.String.valueOf(WaitingForFinishedOrders.this._agentEnv.getAgent().getOrderList())));
+      				
+      				/* 
+      				 * Compiled from source statement at line 167
+      				 * log "FINISHING - Orders PENDING under SUPERVISOR"+ name of agent+" list: "+pendingOrders
+      				 */
+      				
+      				jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitingForFinishedOrders.this.getClass().getName(), WaitingForFinishedOrders.this, "on inform", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("FINISHING - Orders PENDING under SUPERVISOR") + java.lang.String.valueOf(WaitingForFinishedOrders.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" list: ")) + java.lang.String.valueOf(WaitingForFinishedOrders.this._agentEnv.getAgent().getPendingOrders())));
+      				
+      				/* 
+      				 * Compiled from source statement at line 170
+      				 * send message request RedoOrder(orderId,"No need") to senderAgent
+      				 */
+      				
+      				try {
+      					jadescript.util.SendMessageUtils.validatePerformative("request");
       					
-      					/* 
-      					 * Compiled from source statement at line 164
-      					 * break
-      					 */
+      					java.lang.Object _contentToBeSent599599886 = BakeryOntology.RedoOrder(__PatternMatcher1214340500_obj.orderId ,"No need");
       					
-      					break;
+      					jadescript.core.message.Message _synthesizedMessage599599886 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
+      					
+      					_synthesizedMessage599599886.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent599599886,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      					
+      					_synthesizedMessage599599886.setLanguage(__codec.getName());;
+      					
+      					_synthesizedMessage599599886.addReceiver(senderAgent);
+      					
+      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage599599886, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent599599886, "request"));
+      					
+      					_agentEnv.getAgent().send(_synthesizedMessage599599886);
+      				}
+      				catch(java.lang.Throwable _t) {
+      					throw jadescript.core.exception.JadescriptException.wrap(_t);
+      				}
+      			}
+      			else {
+      				/* 
+      				 * Compiled from source statement at line 173
+      				 * send message request RedoOrder(orderId,"Order not done correctly") to senderAgent
+      				 */
+      				
+      				try {
+      					jadescript.util.SendMessageUtils.validatePerformative("request");
+      					
+      					java.lang.Object _contentToBeSent577912466 = BakeryOntology.RedoOrder(__PatternMatcher1214340500_obj.orderId ,"Order not done correctly");
+      					
+      					jadescript.core.message.Message _synthesizedMessage577912466 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
+      					
+      					_synthesizedMessage577912466.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent577912466,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      					
+      					_synthesizedMessage577912466.setLanguage(__codec.getName());;
+      					
+      					_synthesizedMessage577912466.addReceiver(senderAgent);
+      					
+      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage577912466, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent577912466, "request"));
+      					
+      					_agentEnv.getAgent().send(_synthesizedMessage577912466);
+      				}
+      				catch(java.lang.Throwable _t) {
+      					throw jadescript.core.exception.JadescriptException.wrap(_t);
       				}
       			}
       			
       			/* 
-      			 * Compiled from source statement at line 165
+      			 * Compiled from source statement at line 174
       			 * 
-      			 * 	        log "FINISHING - Orders to make under SUPERVISOR"+ name of agent+" list: "+orderList
+      			 *         count = count + 1
       			 */
       			
-      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitingForFinishedOrders.this.getClass().getName(), WaitingForFinishedOrders.this, "on inform", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("FINISHING - Orders to make under SUPERVISOR") + java.lang.String.valueOf(WaitingForFinishedOrders.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" list: ")) + java.lang.String.valueOf(WaitingForFinishedOrders.this._agentEnv.getAgent().getOrderList())));
-      			
-      			/* 
-      			 * Compiled from source statement at line 166
-      			 * log "FINISHING - Orders PENDING under SUPERVISOR"+ name of agent+" list: "+pendingOrders
-      			 */
-      			
-      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitingForFinishedOrders.this.getClass().getName(), WaitingForFinishedOrders.this, "on inform", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("FINISHING - Orders PENDING under SUPERVISOR") + java.lang.String.valueOf(WaitingForFinishedOrders.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" list: ")) + java.lang.String.valueOf(WaitingForFinishedOrders.this._agentEnv.getAgent().getPendingOrders())));
+      			WaitingForFinishedOrders.this.setCount(WaitingForFinishedOrders.this.getCount() + 1);
       		}
       		catch(jadescript.core.exception.JadescriptException __throwable) {
       			__handleJadescriptException(__throwable);

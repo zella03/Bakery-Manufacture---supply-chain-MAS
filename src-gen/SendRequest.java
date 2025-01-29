@@ -57,33 +57,33 @@ public class SendRequest extends OneShotBehaviour<Baker> {
     public void run() {
       try {
       	/* 
-      	 * Compiled from source statement at line 155
+      	 * Compiled from source statement at line 174
       	 * log "BAKER: "+name of agent + " sending request for an order from: " + supervisorName of agent
       	 */
       	
       	jadescript.core.Agent.doLog(jade.util.Logger.INFO, SendRequest.this.getClass().getName(), SendRequest.this, "on execute", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER: ") + java.lang.String.valueOf(SendRequest.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" sending request for an order from: ")) + java.lang.String.valueOf(SendRequest.this.getJadescriptAgent().getSupervisorName())));
       	
       	/* 
-      	 * Compiled from source statement at line 156
+      	 * Compiled from source statement at line 175
       	 * send message request RequestOrder(aid of agent) to supervisorName@
       	 */
       	
       	try {
       		jadescript.util.SendMessageUtils.validatePerformative("request");
       		
-      		java.lang.Object _contentToBeSent798359536 = BakeryOntology.RequestOrder(SendRequest.this.getJadescriptAgent().getAID());
+      		java.lang.Object _contentToBeSent210973266 = BakeryOntology.RequestOrder(SendRequest.this.getJadescriptAgent().getAID());
       		
-      		jadescript.core.message.Message _synthesizedMessage798359536 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
+      		jadescript.core.message.Message _synthesizedMessage210973266 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
       		
-      		_synthesizedMessage798359536.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent798359536,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      		_synthesizedMessage210973266.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent210973266,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       		
-      		_synthesizedMessage798359536.setLanguage(__codec.getName());;
+      		_synthesizedMessage210973266.setLanguage(__codec.getName());;
       		
-      		_synthesizedMessage798359536.addReceiver(new jade.core.AID(java.lang.String.valueOf(SendRequest.this._agentEnv.getAgent().getSupervisorName()), false));
+      		_synthesizedMessage210973266.addReceiver(new jade.core.AID(java.lang.String.valueOf(SendRequest.this._agentEnv.getAgent().getSupervisorName()), false));
       		
-      		_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage798359536, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent798359536, "request"));
+      		_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage210973266, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent210973266, "request"));
       		
-      		_agentEnv.getAgent().send(_synthesizedMessage798359536);
+      		_agentEnv.getAgent().send(_synthesizedMessage210973266);
       	}
       	catch(java.lang.Throwable _t) {
       		throw jadescript.core.exception.JadescriptException.wrap(_t);

@@ -156,16 +156,22 @@ cyclic behaviour WaitingForFinishedOrders for agent Supervisor uses ontology Bak
         count = 0
         
     on message inform OrderStatus(orderId,orderStatus) do
+        senderAgent = sender of message
         #if wylosowane odesłane do poprawki -> albo jednak ktoryś z kolei taki
-        #if count % 10 != 0 do #each 10th should be send to redo
+        if count % 5 ≠ 0 do #each 10th should be send to redo
 	        for i in pendingOrders do
 	            if orderId of i = orderId do
 	                status of i = orderStatus
 	                break
 	        log "FINISHING - Orders to make under SUPERVISOR"+ name of agent+" list: "+orderList
 	        log "FINISHING - Orders PENDING under SUPERVISOR"+ name of agent+" list: "+pendingOrders
-        
-        #count = count + 1
+	        
+	        #send message request_when (RedoOrder(orderId,"No need"),OrderCorrect) to senderAgent
+	        send message request RedoOrder(orderId,"No need") to senderAgent
+        else do
+            #send message request_when (RedoOrder(orderId,"Order not done correctly"),OrderRedoRequired) to senderAgent
+            send message request RedoOrder(orderId,"Order not done correctly") to senderAgent
+        count = count + 1
         
 cyclic behaviour CheckIfPrivate for agent Supervisor uses ontology BakeryOntology
     property noMorePrivateOrder = true
@@ -174,4 +180,4 @@ cyclic behaviour CheckIfPrivate for agent Supervisor uses ontology BakeryOntolog
         for order in orderList do
             if type of order = "private" do            
                 noMorePrivateOrder = false
-                break            
+                break

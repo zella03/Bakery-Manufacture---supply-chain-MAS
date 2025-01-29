@@ -126,15 +126,11 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
 
   public static final String EndOfOrders = "EndOfOrders";
 
-  public static final String RejectOrAcceptOrder = "RejectOrAcceptOrder";
-
-  public static final String RejectOrAcceptOrder_orderId = "orderId";
-
-  public static final String RejectOrAcceptOrder_decision = "decision";
-
   public static final String RedoOrder = "RedoOrder";
 
   public static final String RedoOrder_orderId = "orderId";
+
+  public static final String RedoOrder_decision = "decision";
 
   public static final String GoodToPack = "GoodToPack";
 
@@ -165,4 +161,6 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
   public static final String PackageReady = "PackageReady";
 
   public static final String PackageRejected = "PackageRejected";
+
+  public static final String OrderCorrect = "OrderCorrect";
 }

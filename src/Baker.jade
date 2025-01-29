@@ -108,6 +108,13 @@ one shot behavior DelayedWorkerReady for agent Baker uses ontology BakeryOntolog
         
 cyclic behaviour ManageOrders for agent Baker uses ontology BakeryOntology
     property endOfOrders as boolean
+    property order as Order
+    
+    procedure LookOrderUp with orderId as text do #i dont want to pass all info everytime -> only one order can be in toDo or in preparing at the same time
+        for i in fullOrderList do
+            if orderId = id of i do
+                order = i
+                break
     
     on create do
         endOfOrders = false
@@ -133,7 +140,19 @@ cyclic behaviour ManageOrders for agent Baker uses ontology BakeryOntology
     on message inform OrderStatus(id,status) do
         log "BAKER: "+name of agent+" is finished."
         send message inform OrderStatus(id,status) to supervisorName@
-        remove OrderStatus(id,status) from ordersList #this if zaakceptuje!!!
+        #remove OrderStatus(id,status) from ordersList #this if zaakceptuje!!!
+        
+    on message request RedoOrder(orderId,decision) do
+        if decision = "No need" do
+            log "Order: "+orderId+" ACCEPTED"
+            remove OrderStatus(orderId,"finished") from ordersList #this if zaakceptuje!!!
+            #log "Accepted, BAKER HAS STILL TO DO: "+ordersList
+        else do
+            log "Order: "+orderId+" need to be REDONE. Decision: "+decision
+            do LookOrderUp with orderId #setting order variable -> 
+            do chnageStatus with id of order, "toPrepare"
+            #log "Rejected, BAKER HAS STILL TO DO: "+ordersList
+            activate PrepareOrder(order)
       
     on message inform EndOfPrivateOrders do
         do changeToNormal
@@ -203,10 +222,7 @@ cyclic behaviour ListenCoworkers for agent Baker uses ontology BakeryOntology
         log "BAKER: "+name of agent +" received a request for help from "+ name of senderAgent
         log "Needed ingredients: "+ingredients
         
-        log "during prep: "+duringPreparation
-        
         if not duringPreparation do
-            log "not in prep"
 	        for ingredient in ingredients do
 	            for item in stock do
 	                if quantity of ingredient > quantity of item do
@@ -221,11 +237,8 @@ cyclic behaviour ListenCoworkers for agent Baker uses ontology BakeryOntology
            send message inform IngredientAvaliable(aid, false,ingredients) to senderAgent
            avaliable = false
         
-        log "hello im here"
         if avaliable do
-            log "entered here"
-            send message inform IngredientAvaliable(aid, true,ingredients) to senderAgent  
-            #czy tu avaliable=true????
+            send message inform IngredientAvaliable(aid, true,ingredients) to senderAgent
         
     on message request RequestIngredientsColleague(id as aid, listIngredientsNeeded as list of IngredientQuantity) do
         senderAgent = sender of message

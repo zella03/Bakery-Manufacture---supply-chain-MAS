@@ -59,8 +59,8 @@ ontology BakeryOntology
     
 	
 	#action NotifyCompletion(orderId as text)
-	action RejectOrAcceptOrder(orderId as text, decision as text) #based on decision accepting the order and deleting the task from queue or order sent to redo
-	action RedoOrder(orderId as text)
+	action RedoOrder(orderId as text, decision as text) #based on decision accepting the order and deleting the task from queue or order sent to redo
+	#action RedoOrder(orderId as text)
 	#action HelpWithIngredients(ingredients as list of IngredientQuantity)
 	action GoodToPack(good as Good) #from baker to packer
 	action SubmitPackage(packageOfGoods as PackageOfGoods)
@@ -74,6 +74,7 @@ ontology BakeryOntology
 	proposition OrderRedoRequired
 	proposition PackageReady
 	proposition PackageRejected
+	proposition OrderCorrect
 	
 	
 	#statuses: pending (before everything), toPrepare (just send), waitIngredients (if not enought inngredients), preparing, baking, toFix, finished

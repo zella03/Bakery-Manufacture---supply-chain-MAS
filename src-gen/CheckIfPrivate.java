@@ -67,31 +67,31 @@ public class CheckIfPrivate extends CyclicBehaviour<Supervisor> {
     public void run() {
       try {
       	/* 
-      	 * Compiled from source statement from line 174 to line 177
+      	 * Compiled from source statement from line 180 to line 183
       	 * for order in orderList do
       	 *             if type of order = "private" do            
       	 *                 noMorePrivateOrder = false
-      	 *                 break            
+      	 *                 break
       	 */
       	
       	for ( Order order : CheckIfPrivate.this._agentEnv.getAgent().getOrderList()) {
       		/* 
-      		 * Compiled from source statement from line 175 to line 177
+      		 * Compiled from source statement from line 181 to line 183
       		 * if type of order = "private" do            
       		 *                 noMorePrivateOrder = false
-      		 *                 break            
+      		 *                 break
       		 */
       		
       		if(java.util.Objects.equals(order.getType(), "private")) {
       			/* 
-      			 * Compiled from source statement at line 176
+      			 * Compiled from source statement at line 182
       			 * noMorePrivateOrder = false
       			 */
       			
       			CheckIfPrivate.this.setNoMorePrivateOrder(false);
       			
       			/* 
-      			 * Compiled from source statement at line 177
+      			 * Compiled from source statement at line 183
       			 * break
       			 */
       			

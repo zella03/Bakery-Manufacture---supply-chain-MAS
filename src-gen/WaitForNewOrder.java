@@ -54,7 +54,7 @@ public class WaitForNewOrder extends CyclicBehaviour<Baker> {
   public Boolean checkIfKnow(final AgentEnv<? extends Baker, ? extends SideEffectsFlag.WithSideEffects> _agentEnv, final String good) {
     {
     	/* 
-    	 * Compiled from source statement from line 161 to line 163
+    	 * Compiled from source statement from line 180 to line 182
     	 * for item in recipeBook do 
     	 *             if name of item = good do
     	 *                 return true
@@ -62,14 +62,14 @@ public class WaitForNewOrder extends CyclicBehaviour<Baker> {
     	
     	for ( Good item : WaitForNewOrder.this._agentEnv.getAgent().getRecipeBook()) {
     		/* 
-    		 * Compiled from source statement from line 162 to line 163
+    		 * Compiled from source statement from line 181 to line 182
     		 * if name of item = good do
     		 *                 return true
     		 */
     		
     		if(java.util.Objects.equals(item.getName(), good)) {
     			/* 
-    			 * Compiled from source statement at line 163
+    			 * Compiled from source statement at line 182
     			 * return true
     			 */
     			
@@ -78,7 +78,7 @@ public class WaitForNewOrder extends CyclicBehaviour<Baker> {
     	}
     	
     	/* 
-    	 * Compiled from source statement at line 164
+    	 * Compiled from source statement at line 183
     	 * 
     	 *         return false
     	 */
@@ -94,7 +94,7 @@ public class WaitForNewOrder extends CyclicBehaviour<Baker> {
     super.doOnActivate();
     try {
     	/* 
-    	 * Compiled from source statement at line 167
+    	 * Compiled from source statement at line 186
     	 * log "BAKER: "+name of agent + " is waiting for new order from supervisor: " + supervisorName of agent
     	 */
     	
@@ -117,12 +117,12 @@ public class WaitForNewOrder extends CyclicBehaviour<Baker> {
       	
       	return ;
       }
-       class __PatternMatcher1042640513 {
+       class __PatternMatcher1749412786 {
       	public jade.core.AID agentId;
       	
       	public Order order;
       	
-      	private final __PatternMatcher1042640513 __PatternMatcher1042640513_obj =  this;
+      	private final __PatternMatcher1749412786 __PatternMatcher1749412786_obj =  this;
       	
       	public boolean headerMatch_structterm0_typecast0(java.lang.Object __objx) {
       		jade.core.AID __x;
@@ -218,7 +218,7 @@ public class WaitForNewOrder extends CyclicBehaviour<Baker> {
       		return true && headerMatch_structterm0(__x.getAgentId()) && headerMatch_structterm1(__x.getOrder());
       	}
       }
-      __PatternMatcher1042640513 __PatternMatcher1042640513_obj = new __PatternMatcher1042640513();
+      __PatternMatcher1749412786 __PatternMatcher1749412786_obj = new __PatternMatcher1749412786();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -226,7 +226,7 @@ public class WaitForNewOrder extends CyclicBehaviour<Baker> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1042640513_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher1749412786_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -249,14 +249,14 @@ public class WaitForNewOrder extends CyclicBehaviour<Baker> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement at line 170
+      			 * Compiled from source statement at line 189
       			 * senderAgent = sender of message
       			 */
       			
       			jade.core.AID senderAgent = ((jadescript.core.message.RequestMessage<AssignOrder>) __receivedMessage).getSender();
       			
       			/* 
-      			 * Compiled from source statement from line 172 to line 182
+      			 * Compiled from source statement from line 191 to line 201
       			 * if checkIfKnow(good of order) do
       			 *             currentlyAskingForOrder = false
       			 * 	        log "BAKER: "+name of agent +" received an order for: "+good of order +" from: " + name of senderAgent+" and knows the recipe"
@@ -270,70 +270,70 @@ public class WaitForNewOrder extends CyclicBehaviour<Baker> {
       			 * 	       log "BAKER: "+name of agent+" received an order for: "+good of order +" but does not know the recipe!!"
       			 */
       			
-      			if(WaitForNewOrder.this.checkIfKnow(_agentEnv.getAgent().toEnv() ,__PatternMatcher1042640513_obj.order.getGood())) {
+      			if(WaitForNewOrder.this.checkIfKnow(_agentEnv.getAgent().toEnv() ,__PatternMatcher1749412786_obj.order.getGood())) {
       				/* 
-      				 * Compiled from source statement at line 173
+      				 * Compiled from source statement at line 192
       				 * currentlyAskingForOrder = false
       				 */
       				
       				WaitForNewOrder.this._agentEnv.getAgent().setCurrentlyAskingForOrder(false);
       				
       				/* 
-      				 * Compiled from source statement at line 174
+      				 * Compiled from source statement at line 193
       				 * log "BAKER: "+name of agent +" received an order for: "+good of order +" from: " + name of senderAgent+" and knows the recipe"
       				 */
       				
-      				jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitForNewOrder.this.getClass().getName(), WaitForNewOrder.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER: ") + java.lang.String.valueOf(WaitForNewOrder.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" received an order for: ")) + java.lang.String.valueOf(__PatternMatcher1042640513_obj.order.getGood())) + java.lang.String.valueOf(" from: ")) + java.lang.String.valueOf(senderAgent.getName())) + java.lang.String.valueOf(" and knows the recipe")));
+      				jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitForNewOrder.this.getClass().getName(), WaitForNewOrder.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER: ") + java.lang.String.valueOf(WaitForNewOrder.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" received an order for: ")) + java.lang.String.valueOf(__PatternMatcher1749412786_obj.order.getGood())) + java.lang.String.valueOf(" from: ")) + java.lang.String.valueOf(senderAgent.getName())) + java.lang.String.valueOf(" and knows the recipe")));
       				
       				/* 
-      				 * Compiled from source statement at line 175
+      				 * Compiled from source statement at line 194
       				 * status of order = "toPrepare"
       				 */
       				
-      				__PatternMatcher1042640513_obj.order.setStatus("toPrepare");
+      				__PatternMatcher1749412786_obj.order.setStatus("toPrepare");
       				
       				/* 
-      				 * Compiled from source statement at line 176
+      				 * Compiled from source statement at line 195
       				 * orderWithStatus = OrderStatus(id of order,"toPrepare")
       				 */
       				
-      				OrderStatus orderWithStatus = BakeryOntology.OrderStatus(__PatternMatcher1042640513_obj.order.getId() ,"toPrepare");
+      				OrderStatus orderWithStatus = BakeryOntology.OrderStatus(__PatternMatcher1749412786_obj.order.getId() ,"toPrepare");
       				
       				/* 
-      				 * Compiled from source statement at line 177
+      				 * Compiled from source statement at line 196
       				 * add orderWithStatus to ordersList
       				 */
       				
       				WaitForNewOrder.this._agentEnv.getAgent().getOrdersList().add(orderWithStatus);
       				
       				/* 
-      				 * Compiled from source statement at line 178
+      				 * Compiled from source statement at line 197
       				 * add order to fullOrderList
       				 */
       				
-      				WaitForNewOrder.this._agentEnv.getAgent().getFullOrderList().add(__PatternMatcher1042640513_obj.order);
+      				WaitForNewOrder.this._agentEnv.getAgent().getFullOrderList().add(__PatternMatcher1749412786_obj.order);
       				
       				/* 
-      				 * Compiled from source statement at line 179
+      				 * Compiled from source statement at line 198
       				 * log "OrderList: "+ ordersList+" of BAKER: "+name of agent
       				 */
       				
       				jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitForNewOrder.this.getClass().getName(), WaitForNewOrder.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("OrderList: ") + java.lang.String.valueOf(WaitForNewOrder.this._agentEnv.getAgent().getOrdersList())) + java.lang.String.valueOf(" of BAKER: ")) + java.lang.String.valueOf(WaitForNewOrder.this.getJadescriptAgent().getName())));
       				
       				/* 
-      				 * Compiled from source statement at line 180
+      				 * Compiled from source statement at line 199
       				 * activate PrepareOrder(order)
       				 */
       				
-      				new PrepareOrder(_agentEnv.getAgent().toEnv() ,__PatternMatcher1042640513_obj.order).activate(_agentEnv.getAgent());
+      				new PrepareOrder(_agentEnv.getAgent().toEnv() ,__PatternMatcher1749412786_obj.order).activate(_agentEnv.getAgent());
       			}
       			else {
       				/* 
-      				 * Compiled from source statement at line 182
+      				 * Compiled from source statement at line 201
       				 * log "BAKER: "+name of agent+" received an order for: "+good of order +" but does not know the recipe!!"
       				 */
       				
-      				jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitForNewOrder.this.getClass().getName(), WaitForNewOrder.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER: ") + java.lang.String.valueOf(WaitForNewOrder.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" received an order for: ")) + java.lang.String.valueOf(__PatternMatcher1042640513_obj.order.getGood())) + java.lang.String.valueOf(" but does not know the recipe!!")));
+      				jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitForNewOrder.this.getClass().getName(), WaitForNewOrder.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER: ") + java.lang.String.valueOf(WaitForNewOrder.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" received an order for: ")) + java.lang.String.valueOf(__PatternMatcher1749412786_obj.order.getGood())) + java.lang.String.valueOf(" but does not know the recipe!!")));
       			}
       		}
       		catch(jadescript.core.exception.JadescriptException __throwable) {
