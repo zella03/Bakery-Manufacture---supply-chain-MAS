@@ -61,6 +61,7 @@ agent Baker uses ontology BakeryOntology
     property supervisorName as text
     property listOfSuppliers as list of text
     property listOfCoworkers as list of text
+    property packer as text
     
     property ordersList as list of OrderStatus
     property fullOrderList as list of Order
@@ -80,9 +81,10 @@ agent Baker uses ontology BakeryOntology
 	           status of i = newStatus
 	           break
 	
-    on create with type as text, supervisor as text, coworker1 as text, supplier1 as text, supplier2 as text do
+    on create with type as text, supervisor as text, coworker1 as text, supplier1 as text, supplier2 as text, packer as text do
         typeBaker of this = type
         supervisorName of this = supervisor
+        packer of this = packer
         add coworker1 to listOfCoworkers
         add supplier1 to listOfSuppliers
         add supplier2 to listOfSuppliers
@@ -143,13 +145,18 @@ cyclic behaviour ManageOrders for agent Baker uses ontology BakeryOntology
         #remove OrderStatus(id,status) from ordersList #this if zaakceptuje!!!
         
     on message request RedoOrder(orderId,decision) do
+        do LookOrderUp with orderId #setting order variable -> 
+        
         if decision = "No need" do
             log "Order: "+orderId+" ACCEPTED"
             remove OrderStatus(orderId,"finished") from ordersList #this if zaakceptuje!!!
+            
+            if type of order = "private" do
+                #order was accepted and now its send to packer to pack the order
+                send message request GoodToPack(order) to packer@
             #log "Accepted, BAKER HAS STILL TO DO: "+ordersList
         else do
             log "Order: "+orderId+" need to be REDONE. Decision: "+decision
-            do LookOrderUp with orderId #setting order variable -> 
             do chnageStatus with id of order, "toPrepare"
             #log "Rejected, BAKER HAS STILL TO DO: "+ordersList
             activate PrepareOrder(order)

@@ -60,14 +60,14 @@ public class CurrentlyRestocking extends CyclicBehaviour<Supplier> {
       	
       	return ;
       }
-       class __PatternMatcher2091667030 {
+       class __PatternMatcher1363731235 {
       	public jade.core.AID id;
       	
       	public jadescript.util.JadescriptList<IngredientQuantity> stock;
       	
       	public java.lang.Boolean bakerWhileProparing;
       	
-      	private final __PatternMatcher2091667030 __PatternMatcher2091667030_obj =  this;
+      	private final __PatternMatcher1363731235 __PatternMatcher1363731235_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		jade.core.AID __x;
@@ -147,7 +147,7 @@ public class CurrentlyRestocking extends CyclicBehaviour<Supplier> {
       		return true && headerMatch_structterm0(__x.getAgentId()) && headerMatch_structterm1(__x.getIngredients()) && headerMatch_structterm2(__x.getWhileProparing());
       	}
       }
-      __PatternMatcher2091667030 __PatternMatcher2091667030_obj = new __PatternMatcher2091667030();
+      __PatternMatcher1363731235 __PatternMatcher1363731235_obj = new __PatternMatcher1363731235();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -155,7 +155,7 @@ public class CurrentlyRestocking extends CyclicBehaviour<Supplier> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher2091667030_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher1363731235_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -192,19 +192,19 @@ public class CurrentlyRestocking extends CyclicBehaviour<Supplier> {
       			try {
       				jadescript.util.SendMessageUtils.validatePerformative("inform");
       				
-      				java.lang.Object _contentToBeSent833052266 = BakeryOntology.SupplierRunOutSupply(__PatternMatcher2091667030_obj.bakerWhileProparing);
+      				java.lang.Object _contentToBeSent1990264347 = BakeryOntology.SupplierRunOutSupply(__PatternMatcher1363731235_obj.bakerWhileProparing);
       				
-      				jadescript.core.message.Message _synthesizedMessage833052266 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      				jadescript.core.message.Message _synthesizedMessage1990264347 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       				
-      				_synthesizedMessage833052266.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent833052266,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      				_synthesizedMessage1990264347.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1990264347,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       				
-      				_synthesizedMessage833052266.setLanguage(__codec.getName());;
+      				_synthesizedMessage1990264347.setLanguage(__codec.getName());;
       				
-      				_synthesizedMessage833052266.addReceiver(__receivedMessage.getSender());
+      				_synthesizedMessage1990264347.addReceiver(__receivedMessage.getSender());
       				
-      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage833052266, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent833052266, "inform"));
+      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1990264347, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1990264347, "inform"));
       				
-      				_agentEnv.getAgent().send(_synthesizedMessage833052266);
+      				_agentEnv.getAgent().send(_synthesizedMessage1990264347);
       			}
       			catch(java.lang.Throwable _t) {
       				throw jadescript.core.exception.JadescriptException.wrap(_t);

@@ -3,21 +3,21 @@ import jadescript.content.JadescriptAction;
 
 @SuppressWarnings("all")
 public class GoodToPack implements JadescriptAction {
-  private Good good;
+  private Order order;
 
-  public Good getGood() {
-    return this.good;
+  public Order getOrder() {
+    return this.order;
   }
 
-  public void setGood(final Good good) {
-    this.good = good;
+  public void setOrder(final Order order) {
+    this.order = order;
   }
 
   public String toString() {
     java.lang.StringBuilder _sb = new java.lang.StringBuilder();
     _sb.append("GoodToPack");
     _sb.append("(");
-    _sb.append(java.lang.String.valueOf(getGood()));
+    _sb.append(java.lang.String.valueOf(getOrder()));
     _sb.append(")");
     return _sb.toString();
   }
@@ -25,7 +25,7 @@ public class GoodToPack implements JadescriptAction {
   public boolean equals(final Object obj) {
     if(obj instanceof GoodToPack) {
     	GoodToPack o = (GoodToPack) obj;
-    	return true && java.util.Objects.equals(this.getGood(), o.getGood());
+    	return true && java.util.Objects.equals(this.getOrder(), o.getOrder());
     } else {
     	return super.equals(obj);
     }
@@ -33,21 +33,21 @@ public class GoodToPack implements JadescriptAction {
 
   public GoodToPack() {
     {
-    	this.setGood(new Good());
+    	this.setOrder(new Order());
     }
   }
 
-  public GoodToPack(final Good good) {
+  public GoodToPack(final Order order) {
     super();
     
-    this.setGood(good);
+    this.setOrder(order);
   }
 
   public Ontology __getDeclaringOntology() {
     return BakeryOntology.getInstance();
   }
 
-  private BakeryOntology __metadata_GoodToPack(final Good good) {
+  private BakeryOntology __metadata_GoodToPack(final Order order) {
     return null;
   }
 }

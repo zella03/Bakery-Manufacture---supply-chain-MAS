@@ -44,6 +44,8 @@ ontology BakeryOntology
     action ProvideIngredients(ingredients as list of IngredientQuantity, whileProparing as boolean) #may be with delay
 	action NeedRestock(agentId as aid, ingredients as list of IngredientQuantity,whileProparing as boolean)
 	action ProvidePackingList(packageList as list of PackageOfGoods)#combined of list containing private orders
+	action RedoOrder(orderId as text, decision as text) #based on decision accepting the order and deleting the task from queue or order sent to redo
+	action GoodToPack(order as Order) #from baker to packer
 	
 	predicate IngredientAvaliable(id as aid, avaliable as boolean,ingredients as list of IngredientQuantity) #wystarczy odjąć u agenta przekazującego i dodać u przyjmującego jeżeli tak
 	predicate WorkerReady(workerId as aid, type as text)
@@ -59,16 +61,16 @@ ontology BakeryOntology
     
 	
 	#action NotifyCompletion(orderId as text)
-	action RedoOrder(orderId as text, decision as text) #based on decision accepting the order and deleting the task from queue or order sent to redo
+	
 	#action RedoOrder(orderId as text)
 	#action HelpWithIngredients(ingredients as list of IngredientQuantity)
-	action GoodToPack(good as Good) #from baker to packer
+	
 	action SubmitPackage(packageOfGoods as PackageOfGoods)
 	action RejectPackage(packageId as text, reason as text)
 	action RepackedPackage(packageId as text)
 	
 	
-	predicate PackageStatus(package_ as PackageOfGoods, status as text)
+	predicate PackageStatus(pcg as PackageOfGoods)
 	#predicate IngredientsShortage(ingredientQuan as IngredientQuantity, quantityNeed as integer)
 	
 	proposition OrderRedoRequired

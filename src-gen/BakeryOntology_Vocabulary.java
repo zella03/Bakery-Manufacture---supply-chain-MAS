@@ -92,6 +92,16 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
 
   public static final String ProvidePackingList_packageList = "packageList";
 
+  public static final String RedoOrder = "RedoOrder";
+
+  public static final String RedoOrder_orderId = "orderId";
+
+  public static final String RedoOrder_decision = "decision";
+
+  public static final String GoodToPack = "GoodToPack";
+
+  public static final String GoodToPack_order = "order";
+
   public static final String IngredientAvaliable = "IngredientAvaliable";
 
   public static final String IngredientAvaliable_id = "id";
@@ -126,16 +136,6 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
 
   public static final String EndOfOrders = "EndOfOrders";
 
-  public static final String RedoOrder = "RedoOrder";
-
-  public static final String RedoOrder_orderId = "orderId";
-
-  public static final String RedoOrder_decision = "decision";
-
-  public static final String GoodToPack = "GoodToPack";
-
-  public static final String GoodToPack_good = "good";
-
   public static final String SubmitPackage = "SubmitPackage";
 
   public static final String SubmitPackage_packageOfGoods = "packageOfGoods";
@@ -152,9 +152,7 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
 
   public static final String PackageStatus = "PackageStatus";
 
-  public static final String PackageStatus_package_ = "package_";
-
-  public static final String PackageStatus_status = "status";
+  public static final String PackageStatus_pcg = "pcg";
 
   public static final String OrderRedoRequired = "OrderRedoRequired";
 

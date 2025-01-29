@@ -46,25 +46,45 @@ public class Packer extends Agent {
     return this.packageList;
   }
 
+  protected JadescriptList<Order> ordersReadyToPack = null;
+
+  public void setOrdersReadyToPack(final JadescriptList<Order> ordersReadyToPack) {
+    this.ordersReadyToPack = ordersReadyToPack;
+  }
+
+  public JadescriptList<Order> getOrdersReadyToPack() {
+    return this.ordersReadyToPack;
+  }
+
+  protected JadescriptList<PackageOfGoods> finishedPackages = null;
+
+  public void setFinishedPackages(final JadescriptList<PackageOfGoods> finishedPackages) {
+    this.finishedPackages = finishedPackages;
+  }
+
+  public JadescriptList<PackageOfGoods> getFinishedPackages() {
+    return this.finishedPackages;
+  }
+
   private void __onCreate() {
     java.lang.String supervisor = jadescript.util.types.JadescriptValueAdapter.adapt(this.getArguments()[0], new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT));
     try {
     	/* 
-    	 * Compiled from source statement at line 6
+    	 * Compiled from source statement at line 8
     	 * supervisorName = supervisor
     	 */
     	
     	Packer.this.setSupervisorName(supervisor);
     	
     	/* 
-    	 * Compiled from source statement at line 7
+    	 * Compiled from source statement at line 9
     	 * log "PACKER created with arguments: "+supervisor
     	 */
     	
     	jadescript.core.Agent.doLog(jade.util.Logger.INFO, Packer.this.getClass().getName(), Packer.this, "on create", java.lang.String.valueOf(java.lang.String.valueOf("PACKER created with arguments: ") + java.lang.String.valueOf(supervisor)));
     	
     	/* 
-    	 * Compiled from source statement at line 9
+    	 * Compiled from source statement at line 11
     	 * activate DelayedPackerReady after "PT1S" as duration
     	 */
     	
@@ -101,6 +121,10 @@ public class Packer extends Agent {
     	Packer.this.supervisorName = "";
     	
     	Packer.this.packageList = new jadescript.util.JadescriptList<PackageOfGoods>();
+    	
+    	Packer.this.ordersReadyToPack = new jadescript.util.JadescriptList<Order>();
+    	
+    	Packer.this.finishedPackages = new jadescript.util.JadescriptList<PackageOfGoods>();
     }
   }
 

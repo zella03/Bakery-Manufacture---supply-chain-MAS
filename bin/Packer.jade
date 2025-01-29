@@ -1,6 +1,8 @@
 agent Packer uses ontology BakeryOntology
     property supervisorName as text
     property packageList as list of PackageOfGoods
+    property ordersReadyToPack as list of Order
+    property finishedPackages as list of PackageOfGoods
     
     on create with supervisor as text do
         supervisorName = supervisor
@@ -18,5 +20,57 @@ cyclic behaviour WaitForListWithPackages for agent Packer uses ontology BakeryOn
     on message request ProvidePackingList(pcgList) do
         packageList = pcgList
         log "PACKER list of packages: "+packageList
+        activate WaitAndPackOrders
         deactivate this
 
+cyclic behaviour WaitAndPackOrders for agent Packer uses ontology BakeryOntology
+
+    procedure ifPackageFinished do
+        packed = false
+        
+        if length of packageList ≠ 0 do
+            for packageToPack in packageList do
+                for order in ordersInPackage of packageToPack do
+                    if quantity of order ≠ 0 do
+                        packed = false
+                        break
+                    else do
+                        packed = true
+                if packed do
+                    status of packageToPack = "finished"
+                    add packageToPack to finishedPackages    
+                
+    on execute do
+        if length of packageList = 0 do
+            deactivate this
+            
+        #jeżeli lista z paczkami się powiększyła to czek zamówienia i dodawaj do zamówień
+        # bo co jeżeli dwóch bakerów da w tym samym czasie..
+        if length of ordersReadyToPack ≠ 0 do
+            for packageToPack in packageList do
+                for order in ordersInPackage of packageToPack do
+                    for readyToPack in ordersReadyToPack do
+                        if good of readyToPack = good of order do
+                            quantity of order = quantity of order - 1
+                            remove readyToPack from ordersReadyToPack
+                            status of packageToPack = "preparing"
+                            log "PACKER packed order: "+order+" to package: "+packageId of packageToPack
+                            break
+                    if length of ordersReadyToPack = 0 do
+                        break
+                if length of ordersReadyToPack = 0 do
+                        break
+            
+            do ifPackageFinished
+            
+            if length of finishedPackages ≠ 0 do
+                for pcg in finishedPackages do
+                    log "PACKER send FINISHED package: "+ packageId of pcg
+                    send message inform PackageStatus(pcg) to supervisorName@
+                    remove pcg from packageList
+                finishedPackages = [] of PackageOfGoods
+                  
+    on message request GoodToPack(order) do
+        # tu będzie czekał na nową wiadomość
+        log "PACKER got an order to pack"
+        add order to ordersReadyToPack
