@@ -51,12 +51,12 @@ public class BakeryOntology extends Ontology implements BakeryOntology_Vocabular
     }
   }
 
-  public static OrderQuantity OrderQuantity(final String good, final String type, final Integer quantity) {
-    return new OrderQuantity(good, type, quantity);
-  }
-
   public static Order Order(final String id, final String good, final String status, final String type) {
     return new Order(id, good, status, type);
+  }
+
+  public static OrderQuantity OrderQuantity(final String good, final String type, final Integer quantity) {
+    return new OrderQuantity(good, type, quantity);
   }
 
   public static PackageOfGoods PackageOfGoods(final String packageId, final JadescriptList<OrderQuantity> ordersInPackage, final String status) {
@@ -161,6 +161,10 @@ public class BakeryOntology extends Ontology implements BakeryOntology_Vocabular
     }
   }
 
+  public static PackageStatus PackageStatus(final PackageOfGoods pcg) {
+    return new PackageStatus(pcg);
+  }
+
   public static AgentsReported AgentsReported() {
     return new AgentsReported();
   }
@@ -185,38 +189,6 @@ public class BakeryOntology extends Ontology implements BakeryOntology_Vocabular
     return new AllPackagesReady();
   }
 
-  public static SubmitPackage SubmitPackage(final PackageOfGoods packageOfGoods) {
-    return new SubmitPackage(packageOfGoods);
-  }
-
-  public static RejectPackage RejectPackage(final String packageId, final String reason) {
-    return new RejectPackage(packageId, reason);
-  }
-
-  public static RepackedPackage RepackedPackage(final String packageId) {
-    return new RepackedPackage(packageId);
-  }
-
-  public static PackageStatus PackageStatus(final PackageOfGoods pcg) {
-    return new PackageStatus(pcg);
-  }
-
-  public static OrderRedoRequired OrderRedoRequired() {
-    return new OrderRedoRequired();
-  }
-
-  public static PackageReady PackageReady() {
-    return new PackageReady();
-  }
-
-  public static PackageRejected PackageRejected() {
-    return new PackageRejected();
-  }
-
-  public static OrderCorrect OrderCorrect() {
-    return new OrderCorrect();
-  }
-
   public BakeryOntology() {
     super(__NAME, jadescript.content.onto.Ontology.getInstance(), new jade.content.onto.CFReflectiveIntrospector());
     try {
@@ -228,8 +200,8 @@ public class BakeryOntology extends Ontology implements BakeryOntology_Vocabular
     	
     	add(new jade.content.schema.ConceptSchema(IngredientQuantity), IngredientQuantity.class);
     	add(new jade.content.schema.ConceptSchema(Good), Good.class);
-    	add(new jade.content.schema.ConceptSchema(OrderQuantity), OrderQuantity.class);
     	add(new jade.content.schema.ConceptSchema(Order), Order.class);
+    	add(new jade.content.schema.ConceptSchema(OrderQuantity), OrderQuantity.class);
     	add(new jade.content.schema.ConceptSchema(PackageOfGoods), PackageOfGoods.class);
     	add(new jade.content.schema.ConceptSchema(PackagePreparation), PackagePreparation.class);
     	add(new jade.content.schema.AgentActionSchema(RequestOrder), RequestOrder.class);
@@ -248,20 +220,13 @@ public class BakeryOntology extends Ontology implements BakeryOntology_Vocabular
     	add(new jade.content.schema.PredicateSchema(OrderStatus), OrderStatus.class);
     	add(new jade.content.schema.PredicateSchema(BakerRaportInfo), BakerRaportInfo.class);
     	add(new jade.content.schema.PredicateSchema(PackerRaport), PackerRaport.class);
+    	add(new jade.content.schema.PredicateSchema(PackageStatus), PackageStatus.class);
     	add(new jade.content.schema.PredicateSchema(AgentsReported), AgentsReported.class);
     	add(new jade.content.schema.PredicateSchema(EndOfPrivateOrders), EndOfPrivateOrders.class);
     	add(new jade.content.schema.PredicateSchema(EndOfOrders), EndOfOrders.class);
     	add(new jade.content.schema.PredicateSchema(GroupEndedDay), GroupEndedDay.class);
     	add(new jade.content.schema.PredicateSchema(EndOfDay), EndOfDay.class);
     	add(new jade.content.schema.PredicateSchema(AllPackagesReady), AllPackagesReady.class);
-    	add(new jade.content.schema.AgentActionSchema(SubmitPackage), SubmitPackage.class);
-    	add(new jade.content.schema.AgentActionSchema(RejectPackage), RejectPackage.class);
-    	add(new jade.content.schema.AgentActionSchema(RepackedPackage), RepackedPackage.class);
-    	add(new jade.content.schema.PredicateSchema(PackageStatus), PackageStatus.class);
-    	add(new jade.content.schema.PredicateSchema(OrderRedoRequired), OrderRedoRequired.class);
-    	add(new jade.content.schema.PredicateSchema(PackageReady), PackageReady.class);
-    	add(new jade.content.schema.PredicateSchema(PackageRejected), PackageRejected.class);
-    	add(new jade.content.schema.PredicateSchema(OrderCorrect), OrderCorrect.class);
     	
     	
     	jadescript.content.onto.Ontology.__populateListSchema((jade.content.schema.TermSchema) getSchema(IngredientQuantity), (jade.content.schema.ConceptSchema) getSchema("__ListClass_IngredientQuantity"));
@@ -281,16 +246,16 @@ public class BakeryOntology extends Ontology implements BakeryOntology_Vocabular
     _csGood.add(Good_preparationTime, (jade.content.schema.ConceptSchema) getSchema(jadescript.content.onto.Ontology.DURATION));
     _csGood.add(Good_batchSize, (jade.content.schema.PrimitiveSchema) getSchema(jade.content.onto.BasicOntology.INTEGER));
     
-    	jade.content.schema.ConceptSchema _csOrderQuantity = (jade.content.schema.ConceptSchema) getSchema(OrderQuantity);
-    _csOrderQuantity.add(OrderQuantity_good, (jade.content.schema.PrimitiveSchema) getSchema(jade.content.onto.BasicOntology.STRING));
-    _csOrderQuantity.add(OrderQuantity_type, (jade.content.schema.PrimitiveSchema) getSchema(jade.content.onto.BasicOntology.STRING));
-    _csOrderQuantity.add(OrderQuantity_quantity, (jade.content.schema.PrimitiveSchema) getSchema(jade.content.onto.BasicOntology.INTEGER));
-    
     	jade.content.schema.ConceptSchema _csOrder = (jade.content.schema.ConceptSchema) getSchema(Order);
     _csOrder.add(Order_id, (jade.content.schema.PrimitiveSchema) getSchema(jade.content.onto.BasicOntology.STRING));
     _csOrder.add(Order_good, (jade.content.schema.PrimitiveSchema) getSchema(jade.content.onto.BasicOntology.STRING));
     _csOrder.add(Order_status, (jade.content.schema.PrimitiveSchema) getSchema(jade.content.onto.BasicOntology.STRING));
     _csOrder.add(Order_type, (jade.content.schema.PrimitiveSchema) getSchema(jade.content.onto.BasicOntology.STRING));
+    
+    	jade.content.schema.ConceptSchema _csOrderQuantity = (jade.content.schema.ConceptSchema) getSchema(OrderQuantity);
+    _csOrderQuantity.add(OrderQuantity_good, (jade.content.schema.PrimitiveSchema) getSchema(jade.content.onto.BasicOntology.STRING));
+    _csOrderQuantity.add(OrderQuantity_type, (jade.content.schema.PrimitiveSchema) getSchema(jade.content.onto.BasicOntology.STRING));
+    _csOrderQuantity.add(OrderQuantity_quantity, (jade.content.schema.PrimitiveSchema) getSchema(jade.content.onto.BasicOntology.INTEGER));
     
     	jade.content.schema.ConceptSchema _csPackageOfGoods = (jade.content.schema.ConceptSchema) getSchema(PackageOfGoods);
     _csPackageOfGoods.add(PackageOfGoods_packageId, (jade.content.schema.PrimitiveSchema) getSchema(jade.content.onto.BasicOntology.STRING));
@@ -366,16 +331,6 @@ public class BakeryOntology extends Ontology implements BakeryOntology_Vocabular
     
     	jade.content.schema.PredicateSchema _psPackerRaport = (jade.content.schema.PredicateSchema) getSchema(PackerRaport);
     _psPackerRaport.add(PackerRaport_pcgPrep, (jade.content.schema.ConceptSchema) getSchema("__ListClass_PackagePreparation"));
-    
-    	jade.content.schema.AgentActionSchema _asSubmitPackage = (jade.content.schema.AgentActionSchema) getSchema(SubmitPackage);
-    _asSubmitPackage.add(SubmitPackage_packageOfGoods, (jade.content.schema.ConceptSchema) getSchema(PackageOfGoods));
-    
-    	jade.content.schema.AgentActionSchema _asRejectPackage = (jade.content.schema.AgentActionSchema) getSchema(RejectPackage);
-    _asRejectPackage.add(RejectPackage_packageId, (jade.content.schema.PrimitiveSchema) getSchema(jade.content.onto.BasicOntology.STRING));
-    _asRejectPackage.add(RejectPackage_reason, (jade.content.schema.PrimitiveSchema) getSchema(jade.content.onto.BasicOntology.STRING));
-    
-    	jade.content.schema.AgentActionSchema _asRepackedPackage = (jade.content.schema.AgentActionSchema) getSchema(RepackedPackage);
-    _asRepackedPackage.add(RepackedPackage_packageId, (jade.content.schema.PrimitiveSchema) getSchema(jade.content.onto.BasicOntology.STRING));
     
     	jade.content.schema.PredicateSchema _psPackageStatus = (jade.content.schema.PredicateSchema) getSchema(PackageStatus);
     _psPackageStatus.add(PackageStatus_pcg, (jade.content.schema.ConceptSchema) getSchema(PackageOfGoods));

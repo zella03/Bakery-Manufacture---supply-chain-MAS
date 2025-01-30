@@ -20,14 +20,6 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
 
   public static final String Good_batchSize = "batchSize";
 
-  public static final String OrderQuantity = "OrderQuantity";
-
-  public static final String OrderQuantity_good = "good";
-
-  public static final String OrderQuantity_type = "type";
-
-  public static final String OrderQuantity_quantity = "quantity";
-
   public static final String Order = "Order";
 
   public static final String Order_id = "id";
@@ -37,6 +29,14 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
   public static final String Order_status = "status";
 
   public static final String Order_type = "type";
+
+  public static final String OrderQuantity = "OrderQuantity";
+
+  public static final String OrderQuantity_good = "good";
+
+  public static final String OrderQuantity_type = "type";
+
+  public static final String OrderQuantity_quantity = "quantity";
 
   public static final String PackageOfGoods = "PackageOfGoods";
 
@@ -152,6 +152,10 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
 
   public static final String PackerRaport_pcgPrep = "pcgPrep";
 
+  public static final String PackageStatus = "PackageStatus";
+
+  public static final String PackageStatus_pcg = "pcg";
+
   public static final String AgentsReported = "AgentsReported";
 
   public static final String EndOfPrivateOrders = "EndOfPrivateOrders";
@@ -163,30 +167,4 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
   public static final String EndOfDay = "EndOfDay";
 
   public static final String AllPackagesReady = "AllPackagesReady";
-
-  public static final String SubmitPackage = "SubmitPackage";
-
-  public static final String SubmitPackage_packageOfGoods = "packageOfGoods";
-
-  public static final String RejectPackage = "RejectPackage";
-
-  public static final String RejectPackage_packageId = "packageId";
-
-  public static final String RejectPackage_reason = "reason";
-
-  public static final String RepackedPackage = "RepackedPackage";
-
-  public static final String RepackedPackage_packageId = "packageId";
-
-  public static final String PackageStatus = "PackageStatus";
-
-  public static final String PackageStatus_pcg = "pcg";
-
-  public static final String OrderRedoRequired = "OrderRedoRequired";
-
-  public static final String PackageReady = "PackageReady";
-
-  public static final String PackageRejected = "PackageRejected";
-
-  public static final String OrderCorrect = "OrderCorrect";
 }

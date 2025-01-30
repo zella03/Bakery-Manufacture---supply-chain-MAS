@@ -5,6 +5,7 @@ import jadescript.core.exception.ExceptionThrower;
 import jadescript.core.exception.JadescriptException;
 import jadescript.java.AgentEnv;
 import jadescript.java.SideEffectsFlag;
+import jadescript.util.JadescriptList;
 
 @SuppressWarnings("all")
 public class FinishRaports extends CyclicBehaviour<Supervisor> {
@@ -21,13 +22,13 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
   public void doAction(final int _tickCount) {
     this.__ignoreMessageHandlers = false;
     super.doAction(_tickCount);
-    __event1.run();
     __event2.run();
     __event3.run();
+    __event4.run();
     if(!this.__ignoreMessageHandlers) {
     	this.__noMessageHandled();
     }
-    if ( true  && !__event1.__eventFired && !__event2.__eventFired && !__event3.__eventFired) __awaitForEvents();
+    if ( true  && !__event2.__eventFired && !__event3.__eventFired && !__event4.__eventFired) __awaitForEvents();
   }
 
   public Boolean __hasStaleMessageHandler() {
@@ -47,27 +48,37 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
 
   public Codec __codec = new jade.content.lang.leap.LEAPCodec();
 
+  protected JadescriptList<String> listOfRaports = null;
+
+  public void setListOfRaports(final JadescriptList<String> listOfRaports) {
+    this.listOfRaports = listOfRaports;
+  }
+
+  public JadescriptList<String> getListOfRaports() {
+    return this.listOfRaports;
+  }
+
   public FinishRaports(final AgentEnv<? extends Supervisor, ? extends SideEffectsFlag.WithSideEffects> _agentEnv) {
     super(_agentEnv);
     __initializeAgentEnv();
     __initializeProperties();
     try {
     	/* 
-    	 * Compiled from source statement at line 241
+    	 * Compiled from source statement at line 242
     	 * log "SUPERVISOR waiting for final reports"
     	 */
     	
     	jadescript.core.Agent.doLog(jade.util.Logger.INFO, FinishRaports.this.getClass().getName(), FinishRaports.this, "on create", java.lang.String.valueOf("SUPERVISOR waiting for final reports"));
     	
     	/* 
-    	 * Compiled from source statement at line 242
+    	 * Compiled from source statement at line 243
     	 * allBakersReported = 0
     	 */
     	
     	FinishRaports.this._agentEnv.getAgent().setAllBakersReported(0);
     	
     	/* 
-    	 * Compiled from source statement from line 243 to line 246
+    	 * Compiled from source statement from line 244 to line 247
     	 * if length of supplierList ≠ 0 do #means that this is Supervisor2
     	 *             packerReported = false
     	 *         else do
@@ -76,7 +87,7 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
     	
     	if(!java.util.Objects.equals(FinishRaports.this._agentEnv.getAgent().getSupplierList().size(), 0)) {
     		/* 
-    		 * Compiled from source statement at line 244
+    		 * Compiled from source statement at line 245
     		 * packerReported = false
     		 */
     		
@@ -84,7 +95,7 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
     	}
     	else {
     		/* 
-    		 * Compiled from source statement at line 246
+    		 * Compiled from source statement at line 247
     		 * packerReported = true
     		 */
     		
@@ -99,28 +110,36 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
     }
   }
 
-  private class __Event1 {
+  private class __Event2 {
     Boolean __eventFired = true;
 
     public void run() {
       try {
       	/* 
-      	 * Compiled from source statement from line 249 to line 251
+      	 * Compiled from source statement from line 250 to line 253
       	 * if allBakersReported = numOfWorkers and packerReported do
+      	 *             log listOfRaports
       	 *             log "END OF WORK"
       	 *             destroy this
       	 */
       	
       	if(java.util.Objects.equals(FinishRaports.this._agentEnv.getAgent().getAllBakersReported(), FinishRaports.this._agentEnv.getAgent().getNumOfWorkers()) && FinishRaports.this._agentEnv.getAgent().getPackerReported()) {
       		/* 
-      		 * Compiled from source statement at line 250
+      		 * Compiled from source statement at line 251
+      		 * log listOfRaports
+      		 */
+      		
+      		jadescript.core.Agent.doLog(jade.util.Logger.INFO, FinishRaports.this.getClass().getName(), FinishRaports.this, "on execute", java.lang.String.valueOf(FinishRaports.this.getListOfRaports()));
+      		
+      		/* 
+      		 * Compiled from source statement at line 252
       		 * log "END OF WORK"
       		 */
       		
       		jadescript.core.Agent.doLog(jade.util.Logger.INFO, FinishRaports.this.getClass().getName(), FinishRaports.this, "on execute", java.lang.String.valueOf("END OF WORK"));
       		
       		/* 
-      		 * Compiled from source statement at line 251
+      		 * Compiled from source statement at line 253
       		 * destroy this
       		 */
       		
@@ -136,9 +155,9 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
     }
   }
 
-  private FinishRaports.__Event1 __event1 =  new FinishRaports.__Event1();
+  private FinishRaports.__Event2 __event2 =  new FinishRaports.__Event2();
 
-  private class __Event2 {
+  private class __Event3 {
     Boolean __eventFired = false;
 
     public void run() {
@@ -147,7 +166,7 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
       	
       	return ;
       }
-       class __PatternMatcher1904067707 {
+       class __PatternMatcher968468878 {
       	public jade.core.AID id;
       	
       	public java.lang.Integer succRestockByColl;
@@ -160,7 +179,7 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
       	
       	public jadescript.util.JadescriptList<IngredientQuantity> stock;
       	
-      	private final __PatternMatcher1904067707 __PatternMatcher1904067707_obj =  this;
+      	private final __PatternMatcher968468878 __PatternMatcher968468878_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		jade.core.AID __x;
@@ -300,7 +319,7 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
       		return true && headerMatch_structterm0(__x.getId()) && headerMatch_structterm1(__x.getNumRestockFromColl()) && headerMatch_structterm2(__x.getNumRestockFromSupp()) && headerMatch_structterm3(__x.getNumOrdersToRedo()) && headerMatch_structterm4(__x.getOrdersDone()) && headerMatch_structterm5(__x.getRestStock());
       	}
       }
-      __PatternMatcher1904067707 __PatternMatcher1904067707_obj = new __PatternMatcher1904067707();
+      __PatternMatcher968468878 __PatternMatcher968468878_obj = new __PatternMatcher968468878();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -308,7 +327,7 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1904067707_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher968468878_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -331,25 +350,32 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement at line 255
+      			 * Compiled from source statement at line 257
       			 * senderAgent = sender of message
       			 */
       			
       			jade.core.AID senderAgent = ((jadescript.core.message.InformMessage<BakerRaportInfo>) __receivedMessage).getSender();
       			
       			/* 
-      			 * Compiled from source statement from line 256 to line 260
-      			 * log "RAPORT OF: "+name of agent+" for BAKER: "+name of senderAgent
+      			 * Compiled from source statement from line 258 to line 262
+      			 * raportInstance = "REPORT OF: "+name of agent+" for BAKER: "+name of senderAgent
       			 *             + "\n Num of successful necessary assistance of colleagues: "+succRestockByColl
       			 *             + "\n Num of successful necessary restocks from suppliers: "+succRestockBySupp
       			 *             + "\n Orders done: "+ordersDone+" and orders needed to be redone: "+ordersToRedo
-      			 *             + "\n Stock left: "+stock
+      			 *             + "\n Stock left: "+stock+"\n\n"
       			 */
       			
-      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, FinishRaports.this.getClass().getName(), FinishRaports.this, "on inform", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("RAPORT OF: ") + java.lang.String.valueOf(FinishRaports.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" for BAKER: ")) + java.lang.String.valueOf(senderAgent.getName())) + java.lang.String.valueOf("\n Num of successful necessary assistance of colleagues: ")) + java.lang.String.valueOf(__PatternMatcher1904067707_obj.succRestockByColl)) + java.lang.String.valueOf("\n Num of successful necessary restocks from suppliers: ")) + java.lang.String.valueOf(__PatternMatcher1904067707_obj.succRestockBySupp)) + java.lang.String.valueOf("\n Orders done: ")) + java.lang.String.valueOf(__PatternMatcher1904067707_obj.ordersDone)) + java.lang.String.valueOf(" and orders needed to be redone: ")) + java.lang.String.valueOf(__PatternMatcher1904067707_obj.ordersToRedo)) + java.lang.String.valueOf("\n Stock left: ")) + java.lang.String.valueOf(__PatternMatcher1904067707_obj.stock)));
+      			java.lang.String raportInstance = java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("REPORT OF: ") + java.lang.String.valueOf(FinishRaports.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" for BAKER: ")) + java.lang.String.valueOf(senderAgent.getName())) + java.lang.String.valueOf("\n Num of successful necessary assistance of colleagues: ")) + java.lang.String.valueOf(__PatternMatcher968468878_obj.succRestockByColl)) + java.lang.String.valueOf("\n Num of successful necessary restocks from suppliers: ")) + java.lang.String.valueOf(__PatternMatcher968468878_obj.succRestockBySupp)) + java.lang.String.valueOf("\n Orders done: ")) + java.lang.String.valueOf(__PatternMatcher968468878_obj.ordersDone)) + java.lang.String.valueOf(" and orders needed to be redone: ")) + java.lang.String.valueOf(__PatternMatcher968468878_obj.ordersToRedo)) + java.lang.String.valueOf("\n Stock left: ")) + java.lang.String.valueOf(__PatternMatcher968468878_obj.stock)) + java.lang.String.valueOf("\n\n");
       			
       			/* 
-      			 * Compiled from source statement at line 262
+      			 * Compiled from source statement at line 264
+      			 * add raportInstance to listOfRaports
+      			 */
+      			
+      			FinishRaports.this.getListOfRaports().add(raportInstance);
+      			
+      			/* 
+      			 * Compiled from source statement at line 265
       			 * allBakersReported = allBakersReported + 1
       			 */
       			
@@ -374,9 +400,9 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
     }
   }
 
-  private FinishRaports.__Event2 __event2 = null;
+  private FinishRaports.__Event3 __event3 = null;
 
-  private class __Event3 {
+  private class __Event4 {
     Boolean __eventFired = false;
 
     public void run() {
@@ -385,10 +411,10 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
       	
       	return ;
       }
-       class __PatternMatcher1349609425 {
+       class __PatternMatcher917537106 {
       	public jadescript.util.JadescriptList<PackagePreparation> timeForPackage;
       	
-      	private final __PatternMatcher1349609425 __PatternMatcher1349609425_obj =  this;
+      	private final __PatternMatcher917537106 __PatternMatcher917537106_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		jadescript.util.JadescriptList<PackagePreparation> __x;
@@ -428,7 +454,7 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
       		return true && headerMatch_structterm0(__x.getPcgPrep());
       	}
       }
-      __PatternMatcher1349609425 __PatternMatcher1349609425_obj = new __PatternMatcher1349609425();
+      __PatternMatcher917537106 __PatternMatcher917537106_obj = new __PatternMatcher917537106();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -436,7 +462,7 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1349609425_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher917537106_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -459,15 +485,29 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement from line 265 to line 266
-      			 * log "RAPORT OF: "+name of agent+" for PACKER: "+ name of packer
+      			 * Compiled from source statement at line 268
+      			 * senderAgent = sender of message
+      			 */
+      			
+      			jade.core.AID senderAgent = ((jadescript.core.message.InformMessage<PackerRaport>) __receivedMessage).getSender();
+      			
+      			/* 
+      			 * Compiled from source statement from line 269 to line 270
+      			 * raportInstance = "REPORT OF: "+name of agent+" for PACKER: "+ name of senderAgent
       			 *             + "\n Packages with their prep time: "+PackerRaport(timeForPackage)
       			 */
       			
-      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, FinishRaports.this.getClass().getName(), FinishRaports.this, "on inform", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("RAPORT OF: ") + java.lang.String.valueOf(FinishRaports.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" for PACKER: ")) + java.lang.String.valueOf(FinishRaports.this._agentEnv.getAgent().getPacker().getName())) + java.lang.String.valueOf("\n Packages with their prep time: ")) + java.lang.String.valueOf(BakeryOntology.PackerRaport(__PatternMatcher1349609425_obj.timeForPackage))));
+      			java.lang.String raportInstance = java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("REPORT OF: ") + java.lang.String.valueOf(FinishRaports.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" for PACKER: ")) + java.lang.String.valueOf(senderAgent.getName())) + java.lang.String.valueOf("\n Packages with their prep time: ")) + java.lang.String.valueOf(BakeryOntology.PackerRaport(__PatternMatcher917537106_obj.timeForPackage));
       			
       			/* 
-      			 * Compiled from source statement at line 268
+      			 * Compiled from source statement at line 272
+      			 * add raportInstance to listOfRaports
+      			 */
+      			
+      			FinishRaports.this.getListOfRaports().add(raportInstance);
+      			
+      			/* 
+      			 * Compiled from source statement at line 273
       			 * packerReported = true
       			 */
       			
@@ -492,7 +532,7 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
     }
   }
 
-  private FinishRaports.__Event3 __event3 = null;
+  private FinishRaports.__Event4 __event4 = null;
 
   private ExceptionThrower __thrower = jadescript.core.exception.ExceptionThrower.__DEFAULT_THROWER;
 
@@ -507,9 +547,11 @@ public class FinishRaports extends CyclicBehaviour<Supervisor> {
   private void __initializeProperties() {
     // Initializing properties and event handlers:
     {
-    	__event2 = new FinishRaports.__Event2();
+    	FinishRaports.this.listOfRaports = new jadescript.util.JadescriptList<java.lang.String>();
     	
     	__event3 = new FinishRaports.__Event3();
+    	
+    	__event4 = new FinishRaports.__Event4();
     }
   }
 }

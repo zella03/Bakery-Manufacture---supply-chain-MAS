@@ -1,1 +1,1 @@
-( ap-description  :name "localhost:1099/JADE" :ap-services (set ( ap-service  :name fipa.mts.mtp.http.std :type fipa.mts.mtp.http.std :addresses (sequence http://kubernetes.docker.internal:7778/acc))))
+( ap-description  :name "130.251.244.58:1099/JADE" :ap-services (set ( ap-service  :name fipa.mts.mtp.http.std :type fipa.mts.mtp.http.std :addresses (sequence http://130.251.244.58:7778/acc))))

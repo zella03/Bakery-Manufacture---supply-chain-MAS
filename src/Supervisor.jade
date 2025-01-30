@@ -157,7 +157,7 @@ cyclic behaviour SendOrder for agent Supervisor uses ontology BakeryOntology
 			    else do
 			       log "NO MORE ORDERS under SUPERVISOR: "+ name of agent
 			       send message inform EndOfOrders to senderAgent
-			       destroy this
+			      
 		else do
 		  log "not yet reported"
 
@@ -236,6 +236,7 @@ cyclic behaviour WaitingForFinishedOrders for agent Supervisor uses ontology Bak
             send message inform AllPackagesReady to packer
             
 cyclic behaviour FinishRaports for agent Supervisor uses ontology BakeryOntology
+    property listOfRaports as list of text
     
     on create do
         log "SUPERVISOR waiting for final reports"
@@ -247,24 +248,28 @@ cyclic behaviour FinishRaports for agent Supervisor uses ontology BakeryOntology
              
     on execute do
         if allBakersReported = numOfWorkers and packerReported do
+            log listOfRaports
             log "END OF WORK"
             destroy this
         # if all reported zakończ wszystko!!
         
     on message inform BakerRaportInfo(id,succRestockByColl,succRestockBySupp,ordersToRedo,ordersDone,stock) do
         senderAgent = sender of message
-        log "RAPORT OF: "+name of agent+" for BAKER: "+name of senderAgent
+        raportInstance = "REPORT OF: "+name of agent+" for BAKER: "+name of senderAgent
             + "\n Num of successful necessary assistance of colleagues: "+succRestockByColl
             + "\n Num of successful necessary restocks from suppliers: "+succRestockBySupp
             + "\n Orders done: "+ordersDone+" and orders needed to be redone: "+ordersToRedo
-            + "\n Stock left: "+stock
-            
+            + "\n Stock left: "+stock+"\n\n"
+        
+        add raportInstance to listOfRaports  
         allBakersReported = allBakersReported + 1
     
     on message inform PackerRaport(timeForPackage) do
-        log "RAPORT OF: "+name of agent+" for PACKER: "+ name of packer
+        senderAgent = sender of message
+        raportInstance = "REPORT OF: "+name of agent+" for PACKER: "+ name of senderAgent
             + "\n Packages with their prep time: "+PackerRaport(timeForPackage)
-            
+        
+        add raportInstance to listOfRaports    
         packerReported = true
     
     

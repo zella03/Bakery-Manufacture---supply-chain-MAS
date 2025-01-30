@@ -1,1 +1,1 @@
-http://kubernetes.docker.internal:7778/acc
+http://130.251.244.58:7778/acc

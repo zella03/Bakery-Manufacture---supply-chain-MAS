@@ -519,19 +519,19 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       				try {
       					jadescript.util.SendMessageUtils.validatePerformative("inform");
       					
-      					java.lang.Object _contentToBeSent1135632694 = BakeryOntology.PackageStatus(pcg);
+      					java.lang.Object _contentToBeSent1440795249 = BakeryOntology.PackageStatus(pcg);
       					
-      					jadescript.core.message.Message _synthesizedMessage1135632694 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      					jadescript.core.message.Message _synthesizedMessage1440795249 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       					
-      					_synthesizedMessage1135632694.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1135632694,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      					_synthesizedMessage1440795249.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1440795249,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       					
-      					_synthesizedMessage1135632694.setLanguage(__codec.getName());;
+      					_synthesizedMessage1440795249.setLanguage(__codec.getName());;
       					
-      					_synthesizedMessage1135632694.addReceiver(new jade.core.AID(java.lang.String.valueOf(WaitAndPackOrders.this._agentEnv.getAgent().getSupervisorName()), false));
+      					_synthesizedMessage1440795249.addReceiver(new jade.core.AID(java.lang.String.valueOf(WaitAndPackOrders.this._agentEnv.getAgent().getSupervisorName()), false));
       					
-      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1135632694, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1135632694, "inform"));
+      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1440795249, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1440795249, "inform"));
       					
-      					_agentEnv.getAgent().send(_synthesizedMessage1135632694);
+      					_agentEnv.getAgent().send(_synthesizedMessage1440795249);
       				}
       				catch(java.lang.Throwable _t) {
       					throw jadescript.core.exception.JadescriptException.wrap(_t);
@@ -576,10 +576,10 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       	
       	return ;
       }
-       class __PatternMatcher256608797 {
+       class __PatternMatcher1446479028 {
       	public Order order;
       	
-      	private final __PatternMatcher256608797 __PatternMatcher256608797_obj =  this;
+      	private final __PatternMatcher1446479028 __PatternMatcher1446479028_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		Order __x;
@@ -619,7 +619,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       		return true && headerMatch_structterm0(__x.getOrder());
       	}
       }
-      __PatternMatcher256608797 __PatternMatcher256608797_obj = new __PatternMatcher256608797();
+      __PatternMatcher1446479028 __PatternMatcher1446479028_obj = new __PatternMatcher1446479028();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -627,7 +627,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher256608797_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher1446479028_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -661,7 +661,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       			 * add order to ordersReadyToPack
       			 */
       			
-      			WaitAndPackOrders.this._agentEnv.getAgent().getOrdersReadyToPack().add(__PatternMatcher256608797_obj.order);
+      			WaitAndPackOrders.this._agentEnv.getAgent().getOrdersReadyToPack().add(__PatternMatcher1446479028_obj.order);
       		}
       		catch(jadescript.core.exception.JadescriptException __throwable) {
       			__handleJadescriptException(__throwable);
@@ -693,8 +693,8 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       	
       	return ;
       }
-       class __PatternMatcher1656787452 {
-      	private final __PatternMatcher1656787452 __PatternMatcher1656787452_obj =  this;
+       class __PatternMatcher502009776 {
+      	private final __PatternMatcher502009776 __PatternMatcher502009776_obj =  this;
       	
       	public boolean headerMatch(java.lang.Object __objx) {
       		AllPackagesReady __x;
@@ -714,7 +714,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       		return java.util.Objects.equals(__x,BakeryOntology.AllPackagesReady());
       	}
       }
-      __PatternMatcher1656787452 __PatternMatcher1656787452_obj = new __PatternMatcher1656787452();
+      __PatternMatcher502009776 __PatternMatcher502009776_obj = new __PatternMatcher502009776();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -722,7 +722,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1656787452_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher502009776_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();

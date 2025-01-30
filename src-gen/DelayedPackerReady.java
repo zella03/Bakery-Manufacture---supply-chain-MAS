@@ -64,19 +64,19 @@ public class DelayedPackerReady extends OneShotBehaviour<Packer> {
       	try {
       		jadescript.util.SendMessageUtils.validatePerformative("inform");
       		
-      		java.lang.Object _contentToBeSent1583940454 = BakeryOntology.WorkerReady(DelayedPackerReady.this.getJadescriptAgent().getAID() ,"packer" ,"");
+      		java.lang.Object _contentToBeSent761134793 = BakeryOntology.WorkerReady(DelayedPackerReady.this.getJadescriptAgent().getAID() ,"packer" ,"");
       		
-      		jadescript.core.message.Message _synthesizedMessage1583940454 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      		jadescript.core.message.Message _synthesizedMessage761134793 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       		
-      		_synthesizedMessage1583940454.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1583940454,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      		_synthesizedMessage761134793.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent761134793,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       		
-      		_synthesizedMessage1583940454.setLanguage(__codec.getName());;
+      		_synthesizedMessage761134793.setLanguage(__codec.getName());;
       		
-      		_synthesizedMessage1583940454.addReceiver(new jade.core.AID(java.lang.String.valueOf(DelayedPackerReady.this._agentEnv.getAgent().getSupervisorName()), false));
+      		_synthesizedMessage761134793.addReceiver(new jade.core.AID(java.lang.String.valueOf(DelayedPackerReady.this._agentEnv.getAgent().getSupervisorName()), false));
       		
-      		_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1583940454, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1583940454, "inform"));
+      		_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage761134793, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent761134793, "inform"));
       		
-      		_agentEnv.getAgent().send(_synthesizedMessage1583940454);
+      		_agentEnv.getAgent().send(_synthesizedMessage761134793);
       	}
       	catch(java.lang.Throwable _t) {
       		throw jadescript.core.exception.JadescriptException.wrap(_t);

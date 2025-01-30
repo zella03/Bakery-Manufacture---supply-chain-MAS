@@ -212,19 +212,19 @@ public class BakingOrderBehavior extends CyclicBehaviour<Baker> {
       				try {
       					jadescript.util.SendMessageUtils.validatePerformative("inform");
       					
-      					java.lang.Object _contentToBeSent2061605137 = orderWithStat;
+      					java.lang.Object _contentToBeSent1911302309 = orderWithStat;
       					
-      					jadescript.core.message.Message _synthesizedMessage2061605137 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      					jadescript.core.message.Message _synthesizedMessage1911302309 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       					
-      					_synthesizedMessage2061605137.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent2061605137,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      					_synthesizedMessage1911302309.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1911302309,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       					
-      					_synthesizedMessage2061605137.setLanguage(__codec.getName());;
+      					_synthesizedMessage1911302309.setLanguage(__codec.getName());;
       					
-      					_synthesizedMessage2061605137.addReceiver(BakingOrderBehavior.this._agentEnv.getAgent().getAID());
+      					_synthesizedMessage1911302309.addReceiver(BakingOrderBehavior.this._agentEnv.getAgent().getAID());
       					
-      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage2061605137, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent2061605137, "inform"));
+      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1911302309, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1911302309, "inform"));
       					
-      					_agentEnv.getAgent().send(_synthesizedMessage2061605137);
+      					_agentEnv.getAgent().send(_synthesizedMessage1911302309);
       				}
       				catch(java.lang.Throwable _t) {
       					throw jadescript.core.exception.JadescriptException.wrap(_t);

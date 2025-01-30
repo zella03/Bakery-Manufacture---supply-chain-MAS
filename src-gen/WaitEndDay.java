@@ -60,8 +60,8 @@ public class WaitEndDay extends CyclicBehaviour<Packer> {
       	
       	return ;
       }
-       class __PatternMatcher216187747 {
-      	private final __PatternMatcher216187747 __PatternMatcher216187747_obj =  this;
+       class __PatternMatcher2859542 {
+      	private final __PatternMatcher2859542 __PatternMatcher2859542_obj =  this;
       	
       	public boolean headerMatch(java.lang.Object __objx) {
       		EndOfDay __x;
@@ -81,7 +81,7 @@ public class WaitEndDay extends CyclicBehaviour<Packer> {
       		return java.util.Objects.equals(__x,BakeryOntology.EndOfDay());
       	}
       }
-      __PatternMatcher216187747 __PatternMatcher216187747_obj = new __PatternMatcher216187747();
+      __PatternMatcher2859542 __PatternMatcher2859542_obj = new __PatternMatcher2859542();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -89,7 +89,7 @@ public class WaitEndDay extends CyclicBehaviour<Packer> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher216187747_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher2859542_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -119,19 +119,19 @@ public class WaitEndDay extends CyclicBehaviour<Packer> {
       			try {
       				jadescript.util.SendMessageUtils.validatePerformative("inform");
       				
-      				java.lang.Object _contentToBeSent123581572 = BakeryOntology.PackerRaport(WaitEndDay.this._agentEnv.getAgent().getTimeForPackage());
+      				java.lang.Object _contentToBeSent1538310574 = BakeryOntology.PackerRaport(WaitEndDay.this._agentEnv.getAgent().getTimeForPackage());
       				
-      				jadescript.core.message.Message _synthesizedMessage123581572 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      				jadescript.core.message.Message _synthesizedMessage1538310574 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       				
-      				_synthesizedMessage123581572.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent123581572,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      				_synthesizedMessage1538310574.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1538310574,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       				
-      				_synthesizedMessage123581572.setLanguage(__codec.getName());;
+      				_synthesizedMessage1538310574.setLanguage(__codec.getName());;
       				
-      				_synthesizedMessage123581572.addReceiver(new jade.core.AID(java.lang.String.valueOf(WaitEndDay.this._agentEnv.getAgent().getSupervisorName()), false));
+      				_synthesizedMessage1538310574.addReceiver(new jade.core.AID(java.lang.String.valueOf(WaitEndDay.this._agentEnv.getAgent().getSupervisorName()), false));
       				
-      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage123581572, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent123581572, "inform"));
+      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1538310574, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1538310574, "inform"));
       				
-      				_agentEnv.getAgent().send(_synthesizedMessage123581572);
+      				_agentEnv.getAgent().send(_synthesizedMessage1538310574);
       			}
       			catch(java.lang.Throwable _t) {
       				throw jadescript.core.exception.JadescriptException.wrap(_t);

@@ -12,23 +12,17 @@ ontology BakeryOntology
 		batchSize as integer
 	)
 	
-	concept OrderQuantity(
-		good as text,
-		type as text,
-		quantity as integer
-	)
-
 	concept Order(
 		id as text,
 		good as text, #name of good
 		status as text, #pending, in progress, completed, to fix
 		type as text #normal/private
 	)
-	
-	#concept GoodsQuantity(
-	#	good as text,
-	#	quantity as integer
-	#)
+	concept OrderQuantity(
+        good as text,
+        type as text,
+        quantity as integer
+    )
 	
 	concept PackageOfGoods(
 		packageId as text,
@@ -58,6 +52,7 @@ ontology BakeryOntology
 	predicate OrderStatus(orderId as text, status as text) #notification of clompletion
 	predicate BakerRaportInfo(id as aid, numRestockFromColl as integer, numRestockFromSupp as integer, numOrdersToRedo as integer,ordersDone as integer, restStock as list of IngredientQuantity)
 	predicate PackerRaport(pcgPrep as list of PackagePreparation)
+	predicate PackageStatus(pcg as PackageOfGoods)
 	
 	proposition AgentsReported
 	proposition EndOfPrivateOrders
@@ -65,27 +60,3 @@ ontology BakeryOntology
     proposition GroupEndedDay
     proposition EndOfDay
     proposition AllPackagesReady
-    #proposition SupplierRunOutSupply
-    
-    
-	
-	#action NotifyCompletion(orderId as text)
-	
-	#action RedoOrder(orderId as text)
-	#action HelpWithIngredients(ingredients as list of IngredientQuantity)
-	
-	action SubmitPackage(packageOfGoods as PackageOfGoods)
-	action RejectPackage(packageId as text, reason as text)
-	action RepackedPackage(packageId as text)
-	
-	
-	predicate PackageStatus(pcg as PackageOfGoods)
-	#predicate IngredientsShortage(ingredientQuan as IngredientQuantity, quantityNeed as integer)
-	
-	proposition OrderRedoRequired
-	proposition PackageReady
-	proposition PackageRejected
-	proposition OrderCorrect
-	
-	
-	#statuses: pending (before everything), toPrepare (just send), waitIngredients (if not enought inngredients), preparing, baking, toFix, finished

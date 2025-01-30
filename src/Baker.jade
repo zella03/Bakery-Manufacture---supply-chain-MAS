@@ -322,7 +322,7 @@ cyclic behaviour HandleIngredientsShortage for agent Baker uses ontology BakeryO
            
     on message request ProvideIngredients(handedIngredients, whileProparing) do
         senderAgent = sender of message
-        log "Just got ingredients from: "+senderAgent
+        log "Just got ingredients from: "+ name of senderAgent
         
         for ingredient in handedIngredients do
             for item in stock do

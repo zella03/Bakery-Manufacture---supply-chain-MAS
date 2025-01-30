@@ -60,8 +60,8 @@ public class WaitForEandOfDay extends CyclicBehaviour<Supplier> {
       	
       	return ;
       }
-       class __PatternMatcher1246806578 {
-      	private final __PatternMatcher1246806578 __PatternMatcher1246806578_obj =  this;
+       class __PatternMatcher1818337768 {
+      	private final __PatternMatcher1818337768 __PatternMatcher1818337768_obj =  this;
       	
       	public boolean headerMatch(java.lang.Object __objx) {
       		EndOfDay __x;
@@ -81,7 +81,7 @@ public class WaitForEandOfDay extends CyclicBehaviour<Supplier> {
       		return java.util.Objects.equals(__x,BakeryOntology.EndOfDay());
       	}
       }
-      __PatternMatcher1246806578 __PatternMatcher1246806578_obj = new __PatternMatcher1246806578();
+      __PatternMatcher1818337768 __PatternMatcher1818337768_obj = new __PatternMatcher1818337768();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -89,7 +89,7 @@ public class WaitForEandOfDay extends CyclicBehaviour<Supplier> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1246806578_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher1818337768_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();

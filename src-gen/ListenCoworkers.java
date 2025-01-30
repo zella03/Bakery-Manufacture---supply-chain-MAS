@@ -146,12 +146,12 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       	
       	return ;
       }
-       class __PatternMatcher1285775277 {
+       class __PatternMatcher311126751 {
       	public jade.core.AID agentId;
       	
       	public jadescript.util.JadescriptList<IngredientQuantity> ingredients;
       	
-      	private final __PatternMatcher1285775277 __PatternMatcher1285775277_obj =  this;
+      	private final __PatternMatcher311126751 __PatternMatcher311126751_obj =  this;
       	
       	public boolean headerMatch_structterm0_typecast0(java.lang.Object __objx) {
       		jade.core.AID __x;
@@ -247,7 +247,7 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       		return true && headerMatch_structterm0(__x.getAgentId()) && headerMatch_structterm1(__x.getIngredients());
       	}
       }
-      __PatternMatcher1285775277 __PatternMatcher1285775277_obj = new __PatternMatcher1285775277();
+      __PatternMatcher311126751 __PatternMatcher311126751_obj = new __PatternMatcher311126751();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -255,7 +255,7 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1285775277_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher311126751_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -303,7 +303,7 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       			 * log "Needed ingredients: "+ingredients
       			 */
       			
-      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ListenCoworkers.this.getClass().getName(), ListenCoworkers.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf("Needed ingredients: ") + java.lang.String.valueOf(__PatternMatcher1285775277_obj.ingredients)));
+      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ListenCoworkers.this.getClass().getName(), ListenCoworkers.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf("Needed ingredients: ") + java.lang.String.valueOf(__PatternMatcher311126751_obj.ingredients)));
       			
       			/* 
       			 * Compiled from source statement from line 244 to line 257
@@ -337,7 +337,7 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       				 * 	                break
       				 */
       				
-      				for ( IngredientQuantity ingredient : __PatternMatcher1285775277_obj.ingredients) {
+      				for ( IngredientQuantity ingredient : __PatternMatcher311126751_obj.ingredients) {
       					/* 
       					 * Compiled from source statement from line 246 to line 251
       					 * for item in stock do
@@ -374,19 +374,19 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       							try {
       								jadescript.util.SendMessageUtils.validatePerformative("inform");
       								
-      								java.lang.Object _contentToBeSent29974814 = BakeryOntology.IngredientAvaliable(ListenCoworkers.this._agentEnv.getAgent().getAID() ,false ,__PatternMatcher1285775277_obj.ingredients);
+      								java.lang.Object _contentToBeSent561407575 = BakeryOntology.IngredientAvaliable(ListenCoworkers.this._agentEnv.getAgent().getAID() ,false ,__PatternMatcher311126751_obj.ingredients);
       								
-      								jadescript.core.message.Message _synthesizedMessage29974814 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      								jadescript.core.message.Message _synthesizedMessage561407575 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       								
-      								_synthesizedMessage29974814.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent29974814,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      								_synthesizedMessage561407575.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent561407575,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       								
-      								_synthesizedMessage29974814.setLanguage(__codec.getName());;
+      								_synthesizedMessage561407575.setLanguage(__codec.getName());;
       								
-      								_synthesizedMessage29974814.addReceiver(senderAgent);
+      								_synthesizedMessage561407575.addReceiver(senderAgent);
       								
-      								_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage29974814, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent29974814, "inform"));
+      								_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage561407575, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent561407575, "inform"));
       								
-      								_agentEnv.getAgent().send(_synthesizedMessage29974814);
+      								_agentEnv.getAgent().send(_synthesizedMessage561407575);
       							}
       							catch(java.lang.Throwable _t) {
       								throw jadescript.core.exception.JadescriptException.wrap(_t);
@@ -441,19 +441,19 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       				try {
       					jadescript.util.SendMessageUtils.validatePerformative("inform");
       					
-      					java.lang.Object _contentToBeSent964353481 = BakeryOntology.IngredientAvaliable(ListenCoworkers.this._agentEnv.getAgent().getAID() ,false ,__PatternMatcher1285775277_obj.ingredients);
+      					java.lang.Object _contentToBeSent645912201 = BakeryOntology.IngredientAvaliable(ListenCoworkers.this._agentEnv.getAgent().getAID() ,false ,__PatternMatcher311126751_obj.ingredients);
       					
-      					jadescript.core.message.Message _synthesizedMessage964353481 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      					jadescript.core.message.Message _synthesizedMessage645912201 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       					
-      					_synthesizedMessage964353481.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent964353481,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      					_synthesizedMessage645912201.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent645912201,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       					
-      					_synthesizedMessage964353481.setLanguage(__codec.getName());;
+      					_synthesizedMessage645912201.setLanguage(__codec.getName());;
       					
-      					_synthesizedMessage964353481.addReceiver(senderAgent);
+      					_synthesizedMessage645912201.addReceiver(senderAgent);
       					
-      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage964353481, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent964353481, "inform"));
+      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage645912201, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent645912201, "inform"));
       					
-      					_agentEnv.getAgent().send(_synthesizedMessage964353481);
+      					_agentEnv.getAgent().send(_synthesizedMessage645912201);
       				}
       				catch(java.lang.Throwable _t) {
       					throw jadescript.core.exception.JadescriptException.wrap(_t);
@@ -484,19 +484,19 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       				try {
       					jadescript.util.SendMessageUtils.validatePerformative("inform");
       					
-      					java.lang.Object _contentToBeSent1934743226 = BakeryOntology.IngredientAvaliable(ListenCoworkers.this._agentEnv.getAgent().getAID() ,true ,__PatternMatcher1285775277_obj.ingredients);
+      					java.lang.Object _contentToBeSent840989992 = BakeryOntology.IngredientAvaliable(ListenCoworkers.this._agentEnv.getAgent().getAID() ,true ,__PatternMatcher311126751_obj.ingredients);
       					
-      					jadescript.core.message.Message _synthesizedMessage1934743226 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      					jadescript.core.message.Message _synthesizedMessage840989992 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       					
-      					_synthesizedMessage1934743226.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1934743226,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      					_synthesizedMessage840989992.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent840989992,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       					
-      					_synthesizedMessage1934743226.setLanguage(__codec.getName());;
+      					_synthesizedMessage840989992.setLanguage(__codec.getName());;
       					
-      					_synthesizedMessage1934743226.addReceiver(senderAgent);
+      					_synthesizedMessage840989992.addReceiver(senderAgent);
       					
-      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1934743226, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1934743226, "inform"));
+      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage840989992, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent840989992, "inform"));
       					
-      					_agentEnv.getAgent().send(_synthesizedMessage1934743226);
+      					_agentEnv.getAgent().send(_synthesizedMessage840989992);
       				}
       				catch(java.lang.Throwable _t) {
       					throw jadescript.core.exception.JadescriptException.wrap(_t);
@@ -533,12 +533,12 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       	
       	return ;
       }
-       class __PatternMatcher687839998 {
+       class __PatternMatcher362484614 {
       	public jade.core.AID id;
       	
       	public jadescript.util.JadescriptList<IngredientQuantity> listIngredientsNeeded;
       	
-      	private final __PatternMatcher687839998 __PatternMatcher687839998_obj =  this;
+      	private final __PatternMatcher362484614 __PatternMatcher362484614_obj =  this;
       	
       	public boolean headerMatch_structterm0_typecast0(java.lang.Object __objx) {
       		jade.core.AID __x;
@@ -634,7 +634,7 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       		return true && headerMatch_structterm0(__x.getAgentId()) && headerMatch_structterm1(__x.getIngredients());
       	}
       }
-      __PatternMatcher687839998 __PatternMatcher687839998_obj = new __PatternMatcher687839998();
+      __PatternMatcher362484614 __PatternMatcher362484614_obj = new __PatternMatcher362484614();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -642,7 +642,7 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher687839998_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher362484614_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -680,7 +680,7 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       			 *                    add IngredientQuantity(ingredientName of ingredient, quantity of ingredient) to providedIngredients
       			 */
       			
-      			for ( IngredientQuantity ingredient : __PatternMatcher687839998_obj.listIngredientsNeeded) {
+      			for ( IngredientQuantity ingredient : __PatternMatcher362484614_obj.listIngredientsNeeded) {
       				/* 
       				 * Compiled from source statement from line 265 to line 268
       				 * for item in stock do
@@ -739,19 +739,19 @@ public class ListenCoworkers extends CyclicBehaviour<Baker> {
       			try {
       				jadescript.util.SendMessageUtils.validatePerformative("request");
       				
-      				java.lang.Object _contentToBeSent1851714495 = BakeryOntology.ProvideIngredients(ListenCoworkers.this.getProvidedIngredients() ,true);
+      				java.lang.Object _contentToBeSent1478182781 = BakeryOntology.ProvideIngredients(ListenCoworkers.this.getProvidedIngredients() ,true);
       				
-      				jadescript.core.message.Message _synthesizedMessage1851714495 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
+      				jadescript.core.message.Message _synthesizedMessage1478182781 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
       				
-      				_synthesizedMessage1851714495.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1851714495,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      				_synthesizedMessage1478182781.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1478182781,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       				
-      				_synthesizedMessage1851714495.setLanguage(__codec.getName());;
+      				_synthesizedMessage1478182781.setLanguage(__codec.getName());;
       				
-      				_synthesizedMessage1851714495.addReceiver(senderAgent);
+      				_synthesizedMessage1478182781.addReceiver(senderAgent);
       				
-      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1851714495, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1851714495, "request"));
+      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1478182781, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1478182781, "request"));
       				
-      				_agentEnv.getAgent().send(_synthesizedMessage1851714495);
+      				_agentEnv.getAgent().send(_synthesizedMessage1478182781);
       			}
       			catch(java.lang.Throwable _t) {
       				throw jadescript.core.exception.JadescriptException.wrap(_t);
