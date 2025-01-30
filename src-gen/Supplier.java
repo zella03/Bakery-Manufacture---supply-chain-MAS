@@ -116,6 +116,16 @@ public class Supplier extends Agent {
     return this.supplierType;
   }
 
+  protected String supervisorName = null;
+
+  public void setSupervisorName(final String supervisorName) {
+    this.supervisorName = supervisorName;
+  }
+
+  public String getSupervisorName() {
+    return this.supervisorName;
+  }
+
   protected Boolean runOutSupply = null;
 
   public void setRunOutSupply(final Boolean runOutSupply) {
@@ -128,30 +138,38 @@ public class Supplier extends Agent {
 
   private void __onCreate() {
     java.lang.String type = jadescript.util.types.JadescriptValueAdapter.adapt(this.getArguments()[0], new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT));
+    java.lang.String supervisor = jadescript.util.types.JadescriptValueAdapter.adapt(this.getArguments()[1], new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT));
     try {
     	/* 
-    	 * Compiled from source statement at line 15
+    	 * Compiled from source statement at line 16
     	 * supplierType of agent = type
     	 */
     	
     	_agentEnv.getAgent().setSupplierType(type);
     	
     	/* 
-    	 * Compiled from source statement at line 16
+    	 * Compiled from source statement at line 17
+    	 * supervisorName of agent = supervisor
+    	 */
+    	
+    	_agentEnv.getAgent().setSupervisorName(supervisor);
+    	
+    	/* 
+    	 * Compiled from source statement at line 18
     	 * runOutSupply = false
     	 */
     	
     	Supplier.this.setRunOutSupply(false);
     	
     	/* 
-    	 * Compiled from source statement at line 18
+    	 * Compiled from source statement at line 20
     	 * log "SUPPLIER created with arguments: "+supplierType
     	 */
     	
     	jadescript.core.Agent.doLog(jade.util.Logger.INFO, Supplier.this.getClass().getName(), Supplier.this, "on create", java.lang.String.valueOf(java.lang.String.valueOf("SUPPLIER created with arguments: ") + java.lang.String.valueOf(Supplier.this.getSupplierType())));
     	
     	/* 
-    	 * Compiled from source statement from line 20 to line 23
+    	 * Compiled from source statement from line 22 to line 25
     	 * if supplierType = "supplierType1" do
     	 *              listOfAvSupplies = supplies1
     	 *         else do
@@ -160,7 +178,7 @@ public class Supplier extends Agent {
     	
     	if(java.util.Objects.equals(Supplier.this.getSupplierType(), "supplierType1")) {
     		/* 
-    		 * Compiled from source statement at line 21
+    		 * Compiled from source statement at line 23
     		 * listOfAvSupplies = supplies1
     		 */
     		
@@ -168,7 +186,7 @@ public class Supplier extends Agent {
     	}
     	else {
     		/* 
-    		 * Compiled from source statement at line 23
+    		 * Compiled from source statement at line 25
     		 * listOfAvSupplies = supplies2
     		 */
     		
@@ -176,7 +194,7 @@ public class Supplier extends Agent {
     	}
     	
     	/* 
-    	 * Compiled from source statement at line 25
+    	 * Compiled from source statement at line 27
     	 * 
     	 *         
     	 *         log "SUPPLIER'S list of supplies: "+listOfAvSupplies
@@ -185,11 +203,11 @@ public class Supplier extends Agent {
     	jadescript.core.Agent.doLog(jade.util.Logger.INFO, Supplier.this.getClass().getName(), Supplier.this, "on create", java.lang.String.valueOf(java.lang.String.valueOf("SUPPLIER'S list of supplies: ") + java.lang.String.valueOf(Supplier.this.getListOfAvSupplies())));
     	
     	/* 
-    	 * Compiled from source statement at line 26
-    	 * activate ProvidingRestock
+    	 * Compiled from source statement at line 28
+    	 * activate DelayedSupplierReady after "PT2S" as duration
     	 */
     	
-    	new ProvidingRestock(_agentEnv.getAgent().toEnv()).activate(_agentEnv.getAgent());
+    	new DelayedSupplierReady(_agentEnv.getAgent().toEnv()).activate_after(_agentEnv.getAgent(), ((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT2S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))));
     }
     catch(jadescript.core.exception.JadescriptException __throwable) {
     	__handleJadescriptException(__throwable);
@@ -237,6 +255,8 @@ public class Supplier extends Agent {
     	
     	Supplier.this.supplierType = "";
     	
+    	Supplier.this.supervisorName = "";
+    	
     	Supplier.this.runOutSupply = false;
     }
   }
@@ -261,7 +281,7 @@ public class Supplier extends Agent {
     cm.registerLanguage(__codec);
   }
 
-  public static JadescriptAgentController create(final ContainerController _container, final String _agentName, final String type) throws StaleProxyException {
-    return jadescript.java.JadescriptAgentController.createRaw(_container, _agentName, Supplier.class, type);
+  public static JadescriptAgentController create(final ContainerController _container, final String _agentName, final String type, final String supervisor) throws StaleProxyException {
+    return jadescript.java.JadescriptAgentController.createRaw(_container, _agentName, Supplier.class, type, supervisor);
   }
 }

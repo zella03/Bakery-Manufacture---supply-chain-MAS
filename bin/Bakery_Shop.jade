@@ -35,6 +35,11 @@ ontology BakeryOntology
 		ordersInPackage as list of OrderQuantity,
 		status as text
 	)
+	
+	concept PackagePreparation(
+		packageId as text,
+		prepTime as duration
+	)
 
 	action RequestOrder(agentId as aid) #only if only one order baking and not waiting for ingredients
 	action AssignOrder(agentId as aid, order as Order) #if supervisor asked (or maybe just a tekst what to doo
@@ -48,14 +53,17 @@ ontology BakeryOntology
 	action GoodToPack(order as Order) #from baker to packer
 	
 	predicate IngredientAvaliable(id as aid, avaliable as boolean,ingredients as list of IngredientQuantity) #wystarczy odjąć u agenta przekazującego i dodać u przyjmującego jeżeli tak
-	predicate WorkerReady(workerId as aid, type as text)
-	predicate PackerReady(workerId as aid)
+	predicate WorkerReady(workerId as aid,worker as text, type as text)
 	predicate SupplierRunOutSupply(bakerWhileProparing as boolean)
 	predicate OrderStatus(orderId as text, status as text) #notification of clompletion
+	predicate BakerRaportInfo(id as aid, numRestockFromColl as integer, numRestockFromSupp as integer, numOrdersToRedo as integer,ordersDone as integer, restStock as list of IngredientQuantity)
+	predicate PackerRaport(pcgPrep as list of PackagePreparation)
 	
 	proposition AgentsReported
 	proposition EndOfPrivateOrders
     proposition EndOfOrders
+    proposition GroupEndedDay
+    proposition EndOfDay
     #proposition SupplierRunOutSupply
     
     

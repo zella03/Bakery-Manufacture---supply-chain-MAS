@@ -57,21 +57,21 @@ public class GoForSupplies extends OneShotBehaviour<Supplier> {
     public void run() {
       try {
       	/* 
-      	 * Compiled from source statement at line 62
+      	 * Compiled from source statement at line 71
       	 * activate CurrentlyRestocking
       	 */
       	
       	new CurrentlyRestocking(_agentEnv.getAgent().toEnv()).activate(_agentEnv.getAgent());
       	
       	/* 
-      	 * Compiled from source statement at line 63
+      	 * Compiled from source statement at line 72
       	 * log "SUPPLIER'S STOCK before: "+listOfAvSupplies
       	 */
       	
       	jadescript.core.Agent.doLog(jade.util.Logger.INFO, GoForSupplies.this.getClass().getName(), GoForSupplies.this, "on execute", java.lang.String.valueOf(java.lang.String.valueOf("SUPPLIER'S STOCK before: ") + java.lang.String.valueOf(GoForSupplies.this._agentEnv.getAgent().getListOfAvSupplies())));
       	
       	/* 
-      	 * Compiled from source statement from line 64 to line 66
+      	 * Compiled from source statement from line 73 to line 75
       	 * for item in listOfAvSupplies do
       	 * 	        if quantity of item < 5 do
       	 * 	            quantity of item = 10
@@ -79,14 +79,14 @@ public class GoForSupplies extends OneShotBehaviour<Supplier> {
       	
       	for ( IngredientQuantity item : GoForSupplies.this._agentEnv.getAgent().getListOfAvSupplies()) {
       		/* 
-      		 * Compiled from source statement from line 65 to line 66
+      		 * Compiled from source statement from line 74 to line 75
       		 * if quantity of item < 5 do
       		 * 	            quantity of item = 10
       		 */
       		
       		if(item.getQuantity() < 5) {
       			/* 
-      			 * Compiled from source statement at line 66
+      			 * Compiled from source statement at line 75
       			 * quantity of item = 10
       			 */
       			
@@ -95,7 +95,7 @@ public class GoForSupplies extends OneShotBehaviour<Supplier> {
       	}
       	
       	/* 
-      	 * Compiled from source statement at line 68
+      	 * Compiled from source statement at line 77
       	 *  # restock for supplier
       	 * 	    
       	 * 	    runOutSupply = false
@@ -104,21 +104,21 @@ public class GoForSupplies extends OneShotBehaviour<Supplier> {
       	GoForSupplies.this._agentEnv.getAgent().setRunOutSupply(false);
       	
       	/* 
-      	 * Compiled from source statement at line 69
+      	 * Compiled from source statement at line 78
       	 * log "SUPPLIER'S STOCK after: "+listOfAvSupplies
       	 */
       	
       	jadescript.core.Agent.doLog(jade.util.Logger.INFO, GoForSupplies.this.getClass().getName(), GoForSupplies.this, "on execute", java.lang.String.valueOf(java.lang.String.valueOf("SUPPLIER'S STOCK after: ") + java.lang.String.valueOf(GoForSupplies.this._agentEnv.getAgent().getListOfAvSupplies())));
       	
       	/* 
-      	 * Compiled from source statement at line 70
+      	 * Compiled from source statement at line 79
       	 * activate ProvidingRestock after "PT2S" as duration
       	 */
       	
       	new ProvidingRestock(_agentEnv.getAgent().toEnv()).activate_after(_agentEnv.getAgent(), ((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT2S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))));
       	
       	/* 
-      	 * Compiled from source statement at line 71
+      	 * Compiled from source statement at line 80
       	 * deactivate CurrentlyRestocking after "PT2S" as duration
       	 */
       	

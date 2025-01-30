@@ -66,29 +66,39 @@ public class Packer extends Agent {
     return this.finishedPackages;
   }
 
+  protected JadescriptList<PackagePreparation> timeForPackage = null;
+
+  public void setTimeForPackage(final JadescriptList<PackagePreparation> timeForPackage) {
+    this.timeForPackage = timeForPackage;
+  }
+
+  public JadescriptList<PackagePreparation> getTimeForPackage() {
+    return this.timeForPackage;
+  }
+
   private void __onCreate() {
     java.lang.String supervisor = jadescript.util.types.JadescriptValueAdapter.adapt(this.getArguments()[0], new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT));
     try {
     	/* 
-    	 * Compiled from source statement at line 8
+    	 * Compiled from source statement at line 9
     	 * supervisorName = supervisor
     	 */
     	
     	Packer.this.setSupervisorName(supervisor);
     	
     	/* 
-    	 * Compiled from source statement at line 9
+    	 * Compiled from source statement at line 10
     	 * log "PACKER created with arguments: "+supervisor
     	 */
     	
     	jadescript.core.Agent.doLog(jade.util.Logger.INFO, Packer.this.getClass().getName(), Packer.this, "on create", java.lang.String.valueOf(java.lang.String.valueOf("PACKER created with arguments: ") + java.lang.String.valueOf(supervisor)));
     	
     	/* 
-    	 * Compiled from source statement at line 11
-    	 * activate DelayedPackerReady after "PT1S" as duration
+    	 * Compiled from source statement at line 12
+    	 * activate DelayedPackerReady after "PT3S" as duration
     	 */
     	
-    	new DelayedPackerReady(_agentEnv.getAgent().toEnv()).activate_after(_agentEnv.getAgent(), ((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT1S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))));
+    	new DelayedPackerReady(_agentEnv.getAgent().toEnv()).activate_after(_agentEnv.getAgent(), ((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT3S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))));
     }
     catch(jadescript.core.exception.JadescriptException __throwable) {
     	__handleJadescriptException(__throwable);
@@ -125,6 +135,8 @@ public class Packer extends Agent {
     	Packer.this.ordersReadyToPack = new jadescript.util.JadescriptList<Order>();
     	
     	Packer.this.finishedPackages = new jadescript.util.JadescriptList<PackageOfGoods>();
+    	
+    	Packer.this.timeForPackage = new jadescript.util.JadescriptList<PackagePreparation>();
     }
   }
 

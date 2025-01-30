@@ -9,10 +9,12 @@ agent Supplier uses ontology BakeryOntology
     property listOfAvSupplies as list of IngredientQuantity
     
     property supplierType as text
+    property supervisorName as text
     property runOutSupply as boolean
     
-    on create with type as text do
+    on create with type as text, supervisor as text do
         supplierType of agent = type
+        supervisorName of agent = supervisor
         runOutSupply = false
         
         log "SUPPLIER created with arguments: "+supplierType
@@ -23,6 +25,13 @@ agent Supplier uses ontology BakeryOntology
             listOfAvSupplies = supplies2
         
         log "SUPPLIER'S list of supplies: "+listOfAvSupplies
+        activate DelayedSupplierReady after "PT2S" as duration
+        #activate ProvidingRestock
+
+one shot behavior DelayedSupplierReady for agent Supplier uses ontology BakeryOntology
+    on execute do
+        send message inform WorkerReady(aid of agent,"supplier","none") to supervisorName@
+        log "SUPPLIER: "+name of agent+" READY TO WORK"
         activate ProvidingRestock
 
 cyclic behaviour ProvidingRestock for agent Supplier uses ontology BakeryOntology

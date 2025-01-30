@@ -1,11 +1,11 @@
 agent Supervisor uses ontology BakeryOntology
-    property orderBread = OrderQuantity("bread","normal",6)
-    property orderBun = OrderQuantity("bun","normal",4)
-    property orderCookies = OrderQuantity("cookies","normal",5)
+    property orderBread = OrderQuantity("bread","normal",3)
+    property orderBun = OrderQuantity("bun","normal",3)
+    property orderCookies = OrderQuantity("cookies","normal",3)
     
     property orderCake1 = OrderQuantity("cake","private",1)
-    property orderCupcake1 = OrderQuantity("cupcakes","private",2)
-    property orderCake2 = OrderQuantity("cake","private",2)
+    property orderCupcake1 = OrderQuantity("cupcakes","private",1)
+    property orderCake2 = OrderQuantity("cake","private",1)
     property orderCupcake2 = OrderQuantity("cupcakes","private",1)
     
     property package1 = PackageOfGoods(
@@ -14,8 +14,8 @@ agent Supervisor uses ontology BakeryOntology
     property package2 = PackageOfGoods(
     	"Pcg2",[orderCake2,orderCupcake2],"pending"
     )
-    
     property privateOrders = [package1, package2]
+    
     property finishedPackages as list of PackageOfGoods
     property normalOrders = [orderBread, orderBun, orderCookies]
     
@@ -23,9 +23,11 @@ agent Supervisor uses ontology BakeryOntology
     property pendingOrders as list of OrderStatus
     property type as text
     property numOfWorkers as integer
+    property coSupplier as text
     property orderCount as integer
-    property listOfWorkers as list of WorkerReady
+    property listOfBakers as list of WorkerReady
     property packer as aid
+    property supplierList as list of aid
     
     
     procedure SplitIntoOrdersNormal with listOfOrders as list of OrderQuantity,ratio as integer do
@@ -48,10 +50,11 @@ agent Supervisor uses ontology BakeryOntology
         log "Splitted orders of SUPERVISOR: "+orderList
                 
     
-    on create with type as text, numOfWorkers as integer do
+    on create with type as text, numOfWorkers as integer, coSupplier as text do
         type of agent = type
         numOfWorkers of agent = numOfWorkers
         orderCount of agent = 0
+        coSupplier of agent = coSupplier
         log "SUPERVISOR created with arguments: "+type
         
         if type of agent = "normal" do
@@ -61,52 +64,62 @@ agent Supervisor uses ontology BakeryOntology
         activate ReportingWorkers
 
 cyclic behaviour ReportingWorkers for agent Supervisor uses ontology BakeryOntology
-    property count as integer
+    #property count as integer
     property allReported as boolean
     property packerReady as boolean
+    property supplierReady as boolean
     on create do
-        count = 0
+        #count = 0
+        otherGroupEnded = false
         allReported = false
         if type = "private" do
             packerReady = false
+            supplierReady = false
         else do
             packerReady = true
+            supplierReady = true
         
     on execute do
-        if allReported and packerReady do
-	        for worker in listOfWorkers do
-	            send message inform AgentsReported to workerId of worker
-	        activate SendOrder
-	        deactivate this
-    
-    on message inform PackerReady(id) do
-        packer of agent = id
-        packerReady = true
-        send message request ProvidePackingList(privateOrders) to packer
+        if allReported and packerReady and supplierReady do
+	       for worker in listOfBakers do
+	           send message inform AgentsReported to workerId of worker
+	       activate SendOrder
+	       deactivate this	   
         
-    on message inform WorkerReady(id, workerType) do
-        add WorkerReady(id,workerType) to listOfWorkers
-        log "BAKERS which reported - ready to work: "+listOfWorkers
-        count = count + 1
+    on message inform WorkerReady(id,worker,workerType) do
+        senderAgent = sender of message
+        if worker = "baker" do
+	       add WorkerReady(senderAgent,worker,workerType) to listOfBakers
+	       #log "BAKERS which reported - ready to work: "+listOfBakers
+	       #count = count + 1
+	    else if worker = "packer" do
+	       packer of agent = senderAgent
+	       packerReady = true
+	       send message request ProvidePackingList(privateOrders) to packer
+	    else if worker = "supplier" do
+	       add senderAgent to supplierList
         
-        if count = numOfWorkers do
+        if length of listOfBakers = numOfWorkers do
            allReported = true
+        
+        if length of supplierList = 2 do
+           supplierReady = true
 
 cyclic behaviour SendOrder for agent Supervisor uses ontology BakeryOntology
     property currentWorkerType as text
     property eandOfPrivateOrders as boolean
     
     function checkIfWorkerReported(id as aid) as boolean do
-        if length of listOfWorkers ≠ 0 do
-	        for worker in listOfWorkers do
+        if length of listOfBakers ≠ 0 do
+	        for worker in listOfBakers do
 	            if workerId of worker = id do
 	                currentWorkerType = type of worker
 	                return true
         return false
         
     procedure ChangeTypeOfAgent with id as aid do
-        if length of listOfWorkers ≠ 0 do
-	        for worker in listOfWorkers do
+        if length of listOfBakers ≠ 0 do
+	        for worker in listOfBakers do
 	            if workerId of worker = id do
 	                type of worker = "normal"
 	                log "BAKER: "+worker+" changed into type 'normal'"
@@ -123,6 +136,7 @@ cyclic behaviour SendOrder for agent Supervisor uses ontology BakeryOntology
         if checkIfWorkerReported(id) do #should check if agent is on the list of working bakers
             if currentWorkerType = "private" and (length of orderList = 0) do #first time asking if sent of private
                log "END OF PRIVATE ORDERS. Lets do some normal orders."
+               type = "normal"
                do SplitIntoOrdersNormal with normalOrders,3
                eandOfPrivateOrders = true
                
@@ -147,15 +161,52 @@ cyclic behaviour SendOrder for agent Supervisor uses ontology BakeryOntology
 			       log "NO MORE ORDERS under SUPERVISOR: "+ name of agent
 			       send message inform EndOfOrders to senderAgent
 			       # info że koniec i nie ma się więcej pytać -> ale trzeba sprawdzić dla każdego
-			       #deactivate this
+			       deactivate this
 		else do
 		  log "not yet reported"
 
 cyclic behaviour WaitingForFinishedOrders for agent Supervisor uses ontology BakeryOntology
     property count as integer
+    property otherGroupEnded as boolean
+    property meNotEnded as boolean
+    
+    function allOrdersFinished as boolean do
+        for order in pendingOrders do
+            if status of order ≠ "finished" do
+                return false
+        if type = "private" do
+	        for pcg in privateOrders do
+	            if status of pcg ≠ "finished" do
+	                return false
+        return true
+        
     on create do
+        meNotEnded = true
+        otherGroupEnded = false
         count = 0
         
+    on execute do
+        if type = "normal" and allOrdersFinished and length of orderList = 0 and meNotEnded do
+            log "Ended+sending -- entered here: "+coSupplier+" __ "+coSupplier@
+            send message inform GroupEndedDay to coSupplier@
+            meNotEnded = false
+        else if type = "normal" and allOrdersFinished and length of orderList = 0 and otherGroupEnded do
+            log "hi from sending end of the dayy"
+            for baker in listOfBakers do
+                send message inform EndOfDay to workerId of baker
+            if length of supplierList ≠ 0 do #if means its the supplier2
+	            for supplier in supplierList do
+	                send message inform EndOfDay to supplier
+	            send message inform EndOfDay to packer
+            activate FinishRaports
+            deactivate this
+            
+            #i tutaj wysyłanie info do wszyyystkich że halo halo koniec dnia
+        
+    on message inform GroupEndedDay do
+        otherGroupEnded = true
+        log "Talking to co supp-- entered here"
+    
     on message inform OrderStatus(orderId,orderStatus) do
         senderAgent = sender of message
         if count % 5 ≠ 0 do #each 5th should be send to redo
@@ -166,6 +217,8 @@ cyclic behaviour WaitingForFinishedOrders for agent Supervisor uses ontology Bak
 	        log "FINISHING - Orders to make under SUPERVISOR"+ name of agent+" list: "+orderList
 	        log "FINISHING - Orders PENDING under SUPERVISOR"+ name of agent+" list: "+pendingOrders
 	        
+	        
+	        log "type: "+type+" allOrdersFinished: "+allOrdersFinished+" orderList: "+orderList+" meNotEnded: "+meNotEnded
 	        #send message request_when (RedoOrder(orderId,"No need"),OrderCorrect) to senderAgent
 	        send message request RedoOrder(orderId,"No need") to senderAgent
         else do
@@ -174,17 +227,24 @@ cyclic behaviour WaitingForFinishedOrders for agent Supervisor uses ontology Bak
         count = count + 1
         
     on message inform PackageStatus(orderPacked) do
-        add orderPacked to finishedPackages
-        log "Ready packages: "+finishedPackages
+        allPacked = false
         
-        if length of finishedPackages = length of privateOrders do
-            log "ALL packages packed"
-        
-cyclic behaviour CheckIfPrivate for agent Supervisor uses ontology BakeryOntology
-    property noMorePrivateOrder = true
-    
-    on execute do
-        for order in orderList do
-            if type of order = "private" do            
-                noMorePrivateOrder = false
+        for pcg in privateOrders do
+            if packageId of pcg = packageId of orderPacked do
+                status of pcg = status of orderPacked
                 break
+        
+        log "Ready packages: "+privateOrders
+        
+        for pcg in privateOrders do
+            if status of pcg ≠ "finished" do
+                break
+            else do
+                allPacked = true
+                
+        if allPacked do
+            log "ALL packages packed"
+            
+cyclic behaviour FinishRaports for agent Supervisor uses ontology BakeryOntology
+    on create do
+        log "Hello in finish repo"

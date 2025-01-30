@@ -71,14 +71,14 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       	
       	return ;
       }
-       class __PatternMatcher1566678344 {
+       class __PatternMatcher1453542392 {
       	public jade.core.AID id;
       	
       	public jadescript.util.JadescriptList<IngredientQuantity> stock;
       	
       	public java.lang.Boolean whilePreparing;
       	
-      	private final __PatternMatcher1566678344 __PatternMatcher1566678344_obj =  this;
+      	private final __PatternMatcher1453542392 __PatternMatcher1453542392_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		jade.core.AID __x;
@@ -158,7 +158,7 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       		return true && headerMatch_structterm0(__x.getAgentId()) && headerMatch_structterm1(__x.getIngredients()) && headerMatch_structterm2(__x.getWhileProparing());
       	}
       }
-      __PatternMatcher1566678344 __PatternMatcher1566678344_obj = new __PatternMatcher1566678344();
+      __PatternMatcher1453542392 __PatternMatcher1453542392_obj = new __PatternMatcher1453542392();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -166,7 +166,7 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1566678344_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher1453542392_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -189,29 +189,29 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement at line 32
+      			 * Compiled from source statement at line 41
       			 * senderAgent = sender of message
       			 */
       			
       			jade.core.AID senderAgent = ((jadescript.core.message.RequestMessage<NeedRestock>) __receivedMessage).getSender();
       			
       			/* 
-      			 * Compiled from source statement from line 34 to line 36
+      			 * Compiled from source statement from line 43 to line 45
       			 * if length of stock = 0 do
       			 * 	        log "ERROR: Received empty stock from " + sender of message
       			 * 	        return
       			 */
       			
-      			if(java.util.Objects.equals(__PatternMatcher1566678344_obj.stock.size(), 0)) {
+      			if(java.util.Objects.equals(__PatternMatcher1453542392_obj.stock.size(), 0)) {
       				/* 
-      				 * Compiled from source statement at line 35
+      				 * Compiled from source statement at line 44
       				 * log "ERROR: Received empty stock from " + sender of message
       				 */
       				
       				jadescript.core.Agent.doLog(jade.util.Logger.INFO, ProvidingRestock.this.getClass().getName(), ProvidingRestock.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf("ERROR: Received empty stock from ") + java.lang.String.valueOf(((jadescript.core.message.RequestMessage<NeedRestock>) __receivedMessage).getSender())));
       				
       				/* 
-      				 * Compiled from source statement at line 36
+      				 * Compiled from source statement at line 45
       				 * return
       				 */
       				
@@ -219,15 +219,15 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       			}
       			
       			/* 
-      			 * Compiled from source statement at line 37
+      			 * Compiled from source statement at line 46
       			 * 
       			 * 	    log "Received NeedRestock from " + sender of message + " with stock: " + stock
       			 */
       			
-      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ProvidingRestock.this.getClass().getName(), ProvidingRestock.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Received NeedRestock from ") + java.lang.String.valueOf(((jadescript.core.message.RequestMessage<NeedRestock>) __receivedMessage).getSender())) + java.lang.String.valueOf(" with stock: ")) + java.lang.String.valueOf(__PatternMatcher1566678344_obj.stock)));
+      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ProvidingRestock.this.getClass().getName(), ProvidingRestock.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Received NeedRestock from ") + java.lang.String.valueOf(((jadescript.core.message.RequestMessage<NeedRestock>) __receivedMessage).getSender())) + java.lang.String.valueOf(" with stock: ")) + java.lang.String.valueOf(__PatternMatcher1453542392_obj.stock)));
       			
       			/* 
-      			 * Compiled from source statement from line 39 to line 46
+      			 * Compiled from source statement from line 48 to line 55
       			 * for item in stock do
       			 *             for ingredient in listOfAvSupplies do
       			 * 	            if ingredientName of item = ingredientName of ingredient and quantity of item ≤ 4 and quantity of ingredient ≥ 6 do
@@ -238,9 +238,9 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       			 * 	               runOutSupply = true
       			 */
       			
-      			for ( IngredientQuantity item : __PatternMatcher1566678344_obj.stock) {
+      			for ( IngredientQuantity item : __PatternMatcher1453542392_obj.stock) {
       				/* 
-      				 * Compiled from source statement from line 40 to line 46
+      				 * Compiled from source statement from line 49 to line 55
       				 * for ingredient in listOfAvSupplies do
       				 * 	            if ingredientName of item = ingredientName of ingredient and quantity of item ≤ 4 and quantity of ingredient ≥ 6 do
       				 * 	               quantity of ingredient = quantity of ingredient - 6
@@ -252,7 +252,7 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       				
       				for ( IngredientQuantity ingredient : ProvidingRestock.this._agentEnv.getAgent().getListOfAvSupplies()) {
       					/* 
-      					 * Compiled from source statement from line 41 to line 43
+      					 * Compiled from source statement from line 50 to line 52
       					 * if ingredientName of item = ingredientName of ingredient and quantity of item ≤ 4 and quantity of ingredient ≥ 6 do
       					 * 	               quantity of ingredient = quantity of ingredient - 6
       					 * 	               add IngredientQuantity(ingredientName of item,6) to itemsToProvide
@@ -260,14 +260,14 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       					
       					if(java.util.Objects.equals(item.getIngredientName(), ingredient.getIngredientName()) && item.getQuantity() <= 4 && ingredient.getQuantity() >= 6) {
       						/* 
-      						 * Compiled from source statement at line 42
+      						 * Compiled from source statement at line 51
       						 * quantity of ingredient = quantity of ingredient - 6
       						 */
       						
       						ingredient.setQuantity(ingredient.getQuantity() - 6);
       						
       						/* 
-      						 * Compiled from source statement at line 43
+      						 * Compiled from source statement at line 52
       						 * add IngredientQuantity(ingredientName of item,6) to itemsToProvide
       						 */
       						
@@ -275,7 +275,7 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       					}
       					
       					/* 
-      					 * Compiled from source statement from line 45 to line 46
+      					 * Compiled from source statement from line 54 to line 55
       					 * 
       					 * 	            
       					 * 	            if quantity of ingredient < 6 do
@@ -284,7 +284,7 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       					
       					if(ingredient.getQuantity() < 6) {
       						/* 
-      						 * Compiled from source statement at line 46
+      						 * Compiled from source statement at line 55
       						 * runOutSupply = true
       						 */
       						
@@ -294,7 +294,7 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       			}
       			
       			/* 
-      			 * Compiled from source statement from line 48 to line 51
+      			 * Compiled from source statement from line 57 to line 60
       			 * 
       			 *         
       			 *         if length of itemsToProvide ≠ 0 do
@@ -305,40 +305,40 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       			
       			if(!java.util.Objects.equals(ProvidingRestock.this.getItemsToProvide().size(), 0)) {
       				/* 
-      				 * Compiled from source statement at line 49
+      				 * Compiled from source statement at line 58
       				 * log "SUPPLIER sends supplies: "+itemsToProvide
       				 */
       				
       				jadescript.core.Agent.doLog(jade.util.Logger.INFO, ProvidingRestock.this.getClass().getName(), ProvidingRestock.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf("SUPPLIER sends supplies: ") + java.lang.String.valueOf(ProvidingRestock.this.getItemsToProvide())));
       				
       				/* 
-      				 * Compiled from source statement at line 50
+      				 * Compiled from source statement at line 59
       				 * send message request ProvideIngredients(itemsToProvide,whilePreparing) to senderAgent
       				 */
       				
       				try {
       					jadescript.util.SendMessageUtils.validatePerformative("request");
       					
-      					java.lang.Object _contentToBeSent1910043103 = BakeryOntology.ProvideIngredients(ProvidingRestock.this.getItemsToProvide() ,__PatternMatcher1566678344_obj.whilePreparing);
+      					java.lang.Object _contentToBeSent1023753751 = BakeryOntology.ProvideIngredients(ProvidingRestock.this.getItemsToProvide() ,__PatternMatcher1453542392_obj.whilePreparing);
       					
-      					jadescript.core.message.Message _synthesizedMessage1910043103 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
+      					jadescript.core.message.Message _synthesizedMessage1023753751 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
       					
-      					_synthesizedMessage1910043103.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1910043103,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      					_synthesizedMessage1023753751.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1023753751,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       					
-      					_synthesizedMessage1910043103.setLanguage(__codec.getName());;
+      					_synthesizedMessage1023753751.setLanguage(__codec.getName());;
       					
-      					_synthesizedMessage1910043103.addReceiver(senderAgent);
+      					_synthesizedMessage1023753751.addReceiver(senderAgent);
       					
-      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1910043103, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1910043103, "request"));
+      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1023753751, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1023753751, "request"));
       					
-      					_agentEnv.getAgent().send(_synthesizedMessage1910043103);
+      					_agentEnv.getAgent().send(_synthesizedMessage1023753751);
       				}
       				catch(java.lang.Throwable _t) {
       					throw jadescript.core.exception.JadescriptException.wrap(_t);
       				}
       				
       				/* 
-      				 * Compiled from source statement at line 51
+      				 * Compiled from source statement at line 60
       				 * itemsToProvide = [] of IngredientQuantity
       				 */
       				
@@ -346,7 +346,7 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       			}
       			
       			/* 
-      			 * Compiled from source statement at line 53
+      			 * Compiled from source statement at line 62
       			 * 
       			 *         
       			 *         log "Supplier list av: "+listOfAvSupplies
@@ -355,14 +355,14 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ProvidingRestock.this.getClass().getName(), ProvidingRestock.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf("Supplier list av: ") + java.lang.String.valueOf(ProvidingRestock.this._agentEnv.getAgent().getListOfAvSupplies())));
       			
       			/* 
-      			 * Compiled from source statement at line 54
+      			 * Compiled from source statement at line 63
       			 * log "Supplier run out: "+runOutSupply
       			 */
       			
       			jadescript.core.Agent.doLog(jade.util.Logger.INFO, ProvidingRestock.this.getClass().getName(), ProvidingRestock.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf("Supplier run out: ") + java.lang.String.valueOf(ProvidingRestock.this._agentEnv.getAgent().getRunOutSupply())));
       			
       			/* 
-      			 * Compiled from source statement from line 55 to line 58
+      			 * Compiled from source statement from line 64 to line 67
       			 * if runOutSupply do
       			 *             activate GoForSupplies
       			 *             #send message inform SupplierRunOutSupply to aid of agent
@@ -371,14 +371,14 @@ public class ProvidingRestock extends CyclicBehaviour<Supplier> {
       			
       			if(ProvidingRestock.this._agentEnv.getAgent().getRunOutSupply()) {
       				/* 
-      				 * Compiled from source statement at line 56
+      				 * Compiled from source statement at line 65
       				 * activate GoForSupplies
       				 */
       				
       				new GoForSupplies(_agentEnv.getAgent().toEnv()).activate(_agentEnv.getAgent());
       				
       				/* 
-      				 * Compiled from source statement at line 58
+      				 * Compiled from source statement at line 67
       				 * deactivate this
       				 */
       				

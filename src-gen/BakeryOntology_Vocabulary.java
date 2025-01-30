@@ -46,6 +46,12 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
 
   public static final String PackageOfGoods_status = "status";
 
+  public static final String PackagePreparation = "PackagePreparation";
+
+  public static final String PackagePreparation_packageId = "packageId";
+
+  public static final String PackagePreparation_prepTime = "prepTime";
+
   public static final String RequestOrder = "RequestOrder";
 
   public static final String RequestOrder_agentId = "agentId";
@@ -114,11 +120,9 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
 
   public static final String WorkerReady_workerId = "workerId";
 
+  public static final String WorkerReady_worker = "worker";
+
   public static final String WorkerReady_type = "type";
-
-  public static final String PackerReady = "PackerReady";
-
-  public static final String PackerReady_workerId = "workerId";
 
   public static final String SupplierRunOutSupply = "SupplierRunOutSupply";
 
@@ -130,11 +134,33 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
 
   public static final String OrderStatus_status = "status";
 
+  public static final String BakerRaportInfo = "BakerRaportInfo";
+
+  public static final String BakerRaportInfo_id = "id";
+
+  public static final String BakerRaportInfo_numRestockFromColl = "numRestockFromColl";
+
+  public static final String BakerRaportInfo_numRestockFromSupp = "numRestockFromSupp";
+
+  public static final String BakerRaportInfo_numOrdersToRedo = "numOrdersToRedo";
+
+  public static final String BakerRaportInfo_ordersDone = "ordersDone";
+
+  public static final String BakerRaportInfo_restStock = "restStock";
+
+  public static final String PackerRaport = "PackerRaport";
+
+  public static final String PackerRaport_pcgPrep = "pcgPrep";
+
   public static final String AgentsReported = "AgentsReported";
 
   public static final String EndOfPrivateOrders = "EndOfPrivateOrders";
 
   public static final String EndOfOrders = "EndOfOrders";
+
+  public static final String GroupEndedDay = "GroupEndedDay";
+
+  public static final String EndOfDay = "EndOfDay";
 
   public static final String SubmitPackage = "SubmitPackage";
 

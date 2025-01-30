@@ -60,14 +60,14 @@ public class CurrentlyRestocking extends CyclicBehaviour<Supplier> {
       	
       	return ;
       }
-       class __PatternMatcher1363731235 {
+       class __PatternMatcher868484113 {
       	public jade.core.AID id;
       	
       	public jadescript.util.JadescriptList<IngredientQuantity> stock;
       	
       	public java.lang.Boolean bakerWhileProparing;
       	
-      	private final __PatternMatcher1363731235 __PatternMatcher1363731235_obj =  this;
+      	private final __PatternMatcher868484113 __PatternMatcher868484113_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		jade.core.AID __x;
@@ -147,7 +147,7 @@ public class CurrentlyRestocking extends CyclicBehaviour<Supplier> {
       		return true && headerMatch_structterm0(__x.getAgentId()) && headerMatch_structterm1(__x.getIngredients()) && headerMatch_structterm2(__x.getWhileProparing());
       	}
       }
-      __PatternMatcher1363731235 __PatternMatcher1363731235_obj = new __PatternMatcher1363731235();
+      __PatternMatcher868484113 __PatternMatcher868484113_obj = new __PatternMatcher868484113();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -155,7 +155,7 @@ public class CurrentlyRestocking extends CyclicBehaviour<Supplier> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1363731235_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher868484113_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -178,33 +178,33 @@ public class CurrentlyRestocking extends CyclicBehaviour<Supplier> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement at line 76
+      			 * Compiled from source statement at line 85
       			 * log "Sorry but SUPPLIER: "+name of agent+" is restocking supplies"
       			 */
       			
       			jadescript.core.Agent.doLog(jade.util.Logger.INFO, CurrentlyRestocking.this.getClass().getName(), CurrentlyRestocking.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Sorry but SUPPLIER: ") + java.lang.String.valueOf(CurrentlyRestocking.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" is restocking supplies")));
       			
       			/* 
-      			 * Compiled from source statement at line 77
+      			 * Compiled from source statement at line 86
       			 * send message inform SupplierRunOutSupply(bakerWhileProparing) to sender
       			 */
       			
       			try {
       				jadescript.util.SendMessageUtils.validatePerformative("inform");
       				
-      				java.lang.Object _contentToBeSent1990264347 = BakeryOntology.SupplierRunOutSupply(__PatternMatcher1363731235_obj.bakerWhileProparing);
+      				java.lang.Object _contentToBeSent1781274829 = BakeryOntology.SupplierRunOutSupply(__PatternMatcher868484113_obj.bakerWhileProparing);
       				
-      				jadescript.core.message.Message _synthesizedMessage1990264347 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      				jadescript.core.message.Message _synthesizedMessage1781274829 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       				
-      				_synthesizedMessage1990264347.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1990264347,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      				_synthesizedMessage1781274829.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1781274829,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       				
-      				_synthesizedMessage1990264347.setLanguage(__codec.getName());;
+      				_synthesizedMessage1781274829.setLanguage(__codec.getName());;
       				
-      				_synthesizedMessage1990264347.addReceiver(__receivedMessage.getSender());
+      				_synthesizedMessage1781274829.addReceiver(__receivedMessage.getSender());
       				
-      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1990264347, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1990264347, "inform"));
+      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1781274829, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1781274829, "inform"));
       				
-      				_agentEnv.getAgent().send(_synthesizedMessage1990264347);
+      				_agentEnv.getAgent().send(_synthesizedMessage1781274829);
       			}
       			catch(java.lang.Throwable _t) {
       				throw jadescript.core.exception.JadescriptException.wrap(_t);

@@ -14,6 +14,16 @@ public class WorkerReady implements JadescriptPredicate {
     this.workerId = workerId;
   }
 
+  private String worker;
+
+  public String getWorker() {
+    return this.worker;
+  }
+
+  public void setWorker(final String worker) {
+    this.worker = worker;
+  }
+
   private String type;
 
   public String getType() {
@@ -30,6 +40,8 @@ public class WorkerReady implements JadescriptPredicate {
     _sb.append("(");
     _sb.append(java.lang.String.valueOf(getWorkerId()));
     _sb.append(", ");
+    _sb.append("\"" + java.lang.String.valueOf(getWorker()) + "\"");
+    _sb.append(", ");
     _sb.append("\"" + java.lang.String.valueOf(getType()) + "\"");
     _sb.append(")");
     return _sb.toString();
@@ -38,7 +50,7 @@ public class WorkerReady implements JadescriptPredicate {
   public boolean equals(final Object obj) {
     if(obj instanceof WorkerReady) {
     	WorkerReady o = (WorkerReady) obj;
-    	return true && java.util.Objects.equals(this.getWorkerId(), o.getWorkerId()) && java.util.Objects.equals(this.getType(), o.getType());
+    	return true && java.util.Objects.equals(this.getWorkerId(), o.getWorkerId()) && java.util.Objects.equals(this.getWorker(), o.getWorker()) && java.util.Objects.equals(this.getType(), o.getType());
     } else {
     	return super.equals(obj);
     }
@@ -48,14 +60,17 @@ public class WorkerReady implements JadescriptPredicate {
     {
     	this.setWorkerId(new jade.core.AID());
     	
+    	this.setWorker("");
+    	
     	this.setType("");
     }
   }
 
-  public WorkerReady(final AID workerId, final String type) {
+  public WorkerReady(final AID workerId, final String worker, final String type) {
     super();
     
     this.setWorkerId(workerId);
+    this.setWorker(worker);
     this.setType(type);
   }
 
@@ -63,7 +78,7 @@ public class WorkerReady implements JadescriptPredicate {
     return BakeryOntology.getInstance();
   }
 
-  private BakeryOntology __metadata_WorkerReady(final AID workerId, final String type) {
+  private BakeryOntology __metadata_WorkerReady(final AID workerId, final String worker, final String type) {
     return null;
   }
 }

@@ -3,16 +3,18 @@ agent Packer uses ontology BakeryOntology
     property packageList as list of PackageOfGoods
     property ordersReadyToPack as list of Order
     property finishedPackages as list of PackageOfGoods
+    property timeForPackage as list of PackagePreparation
     
     on create with supervisor as text do
         supervisorName = supervisor
         log "PACKER created with arguments: "+supervisor
         
-        activate DelayedPackerReady after "PT1S" as duration
+        activate DelayedPackerReady after "PT3S" as duration
+        
         
 one shot behavior DelayedPackerReady for agent Packer uses ontology BakeryOntology
     on execute do
-        send message inform PackerReady(aid of agent) to supervisorName@
+        send message inform WorkerReady(aid of agent,"packer","") to supervisorName@
         log "PACKER: "+name of agent+" READY TO WORK"
         activate WaitForListWithPackages
 
@@ -38,19 +40,36 @@ cyclic behaviour WaitAndPackOrders for agent Packer uses ontology BakeryOntology
                         packed = true
                 if packed do
                     status of packageToPack = "finished"
-                    add packageToPack to finishedPackages    
-                
+                    add packageToPack to finishedPackages
+                    
+                    for pcg in timeForPackage do
+                        if packageId of pcg = packageId of packageToPack do
+                            prepTime of pcg = (now - prepTime of pcg) as duration
+                            break
+            
+    
+    function pckAlreadyPending(pcgId as text) as boolean do
+        if length of timeForPackage ≠ 0 do
+            for pcg in timeForPackage do
+                if packageId of pcg = pcgId do
+                    return true
+            return false
+        else do
+            return false
+            
     on execute do
         if length of packageList = 0 do
             deactivate this
             
-        #jeżeli lista z paczkami się powiększyła to czek zamówienia i dodawaj do zamówień
-        # bo co jeżeli dwóch bakerów da w tym samym czasie..
         if length of ordersReadyToPack ≠ 0 do
             for packageToPack in packageList do
                 for order in ordersInPackage of packageToPack do
                     for readyToPack in ordersReadyToPack do
                         if good of readyToPack = good of order do
+                            
+                            if not pckAlreadyPending(packageId of packageToPack) do
+                                add PackagePreparation(packageId of packageToPack,now as duration) to timeForPackage
+                            
                             quantity of order = quantity of order - 1
                             remove readyToPack from ordersReadyToPack
                             status of packageToPack = "preparing"
@@ -68,9 +87,10 @@ cyclic behaviour WaitAndPackOrders for agent Packer uses ontology BakeryOntology
                     log "PACKER send FINISHED package: "+ packageId of pcg
                     send message inform PackageStatus(pcg) to supervisorName@
                     remove pcg from packageList
+                
+                log "TIme of packages: "+timeForPackage
                 finishedPackages = [] of PackageOfGoods
                   
     on message request GoodToPack(order) do
-        # tu będzie czekał na nową wiadomość
         log "PACKER got an order to pack"
         add order to ordersReadyToPack
