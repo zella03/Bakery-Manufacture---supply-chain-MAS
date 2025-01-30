@@ -434,21 +434,22 @@ public class Baker extends Agent {
     	Baker.this.getListOfSuppliers().add(supplier2);
     	
     	/* 
-    	 * Compiled from source statement at line 101
-    	 * log "BAKER created with arguments: " + typeBaker + ", " + supervisor
+    	 * Compiled from source statement from line 101 to line 102
+    	 * log "BAKER: "+name of agent+" created with arguments: " 
+    	 *             + typeBaker + ", " + supervisor+", "+listOfCoworkers+", "+listOfSuppliers+", "+packer
     	 */
     	
-    	jadescript.core.Agent.doLog(jade.util.Logger.INFO, Baker.this.getClass().getName(), Baker.this, "on create", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER created with arguments: ") + java.lang.String.valueOf(Baker.this.getTypeBaker())) + java.lang.String.valueOf(", ")) + java.lang.String.valueOf(supervisor)));
+    	jadescript.core.Agent.doLog(jade.util.Logger.INFO, Baker.this.getClass().getName(), Baker.this, "on create", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER: ") + java.lang.String.valueOf(_agentEnv.getAgent().getName())) + java.lang.String.valueOf(" created with arguments: ")) + java.lang.String.valueOf(Baker.this.getTypeBaker())) + java.lang.String.valueOf(", ")) + java.lang.String.valueOf(supervisor)) + java.lang.String.valueOf(", ")) + java.lang.String.valueOf(Baker.this.getListOfCoworkers())) + java.lang.String.valueOf(", ")) + java.lang.String.valueOf(Baker.this.getListOfSuppliers())) + java.lang.String.valueOf(", ")) + java.lang.String.valueOf(packer)));
     	
     	/* 
-    	 * Compiled from source statement at line 103
+    	 * Compiled from source statement at line 104
     	 * activate DelayedBakerReady after "PT6S" as duration
     	 */
     	
     	new DelayedBakerReady(_agentEnv.getAgent().toEnv()).activate_after(_agentEnv.getAgent(), ((jadescript.lang.Duration) jadescript.util.types.Converter.convert("PT6S", new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))));
     	
     	/* 
-    	 * Compiled from source statement from line 106 to line 109
+    	 * Compiled from source statement from line 107 to line 110
     	 * if type = "normal" do
     	 *             recipeBook of this = [bread, bun, cookies]
     	 *         else do
@@ -457,7 +458,7 @@ public class Baker extends Agent {
     	
     	if(java.util.Objects.equals(type, "normal")) {
     		/* 
-    		 * Compiled from source statement at line 107
+    		 * Compiled from source statement at line 108
     		 * recipeBook of this = [bread, bun, cookies]
     		 */
     		
@@ -465,7 +466,7 @@ public class Baker extends Agent {
     	}
     	else {
     		/* 
-    		 * Compiled from source statement at line 109
+    		 * Compiled from source statement at line 110
     		 * recipeBook of this= [cake, cupcakes]
     		 */
     		
@@ -473,22 +474,22 @@ public class Baker extends Agent {
     	}
     	
     	/* 
-    	 * Compiled from source statement at line 110
+    	 * Compiled from source statement at line 111
     	 * 
-    	 *         log "BAKER knowledge RECIPE_BOOK: "+recipeBook
+    	 *         log "BAKER's knowledge RECIPE_BOOK: "+recipeBook
     	 */
     	
-    	jadescript.core.Agent.doLog(jade.util.Logger.INFO, Baker.this.getClass().getName(), Baker.this, "on create", java.lang.String.valueOf(java.lang.String.valueOf("BAKER knowledge RECIPE_BOOK: ") + java.lang.String.valueOf(Baker.this.getRecipeBook())));
+    	jadescript.core.Agent.doLog(jade.util.Logger.INFO, Baker.this.getClass().getName(), Baker.this, "on create", java.lang.String.valueOf(java.lang.String.valueOf("BAKER's knowledge RECIPE_BOOK: ") + java.lang.String.valueOf(Baker.this.getRecipeBook())));
     	
     	/* 
-    	 * Compiled from source statement at line 112
+    	 * Compiled from source statement at line 113
     	 * activate ManageOrders
     	 */
     	
     	new ManageOrders(_agentEnv.getAgent().toEnv()).activate(_agentEnv.getAgent());
     	
     	/* 
-    	 * Compiled from source statement at line 113
+    	 * Compiled from source statement at line 114
     	 * activate ListenCoworkers
     	 */
     	

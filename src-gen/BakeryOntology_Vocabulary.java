@@ -162,6 +162,8 @@ public interface BakeryOntology_Vocabulary extends Ontology_Vocabulary {
 
   public static final String EndOfDay = "EndOfDay";
 
+  public static final String AllPackagesReady = "AllPackagesReady";
+
   public static final String SubmitPackage = "SubmitPackage";
 
   public static final String SubmitPackage_packageOfGoods = "packageOfGoods";

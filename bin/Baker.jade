@@ -98,7 +98,8 @@ agent Baker uses ontology BakeryOntology
         add coworker1 to listOfCoworkers
         add supplier1 to listOfSuppliers
         add supplier2 to listOfSuppliers
-        log "BAKER created with arguments: " + typeBaker + ", " + supervisor
+        log "BAKER: "+name of agent+" created with arguments: " 
+            + typeBaker + ", " + supervisor+", "+listOfCoworkers+", "+listOfSuppliers+", "+packer
         
         activate DelayedBakerReady after "PT6S" as duration
 
@@ -107,7 +108,7 @@ agent Baker uses ontology BakeryOntology
             recipeBook of this = [bread, bun, cookies]
         else do
             recipeBook of this= [cake, cupcakes]
-        log "BAKER knowledge RECIPE_BOOK: "+recipeBook
+        log "BAKER's knowledge RECIPE_BOOK: "+recipeBook
         
         activate ManageOrders
         activate ListenCoworkers
@@ -140,7 +141,7 @@ cyclic behaviour ManageOrders for agent Baker uses ontology BakeryOntology
                 else do 
                     count = count + 1 #we cannot ask for new order if we are preparing another one or when we lack of ingredients
             if count = length of ordersList and not endOfOrders and not currentlyAskingForOrder do #if everything is ONLY baking we can ask for another order to make
-                log "BAKER: "+name of agent+" __ count of ord baking: "+count+" orderList: "+ ordersList+" end orders: "+ endOfOrders
+                log "BAKER: "+name of agent+"\n count of ord baking: "+count+" orderList: "+ ordersList+" end orders: "+ endOfOrders
                 activate SendRequest
                 currentlyAskingForOrder = true
     
@@ -150,7 +151,7 @@ cyclic behaviour ManageOrders for agent Baker uses ontology BakeryOntology
         activate WaitForNewOrder    
     
     on message inform OrderStatus(id,status) do #message from baker that baking is finished
-        log "BAKER: "+name of agent+" is finished."
+        log "BAKER: "+name of agent+" finished order: "+id
         send message inform OrderStatus(id,status) to supervisorName@
         
     on message request RedoOrder(orderId,decision) do
@@ -177,22 +178,15 @@ cyclic behaviour ManageOrders for agent Baker uses ontology BakeryOntology
     
     on message inform EndOfOrders do
         log "BAKER HAS STILL TO DO: "+ordersList+" but finished"
-        log "Times of help of coll: "+succRestockByColl
-        log "Times of help of supp: "+succRestockBySupp
-        log "Orders needed redo: "+ ordersToRedo
-        log "Orders done: "+ordersDone
-        deactivate WaitForNewOrder
+        destroy WaitForNewOrder
         endOfOrders = true
         
     on message inform EndOfDay do
-        #send message inform BakerRaportInfo(aid,succRestockByColl,succRestockBySupp,ordersToRedo,ordersDone,stock) to supervisorName@
-        #deactivate WaitForNewOrder
-        #deactivate ListenCoworkers
-        #deactivate this
-        log "I will send here report"
-    ## here listening for finishing the work!! -> if supplier says that all is finished!!
-    
-    
+        send message inform BakerRaportInfo(aid,succRestockByColl,succRestockBySupp,ordersToRedo,ordersDone,stock) to supervisorName@
+        destroy WaitForNewOrder
+        destroy ListenCoworkers
+        destroy HandleIngredientsShortage
+        destroy this
     
 one shot behavior SendRequest for agent Baker uses ontology BakeryOntology
     on execute do
@@ -274,14 +268,13 @@ cyclic behaviour ListenCoworkers for agent Baker uses ontology BakeryOntology
                    add IngredientQuantity(ingredientName of ingredient, quantity of ingredient) to providedIngredients
         
         log "Items that are beeing send: "+providedIngredients +" by: "+name of agent
-        log "My current stock after helping: "+stock
+        log "Baker's current stock after helping the colleague: "+stock
         
         send message request ProvideIngredients(providedIngredients,true) to senderAgent
         providedIngredients = [] of IngredientQuantity
         
 
 cyclic behaviour HandleIngredientsShortage for agent Baker uses ontology BakeryOntology
-    #property listIngredientsNeeded as list of IngredientQuantity 
     property order as Order
     property responds as list of IngredientAvaliable
     property noHelpFromCo as boolean
@@ -291,11 +284,8 @@ cyclic behaviour HandleIngredientsShortage for agent Baker uses ontology BakeryO
             if status of i ≠ "baking" and status of i ≠ "finished" do
                 order = i
                 break
-        #return order
     
-    on create with listIngredientsNeeded as list of IngredientQuantity,order as Order do
-        #listIngredientsNeeded of this = listIngredientsNeeded
-        #order of this = order
+    on create do
         noHelpFromCo = true
         
     on message inform IngredientAvaliable(id,avaliable,ingredients) do
@@ -319,14 +309,9 @@ cyclic behaviour HandleIngredientsShortage for agent Baker uses ontology BakeryO
 	        if noHelpFromCo do
 	            log "NOBODY can help baker: "+name of agent+" call for supplier"
 	            for supplier in listOfSuppliers do
-		           #send message request RequestIngredients(aid,listIngredientsNeeded) to supplier@ #idk czy potrzebne delay
 		            do LookOrderUp
 		            activate DelayedRestockQuestion(supplier,order,true) after "PT2S" as duration
 		    responds = [] of IngredientAvaliable
-		    #deactivate this
-		    #if noHelpFromCo do send request to supplier!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            
-            # then deactivate
     
     on message inform SupplierRunOutSupply(bakerWhileProparing) do
         if bakerWhileProparing do
@@ -356,7 +341,6 @@ cyclic behaviour HandleIngredientsShortage for agent Baker uses ontology BakeryO
             log "Good turn to check for preparing: "+order
             activate PrepareOrder(order)
         deactivate this
-   #on message from supplier with ingredient  or I could use provideIngredients 
                   
 
 
@@ -404,27 +388,21 @@ one shot behaviour PrepareOrder for agent Baker uses ontology BakeryOntology
         
     on execute do
         if length of ingredientsNeeded_lack = 0 and status of order = "toPrepare" do
-            #ingredientsNeeded_lack = [] of IngredientQuantity
             do chnageStatus with id of order,"preparing"
             status of order = "preparing"
-	        log "Agent: "+name of agent +" preparing: " + good of order
+	        log "BAKER: "+name of agent +" preparing: " + good of order
 	        
 	        do useOfIngredients with goodToPrepare
-	        log "Current state of stock: "+stock+" of agent "+ name of agent
+	        log "BAKER'S: "+ name of agent + " current state of stock after preparing: "+stock
 	        if needRestoreStock do
-	           log "send message to supplier"#######################################################################################
+	           log "LOW STOCK - try to restock supplies"
 	           for supplier in listOfSuppliers do
 	               activate DelayedRestockQuestion(supplier,order,false) after "PT2S" as duration
-	               #log "BAKER need RESTOCK. ask "+supplier+" having stock: "+stock
-	               #send message request NeedRestock(aid, stock) to supplier@
 	        activate BakingOrderBehavior(order,bakingTime of goodToPrepare) after (preparationTime of goodToPrepare) as duration
 	    else if length of ingredientsNeeded_lack != 0 and status of order = "toPrepare" do
-	       #log "Not enough ingredients in stock"
-	       #send message to supplier with ingredientsNeeded information#################################################################
 	       for coworker in listOfCoworkers do
-	           #checkedLackOfIngredients = true
 	           send message request AskForHelpColleague(aid,ingredientsNeeded_lack)to coworker@
-	           activate HandleIngredientsShortage(ingredientsNeeded_lack,order)      
+	           activate HandleIngredientsShortage      
 
 one shot behavior DelayedRestockQuestion for agent Baker uses ontology BakeryOntology
     property supplier as text
@@ -436,9 +414,9 @@ one shot behavior DelayedRestockQuestion for agent Baker uses ontology BakeryOnt
         order of this = order
         bakerWhileProparing of this = bakerWhileProparing
     on execute do
-        log "BAKER need RESTOCK. ask "+supplier+" having stock: "+stock
+        log "BAKER asks "+supplier+" having stock: "+stock
         send message request NeedRestock(aid of agent, stock, bakerWhileProparing) to supplier@ 
-        activate HandleIngredientsShortage(stock,order)       
+        activate HandleIngredientsShortage       
         
 cyclic behaviour BakingOrderBehavior for agent Baker uses ontology BakeryOntology
     property order as Order
@@ -452,12 +430,12 @@ cyclic behaviour BakingOrderBehavior for agent Baker uses ontology BakeryOntolog
     on activate do
         do chnageStatus with id of order,"baking"
         status of order = "baking"
-        log "Agent: "+name of agent+" started baking for: " + good of order
+        log "BAKER: "+name of agent+" started baking for: " + good of order
         time = now as duration
     
     on execute do
         if (now - time) as duration >= bakingTime as duration do
-            log "Agent: "+name of agent+" finished baking: "+good of order+" of id: "+ id of order
+            log "BAKER: "+name of agent+" finished baking: "+good of order+" of id: "+ id of order
             do chnageStatus with id of order,"finished"
             status of order = "finished"
             for orderWithStat in ordersList do

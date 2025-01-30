@@ -29,10 +29,11 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
     super.doAction(_tickCount);
     __event2.run();
     __event3.run();
+    __event4.run();
     if(!this.__ignoreMessageHandlers) {
     	this.__noMessageHandled();
     }
-    if ( true  && !__event2.__eventFired && !__event3.__eventFired) __awaitForEvents();
+    if ( true  && !__event2.__eventFired && !__event3.__eventFired && !__event4.__eventFired) __awaitForEvents();
   }
 
   public Boolean __hasStaleMessageHandler() {
@@ -62,7 +63,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
     	java.lang.Boolean packed = false;
     	
     	/* 
-    	 * Compiled from source statement from line 33 to line 48
+    	 * Compiled from source statement from line 33 to line 49
     	 * if length of packageList ≠ 0 do
     	 *             for packageToPack in packageList do
     	 *                 for order in ordersInPackage of packageToPack do
@@ -77,13 +78,14 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
     	 *                     
     	 *                     for pcg in timeForPackage do
     	 *                         if packageId of pcg = packageId of packageToPack do
+    	 *                             #log "start time: "+ prepTime of pcg+ " finish time: "+now as duration+" diff: "+ (now - prepTime of pcg) as duration
     	 *                             prepTime of pcg = (now - prepTime of pcg) as duration
     	 *                             break
     	 */
     	
     	if(!java.util.Objects.equals(WaitAndPackOrders.this._agentEnv.getAgent().getPackageList().size(), 0)) {
     		/* 
-    		 * Compiled from source statement from line 34 to line 48
+    		 * Compiled from source statement from line 34 to line 49
     		 * for packageToPack in packageList do
     		 *                 for order in ordersInPackage of packageToPack do
     		 *                     if quantity of order ≠ 0 do
@@ -97,6 +99,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
     		 *                     
     		 *                     for pcg in timeForPackage do
     		 *                         if packageId of pcg = packageId of packageToPack do
+    		 *                             #log "start time: "+ prepTime of pcg+ " finish time: "+now as duration+" diff: "+ (now - prepTime of pcg) as duration
     		 *                             prepTime of pcg = (now - prepTime of pcg) as duration
     		 *                             break
     		 */
@@ -148,7 +151,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
     			}
     			
     			/* 
-    			 * Compiled from source statement from line 41 to line 48
+    			 * Compiled from source statement from line 41 to line 49
     			 * 
     			 *                 if packed do
     			 *                     status of packageToPack = "finished"
@@ -156,6 +159,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
     			 *                     
     			 *                     for pcg in timeForPackage do
     			 *                         if packageId of pcg = packageId of packageToPack do
+    			 *                             #log "start time: "+ prepTime of pcg+ " finish time: "+now as duration+" diff: "+ (now - prepTime of pcg) as duration
     			 *                             prepTime of pcg = (now - prepTime of pcg) as duration
     			 *                             break
     			 */
@@ -176,31 +180,33 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
     				WaitAndPackOrders.this._agentEnv.getAgent().getFinishedPackages().add(packageToPack);
     				
     				/* 
-    				 * Compiled from source statement from line 45 to line 48
+    				 * Compiled from source statement from line 45 to line 49
     				 * for pcg in timeForPackage do
     				 *                         if packageId of pcg = packageId of packageToPack do
+    				 *                             #log "start time: "+ prepTime of pcg+ " finish time: "+now as duration+" diff: "+ (now - prepTime of pcg) as duration
     				 *                             prepTime of pcg = (now - prepTime of pcg) as duration
     				 *                             break
     				 */
     				
     				for ( PackagePreparation pcg : WaitAndPackOrders.this._agentEnv.getAgent().getTimeForPackage()) {
     					/* 
-    					 * Compiled from source statement from line 46 to line 48
+    					 * Compiled from source statement from line 46 to line 49
     					 * if packageId of pcg = packageId of packageToPack do
+    					 *                             #log "start time: "+ prepTime of pcg+ " finish time: "+now as duration+" diff: "+ (now - prepTime of pcg) as duration
     					 *                             prepTime of pcg = (now - prepTime of pcg) as duration
     					 *                             break
     					 */
     					
     					if(java.util.Objects.equals(pcg.getPackageId(), packageToPack.getPackageId())) {
     						/* 
-    						 * Compiled from source statement at line 47
+    						 * Compiled from source statement at line 48
     						 * prepTime of pcg = (now - prepTime of pcg) as duration
     						 */
     						
     						pcg.setPrepTime(((jadescript.lang.Duration) jadescript.util.types.Converter.convert((jadescript.lang.Timestamp.minus(jadescript.lang.Timestamp.now(), pcg.getPrepTime())), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TIMESTAMP), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.DURATION))));
     						
     						/* 
-    						 * Compiled from source statement at line 48
+    						 * Compiled from source statement at line 49
     						 * break
     						 */
     						
@@ -216,7 +222,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
   public Boolean pckAlreadyPending(final AgentEnv<? extends Packer, ? extends SideEffectsFlag.WithSideEffects> _agentEnv, final String pcgId) {
     {
     	/* 
-    	 * Compiled from source statement from line 52 to line 58
+    	 * Compiled from source statement from line 53 to line 59
     	 * if length of timeForPackage ≠ 0 do
     	 *             for pcg in timeForPackage do
     	 *                 if packageId of pcg = pcgId do
@@ -228,7 +234,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
     	
     	if(!java.util.Objects.equals(WaitAndPackOrders.this._agentEnv.getAgent().getTimeForPackage().size(), 0)) {
     		/* 
-    		 * Compiled from source statement from line 53 to line 55
+    		 * Compiled from source statement from line 54 to line 56
     		 * for pcg in timeForPackage do
     		 *                 if packageId of pcg = pcgId do
     		 *                     return true
@@ -236,14 +242,14 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
     		
     		for ( PackagePreparation pcg : WaitAndPackOrders.this._agentEnv.getAgent().getTimeForPackage()) {
     			/* 
-    			 * Compiled from source statement from line 54 to line 55
+    			 * Compiled from source statement from line 55 to line 56
     			 * if packageId of pcg = pcgId do
     			 *                     return true
     			 */
     			
     			if(java.util.Objects.equals(pcg.getPackageId(), pcgId)) {
     				/* 
-    				 * Compiled from source statement at line 55
+    				 * Compiled from source statement at line 56
     				 * return true
     				 */
     				
@@ -252,7 +258,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
     		}
     		
     		/* 
-    		 * Compiled from source statement at line 56
+    		 * Compiled from source statement at line 57
     		 * 
     		 *             return false
     		 */
@@ -261,7 +267,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
     	}
     	else {
     		/* 
-    		 * Compiled from source statement at line 58
+    		 * Compiled from source statement at line 59
     		 * return false
     		 */
     		
@@ -276,25 +282,8 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
     public void run() {
       try {
       	/* 
-      	 * Compiled from source statement from line 61 to line 62
-      	 * if length of packageList = 0 do
-      	 *             deactivate this
-      	 */
-      	
-      	if(java.util.Objects.equals(WaitAndPackOrders.this._agentEnv.getAgent().getPackageList().size(), 0)) {
-      		/* 
-      		 * Compiled from source statement at line 62
-      		 * deactivate this
-      		 */
-      		
-      		WaitAndPackOrders.this.deactivate();
-      	}
-      	
-      	/* 
-      	 * Compiled from source statement from line 64 to line 92
-      	 * 
-      	 *             
-      	 *         if length of ordersReadyToPack ≠ 0 do
+      	 * Compiled from source statement from line 63 to line 90
+      	 * if length of ordersReadyToPack ≠ 0 do
       	 *             for packageToPack in packageList do
       	 *                 for order in ordersInPackage of packageToPack do
       	 *                     for readyToPack in ordersReadyToPack do
@@ -321,13 +310,12 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       	 *                     send message inform PackageStatus(pcg) to supervisorName@
       	 *                     remove pcg from packageList
       	 *                 
-      	 *                 log "TIme of packages: "+timeForPackage
       	 *                 finishedPackages = [] of PackageOfGoods
       	 */
       	
       	if(!java.util.Objects.equals(WaitAndPackOrders.this._agentEnv.getAgent().getOrdersReadyToPack().size(), 0)) {
       		/* 
-      		 * Compiled from source statement from line 65 to line 81
+      		 * Compiled from source statement from line 64 to line 80
       		 * for packageToPack in packageList do
       		 *                 for order in ordersInPackage of packageToPack do
       		 *                     for readyToPack in ordersReadyToPack do
@@ -349,7 +337,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       		
       		for ( PackageOfGoods packageToPack : WaitAndPackOrders.this._agentEnv.getAgent().getPackageList()) {
       			/* 
-      			 * Compiled from source statement from line 66 to line 79
+      			 * Compiled from source statement from line 65 to line 78
       			 * for order in ordersInPackage of packageToPack do
       			 *                     for readyToPack in ordersReadyToPack do
       			 *                         if good of readyToPack = good of order do
@@ -368,7 +356,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       			
       			for ( OrderQuantity order : packageToPack.getOrdersInPackage()) {
       				/* 
-      				 * Compiled from source statement from line 67 to line 77
+      				 * Compiled from source statement from line 66 to line 76
       				 * for readyToPack in ordersReadyToPack do
       				 *                         if good of readyToPack = good of order do
       				 *                             
@@ -384,7 +372,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       				
       				for ( Order readyToPack : WaitAndPackOrders.this._agentEnv.getAgent().getOrdersReadyToPack()) {
       					/* 
-      					 * Compiled from source statement from line 68 to line 77
+      					 * Compiled from source statement from line 67 to line 76
       					 * if good of readyToPack = good of order do
       					 *                             
       					 *                             if not pckAlreadyPending(packageId of packageToPack) do
@@ -399,14 +387,14 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       					
       					if(java.util.Objects.equals(readyToPack.getGood(), order.getGood())) {
       						/* 
-      						 * Compiled from source statement from line 70 to line 71
+      						 * Compiled from source statement from line 69 to line 70
       						 * if not pckAlreadyPending(packageId of packageToPack) do
       						 *                                 add PackagePreparation(packageId of packageToPack,now as duration) to timeForPackage
       						 */
       						
       						if( ! WaitAndPackOrders.this.pckAlreadyPending(_agentEnv.getAgent().toEnv() ,packageToPack.getPackageId())) {
       							/* 
-      							 * Compiled from source statement at line 71
+      							 * Compiled from source statement at line 70
       							 * add PackagePreparation(packageId of packageToPack,now as duration) to timeForPackage
       							 */
       							
@@ -414,7 +402,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       						}
       						
       						/* 
-      						 * Compiled from source statement at line 73
+      						 * Compiled from source statement at line 72
       						 * 
       						 *                             
       						 *                             quantity of order = quantity of order - 1
@@ -423,28 +411,28 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       						order.setQuantity(order.getQuantity() - 1);
       						
       						/* 
-      						 * Compiled from source statement at line 74
+      						 * Compiled from source statement at line 73
       						 * remove readyToPack from ordersReadyToPack
       						 */
       						
       						WaitAndPackOrders.this._agentEnv.getAgent().getOrdersReadyToPack().remove(readyToPack);
       						
       						/* 
-      						 * Compiled from source statement at line 75
+      						 * Compiled from source statement at line 74
       						 * status of packageToPack = "preparing"
       						 */
       						
       						packageToPack.setStatus("preparing");
       						
       						/* 
-      						 * Compiled from source statement at line 76
+      						 * Compiled from source statement at line 75
       						 * log "PACKER packed order: "+order+" to package: "+packageId of packageToPack
       						 */
       						
       						jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitAndPackOrders.this.getClass().getName(), WaitAndPackOrders.this, "on execute", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("PACKER packed order: ") + java.lang.String.valueOf(order)) + java.lang.String.valueOf(" to package: ")) + java.lang.String.valueOf(packageToPack.getPackageId())));
       						
       						/* 
-      						 * Compiled from source statement at line 77
+      						 * Compiled from source statement at line 76
       						 * break
       						 */
       						
@@ -453,7 +441,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       				}
       				
       				/* 
-      				 * Compiled from source statement from line 78 to line 79
+      				 * Compiled from source statement from line 77 to line 78
       				 * 
       				 *                     if length of ordersReadyToPack = 0 do
       				 *                         break
@@ -461,7 +449,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       				
       				if(java.util.Objects.equals(WaitAndPackOrders.this._agentEnv.getAgent().getOrdersReadyToPack().size(), 0)) {
       					/* 
-      					 * Compiled from source statement at line 79
+      					 * Compiled from source statement at line 78
       					 * break
       					 */
       					
@@ -470,7 +458,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       			}
       			
       			/* 
-      			 * Compiled from source statement from line 80 to line 81
+      			 * Compiled from source statement from line 79 to line 80
       			 * 
       			 *                 if length of ordersReadyToPack = 0 do
       			 *                         break
@@ -478,7 +466,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       			
       			if(java.util.Objects.equals(WaitAndPackOrders.this._agentEnv.getAgent().getOrdersReadyToPack().size(), 0)) {
       				/* 
-      				 * Compiled from source statement at line 81
+      				 * Compiled from source statement at line 80
       				 * break
       				 */
       				
@@ -487,7 +475,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       		}
       		
       		/* 
-      		 * Compiled from source statement at line 83
+      		 * Compiled from source statement at line 82
       		 * 
       		 *             
       		 *             do ifPackageFinished
@@ -496,20 +484,19 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       		WaitAndPackOrders.this.ifPackageFinished(_agentEnv.getAgent().toEnv());
       		
       		/* 
-      		 * Compiled from source statement from line 85 to line 92
+      		 * Compiled from source statement from line 84 to line 90
       		 * if length of finishedPackages ≠ 0 do
       		 *                 for pcg in finishedPackages do
       		 *                     log "PACKER send FINISHED package: "+ packageId of pcg
       		 *                     send message inform PackageStatus(pcg) to supervisorName@
       		 *                     remove pcg from packageList
       		 *                 
-      		 *                 log "TIme of packages: "+timeForPackage
       		 *                 finishedPackages = [] of PackageOfGoods
       		 */
       		
       		if(!java.util.Objects.equals(WaitAndPackOrders.this._agentEnv.getAgent().getFinishedPackages().size(), 0)) {
       			/* 
-      			 * Compiled from source statement from line 86 to line 89
+      			 * Compiled from source statement from line 85 to line 88
       			 * for pcg in finishedPackages do
       			 *                     log "PACKER send FINISHED package: "+ packageId of pcg
       			 *                     send message inform PackageStatus(pcg) to supervisorName@
@@ -518,40 +505,40 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       			
       			for ( PackageOfGoods pcg : WaitAndPackOrders.this._agentEnv.getAgent().getFinishedPackages()) {
       				/* 
-      				 * Compiled from source statement at line 87
+      				 * Compiled from source statement at line 86
       				 * log "PACKER send FINISHED package: "+ packageId of pcg
       				 */
       				
       				jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitAndPackOrders.this.getClass().getName(), WaitAndPackOrders.this, "on execute", java.lang.String.valueOf(java.lang.String.valueOf("PACKER send FINISHED package: ") + java.lang.String.valueOf(pcg.getPackageId())));
       				
       				/* 
-      				 * Compiled from source statement at line 88
+      				 * Compiled from source statement at line 87
       				 * send message inform PackageStatus(pcg) to supervisorName@
       				 */
       				
       				try {
       					jadescript.util.SendMessageUtils.validatePerformative("inform");
       					
-      					java.lang.Object _contentToBeSent1493985813 = BakeryOntology.PackageStatus(pcg);
+      					java.lang.Object _contentToBeSent1135632694 = BakeryOntology.PackageStatus(pcg);
       					
-      					jadescript.core.message.Message _synthesizedMessage1493985813 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      					jadescript.core.message.Message _synthesizedMessage1135632694 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       					
-      					_synthesizedMessage1493985813.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1493985813,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      					_synthesizedMessage1135632694.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1135632694,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       					
-      					_synthesizedMessage1493985813.setLanguage(__codec.getName());;
+      					_synthesizedMessage1135632694.setLanguage(__codec.getName());;
       					
-      					_synthesizedMessage1493985813.addReceiver(new jade.core.AID(java.lang.String.valueOf(WaitAndPackOrders.this._agentEnv.getAgent().getSupervisorName()), false));
+      					_synthesizedMessage1135632694.addReceiver(new jade.core.AID(java.lang.String.valueOf(WaitAndPackOrders.this._agentEnv.getAgent().getSupervisorName()), false));
       					
-      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1493985813, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1493985813, "inform"));
+      					_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1135632694, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1135632694, "inform"));
       					
-      					_agentEnv.getAgent().send(_synthesizedMessage1493985813);
+      					_agentEnv.getAgent().send(_synthesizedMessage1135632694);
       				}
       				catch(java.lang.Throwable _t) {
       					throw jadescript.core.exception.JadescriptException.wrap(_t);
       				}
       				
       				/* 
-      				 * Compiled from source statement at line 89
+      				 * Compiled from source statement at line 88
       				 * remove pcg from packageList
       				 */
       				
@@ -559,17 +546,10 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       			}
       			
       			/* 
-      			 * Compiled from source statement at line 91
+      			 * Compiled from source statement at line 90
       			 * 
       			 *                 
-      			 *                 log "TIme of packages: "+timeForPackage
-      			 */
-      			
-      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitAndPackOrders.this.getClass().getName(), WaitAndPackOrders.this, "on execute", java.lang.String.valueOf(java.lang.String.valueOf("TIme of packages: ") + java.lang.String.valueOf(WaitAndPackOrders.this._agentEnv.getAgent().getTimeForPackage())));
-      			
-      			/* 
-      			 * Compiled from source statement at line 92
-      			 * finishedPackages = [] of PackageOfGoods
+      			 *                 finishedPackages = [] of PackageOfGoods
       			 */
       			
       			WaitAndPackOrders.this._agentEnv.getAgent().setFinishedPackages(new jadescript.util.JadescriptList<PackageOfGoods>());
@@ -596,10 +576,10 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       	
       	return ;
       }
-       class __PatternMatcher20071880 {
+       class __PatternMatcher256608797 {
       	public Order order;
       	
-      	private final __PatternMatcher20071880 __PatternMatcher20071880_obj =  this;
+      	private final __PatternMatcher256608797 __PatternMatcher256608797_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		Order __x;
@@ -639,7 +619,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       		return true && headerMatch_structterm0(__x.getOrder());
       	}
       }
-      __PatternMatcher20071880 __PatternMatcher20071880_obj = new __PatternMatcher20071880();
+      __PatternMatcher256608797 __PatternMatcher256608797_obj = new __PatternMatcher256608797();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -647,7 +627,7 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher20071880_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher256608797_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -670,18 +650,18 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
       	try {
       		try {
       			/* 
-      			 * Compiled from source statement at line 95
+      			 * Compiled from source statement at line 93
       			 * log "PACKER got an order to pack"
       			 */
       			
       			jadescript.core.Agent.doLog(jade.util.Logger.INFO, WaitAndPackOrders.this.getClass().getName(), WaitAndPackOrders.this, "on request", java.lang.String.valueOf("PACKER got an order to pack"));
       			
       			/* 
-      			 * Compiled from source statement at line 96
+      			 * Compiled from source statement at line 94
       			 * add order to ordersReadyToPack
       			 */
       			
-      			WaitAndPackOrders.this._agentEnv.getAgent().getOrdersReadyToPack().add(__PatternMatcher20071880_obj.order);
+      			WaitAndPackOrders.this._agentEnv.getAgent().getOrdersReadyToPack().add(__PatternMatcher256608797_obj.order);
       		}
       		catch(jadescript.core.exception.JadescriptException __throwable) {
       			__handleJadescriptException(__throwable);
@@ -704,6 +684,101 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
 
   private WaitAndPackOrders.__Event3 __event3 = null;
 
+  private class __Event4 {
+    Boolean __eventFired = false;
+
+    public void run() {
+      if(WaitAndPackOrders.this.__ignoreMessageHandlers) {
+      	this.__eventFired = false;
+      	
+      	return ;
+      }
+       class __PatternMatcher1656787452 {
+      	private final __PatternMatcher1656787452 __PatternMatcher1656787452_obj =  this;
+      	
+      	public boolean headerMatch(java.lang.Object __objx) {
+      		AllPackagesReady __x;
+      		
+      		try {
+      			if(__objx instanceof AllPackagesReady) {
+      				__x = (AllPackagesReady) __objx;
+      			}
+      			else {
+      				return false;
+      			}
+      		}
+      		catch(java.lang.ClassCastException ignored) {
+      			return false;
+      		}
+      		
+      		return java.util.Objects.equals(__x,BakeryOntology.AllPackagesReady());
+      	}
+      }
+      __PatternMatcher1656787452 __PatternMatcher1656787452_obj = new __PatternMatcher1656787452();
+      jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
+      	return true;
+      }
+      }))), jade.lang.acl.MessageTemplate.MatchPerformative(jadescript.core.message.Message.INFORM)), jadescript.core.nativeevent.NotNativeEventTemplate.MatchNotNative(_agentEnv.getAgent().getContentManager())), new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__templMsg) -> {{
+      	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
+      	
+      	try {
+      		return __PatternMatcher1656787452_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      	}
+      	catch(java.lang.Throwable _e) {
+      		_e.printStackTrace();
+      		
+      		return false;
+      	}
+      }
+      }))));
+      jadescript.core.message.Message __receivedMessage = null;
+      if(myAgent!=null) {
+      	__receivedMessage = jadescript.core.message.Message.wrap(myAgent.receive(__mt));
+      }
+      if(__receivedMessage != null) {
+      	WaitAndPackOrders.this.__ignoreMessageHandlers = true;
+      	
+      	_agentEnv.getAgent().__cleanIgnoredFlagForMessage(__receivedMessage);
+      	
+      	this.__eventFired = true;
+      	
+      	try {
+      		try {
+      			/* 
+      			 * Compiled from source statement at line 97
+      			 * activate WaitEndDay
+      			 */
+      			
+      			new WaitEndDay(_agentEnv.getAgent().toEnv()).activate(_agentEnv.getAgent());
+      			
+      			/* 
+      			 * Compiled from source statement at line 98
+      			 * destroy this
+      			 */
+      			
+      			WaitAndPackOrders.this.destroy();
+      		}
+      		catch(jadescript.core.exception.JadescriptException __throwable) {
+      			__handleJadescriptException(__throwable);
+      		}
+      		catch(java.lang.Throwable __throwable) {
+      			__handleJadescriptException(jadescript.core.exception.JadescriptException.wrap(__throwable));
+      		}
+      		
+      		__receivedMessage = null;
+      	}
+      	catch(Exception _e) {
+      		_e.printStackTrace();
+      	}
+      }
+      else {
+      	this.__eventFired = false;
+      }
+    }
+  }
+
+  private WaitAndPackOrders.__Event4 __event4 = null;
+
   private ExceptionThrower __thrower = jadescript.core.exception.ExceptionThrower.__DEFAULT_THROWER;
 
   public void __handleJadescriptException(final JadescriptException __exc) {
@@ -718,6 +793,8 @@ public class WaitAndPackOrders extends CyclicBehaviour<Packer> {
     // Initializing properties and event handlers:
     {
     	__event3 = new WaitAndPackOrders.__Event3();
+    	
+    	__event4 = new WaitAndPackOrders.__Event4();
     }
   }
 }

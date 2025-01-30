@@ -60,10 +60,10 @@ public class WaitForListWithPackages extends CyclicBehaviour<Packer> {
       	
       	return ;
       }
-       class __PatternMatcher1731060791 {
+       class __PatternMatcher994386124 {
       	public jadescript.util.JadescriptList<PackageOfGoods> pcgList;
       	
-      	private final __PatternMatcher1731060791 __PatternMatcher1731060791_obj =  this;
+      	private final __PatternMatcher994386124 __PatternMatcher994386124_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		jadescript.util.JadescriptList<PackageOfGoods> __x;
@@ -103,7 +103,7 @@ public class WaitForListWithPackages extends CyclicBehaviour<Packer> {
       		return true && headerMatch_structterm0(__x.getPackageList());
       	}
       }
-      __PatternMatcher1731060791 __PatternMatcher1731060791_obj = new __PatternMatcher1731060791();
+      __PatternMatcher994386124 __PatternMatcher994386124_obj = new __PatternMatcher994386124();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -111,7 +111,7 @@ public class WaitForListWithPackages extends CyclicBehaviour<Packer> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher1731060791_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher994386124_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -138,7 +138,7 @@ public class WaitForListWithPackages extends CyclicBehaviour<Packer> {
       			 * packageList = pcgList
       			 */
       			
-      			WaitForListWithPackages.this._agentEnv.getAgent().setPackageList(__PatternMatcher1731060791_obj.pcgList);
+      			WaitForListWithPackages.this._agentEnv.getAgent().setPackageList(__PatternMatcher994386124_obj.pcgList);
       			
       			/* 
       			 * Compiled from source statement at line 24
@@ -156,10 +156,10 @@ public class WaitForListWithPackages extends CyclicBehaviour<Packer> {
       			
       			/* 
       			 * Compiled from source statement at line 26
-      			 * deactivate this
+      			 * destroy this
       			 */
       			
-      			WaitForListWithPackages.this.deactivate();
+      			WaitForListWithPackages.this.destroy();
       		}
       		catch(jadescript.core.exception.JadescriptException __throwable) {
       			__handleJadescriptException(__throwable);

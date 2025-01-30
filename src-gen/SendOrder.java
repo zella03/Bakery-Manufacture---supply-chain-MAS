@@ -223,10 +223,10 @@ public class SendOrder extends CyclicBehaviour<Supervisor> {
       	
       	return ;
       }
-       class __PatternMatcher41252535 {
+       class __PatternMatcher1491568741 {
       	public jade.core.AID id;
       	
-      	private final __PatternMatcher41252535 __PatternMatcher41252535_obj =  this;
+      	private final __PatternMatcher1491568741 __PatternMatcher1491568741_obj =  this;
       	
       	public boolean headerMatch_structterm0(java.lang.Object __objx) {
       		jade.core.AID __x;
@@ -266,7 +266,7 @@ public class SendOrder extends CyclicBehaviour<Supervisor> {
       		return true && headerMatch_structterm0(__x.getAgentId());
       	}
       }
-      __PatternMatcher41252535 __PatternMatcher41252535_obj = new __PatternMatcher41252535();
+      __PatternMatcher1491568741 __PatternMatcher1491568741_obj = new __PatternMatcher1491568741();
       jade.lang.acl.MessageTemplate __mt = jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(jade.lang.acl.MessageTemplate.and(new jade.lang.acl.MessageTemplate(new jadescript.lang.acl.CustomMessageTemplate(((java.util.function.Predicate<jade.lang.acl.ACLMessage>) (__ignored) -> {{
       	return true;
       }
@@ -274,7 +274,7 @@ public class SendOrder extends CyclicBehaviour<Supervisor> {
       	jadescript.core.message.Message __receivedMessage = jadescript.core.message.Message.wrap(__templMsg);
       	
       	try {
-      		return __PatternMatcher41252535_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
+      		return __PatternMatcher1491568741_obj.headerMatch(__receivedMessage.getContent(_agentEnv.getAgent().getContentManager()));
       	}
       	catch(java.lang.Throwable _e) {
       		_e.printStackTrace();
@@ -311,7 +311,7 @@ public class SendOrder extends CyclicBehaviour<Supervisor> {
       			java.lang.Boolean momentOfChangeType = false;
       			
       			/* 
-      			 * Compiled from source statement from line 136 to line 166
+      			 * Compiled from source statement from line 136 to line 162
       			 * if checkIfWorkerReported(id) do #should check if agent is on the list of working bakers
       			 *             if currentWorkerType = "private" and (length of orderList = 0) do #first time asking if sent of private
       			 *                log "END OF PRIVATE ORDERS. Lets do some normal orders."
@@ -330,22 +330,18 @@ public class SendOrder extends CyclicBehaviour<Supervisor> {
       			 * 			       orderStatus = OrderStatus(id of order, status of order)
       			 * 		           remove order from orderList
       			 * 		           add orderStatus to pendingOrders
-      			 * 		            
-      			 * 		           log "REQUEST - Orders to make under SUPERVISOR"+ name of agent+" list: "+orderList
-      			 * 		           log "REQUEST - Orders PENDING under SUPERVISOR"+ name of agent+" list: "+pendingOrders
       			 * 		        
       			 * 			       log "SUPERVISOR: "+name of agent+" received request for order from agent: " + name of sender
       			 * 			       send message request AssignOrder(id,order) to senderAgent
       			 * 			    else do
       			 * 			       log "NO MORE ORDERS under SUPERVISOR: "+ name of agent
       			 * 			       send message inform EndOfOrders to senderAgent
-      			 * 			       # info że koniec i nie ma się więcej pytać -> ale trzeba sprawdzić dla każdego
-      			 * 			       deactivate this
+      			 * 			       destroy this
       			 * 		else do
       			 * 		  log "not yet reported"
       			 */
       			
-      			if(SendOrder.this.checkIfWorkerReported(_agentEnv.getAgent().toEnv() ,__PatternMatcher41252535_obj.id)) {
+      			if(SendOrder.this.checkIfWorkerReported(_agentEnv.getAgent().toEnv() ,__PatternMatcher1491568741_obj.id)) {
       				/* 
       				 * Compiled from source statement from line 137 to line 141
       				 * if currentWorkerType = "private" and (length of orderList = 0) do #first time asking if sent of private
@@ -404,19 +400,19 @@ public class SendOrder extends CyclicBehaviour<Supervisor> {
       					try {
       						jadescript.util.SendMessageUtils.validatePerformative("inform");
       						
-      						java.lang.Object _contentToBeSent74684261 = BakeryOntology.EndOfPrivateOrders();
+      						java.lang.Object _contentToBeSent50517689 = BakeryOntology.EndOfPrivateOrders();
       						
-      						jadescript.core.message.Message _synthesizedMessage74684261 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      						jadescript.core.message.Message _synthesizedMessage50517689 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       						
-      						_synthesizedMessage74684261.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent74684261,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      						_synthesizedMessage50517689.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent50517689,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       						
-      						_synthesizedMessage74684261.setLanguage(__codec.getName());;
+      						_synthesizedMessage50517689.setLanguage(__codec.getName());;
       						
-      						_synthesizedMessage74684261.addReceiver(senderAgent);
+      						_synthesizedMessage50517689.addReceiver(senderAgent);
       						
-      						_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage74684261, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent74684261, "inform"));
+      						_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage50517689, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent50517689, "inform"));
       						
-      						_agentEnv.getAgent().send(_synthesizedMessage74684261);
+      						_agentEnv.getAgent().send(_synthesizedMessage50517689);
       					}
       					catch(java.lang.Throwable _t) {
       						throw jadescript.core.exception.JadescriptException.wrap(_t);
@@ -427,7 +423,7 @@ public class SendOrder extends CyclicBehaviour<Supervisor> {
       					 * do ChangeTypeOfAgent with id
       					 */
       					
-      					SendOrder.this.ChangeTypeOfAgent(_agentEnv.getAgent().toEnv() ,__PatternMatcher41252535_obj.id);
+      					SendOrder.this.ChangeTypeOfAgent(_agentEnv.getAgent().toEnv() ,__PatternMatcher1491568741_obj.id);
       					
       					/* 
       					 * Compiled from source statement at line 146
@@ -438,7 +434,7 @@ public class SendOrder extends CyclicBehaviour<Supervisor> {
       				}
       				
       				/* 
-      				 * Compiled from source statement from line 148 to line 164
+      				 * Compiled from source statement from line 148 to line 160
       				 * 
       				 *             
       				 *             if not momentOfChangeType do
@@ -447,38 +443,30 @@ public class SendOrder extends CyclicBehaviour<Supervisor> {
       				 * 			       orderStatus = OrderStatus(id of order, status of order)
       				 * 		           remove order from orderList
       				 * 		           add orderStatus to pendingOrders
-      				 * 		            
-      				 * 		           log "REQUEST - Orders to make under SUPERVISOR"+ name of agent+" list: "+orderList
-      				 * 		           log "REQUEST - Orders PENDING under SUPERVISOR"+ name of agent+" list: "+pendingOrders
       				 * 		        
       				 * 			       log "SUPERVISOR: "+name of agent+" received request for order from agent: " + name of sender
       				 * 			       send message request AssignOrder(id,order) to senderAgent
       				 * 			    else do
       				 * 			       log "NO MORE ORDERS under SUPERVISOR: "+ name of agent
       				 * 			       send message inform EndOfOrders to senderAgent
-      				 * 			       # info że koniec i nie ma się więcej pytać -> ale trzeba sprawdzić dla każdego
-      				 * 			       deactivate this
+      				 * 			       destroy this
       				 */
       				
       				if( ! momentOfChangeType) {
       					/* 
-      					 * Compiled from source statement from line 149 to line 164
+      					 * Compiled from source statement from line 149 to line 160
       					 * if length of orderList ≠ 0 do
       					 * 			       order = orderList[0]
       					 * 			       orderStatus = OrderStatus(id of order, status of order)
       					 * 		           remove order from orderList
       					 * 		           add orderStatus to pendingOrders
-      					 * 		            
-      					 * 		           log "REQUEST - Orders to make under SUPERVISOR"+ name of agent+" list: "+orderList
-      					 * 		           log "REQUEST - Orders PENDING under SUPERVISOR"+ name of agent+" list: "+pendingOrders
       					 * 		        
       					 * 			       log "SUPERVISOR: "+name of agent+" received request for order from agent: " + name of sender
       					 * 			       send message request AssignOrder(id,order) to senderAgent
       					 * 			    else do
       					 * 			       log "NO MORE ORDERS under SUPERVISOR: "+ name of agent
       					 * 			       send message inform EndOfOrders to senderAgent
-      					 * 			       # info że koniec i nie ma się więcej pytać -> ale trzeba sprawdzić dla każdego
-      					 * 			       deactivate this
+      					 * 			       destroy this
       					 */
       					
       					if(!java.util.Objects.equals(SendOrder.this._agentEnv.getAgent().getOrderList().size(), 0)) {
@@ -512,46 +500,32 @@ public class SendOrder extends CyclicBehaviour<Supervisor> {
       						
       						/* 
       						 * Compiled from source statement at line 155
-      						 * log "REQUEST - Orders to make under SUPERVISOR"+ name of agent+" list: "+orderList
-      						 */
-      						
-      						jadescript.core.Agent.doLog(jade.util.Logger.INFO, SendOrder.this.getClass().getName(), SendOrder.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("REQUEST - Orders to make under SUPERVISOR") + java.lang.String.valueOf(SendOrder.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" list: ")) + java.lang.String.valueOf(SendOrder.this._agentEnv.getAgent().getOrderList())));
-      						
-      						/* 
-      						 * Compiled from source statement at line 156
-      						 * log "REQUEST - Orders PENDING under SUPERVISOR"+ name of agent+" list: "+pendingOrders
-      						 */
-      						
-      						jadescript.core.Agent.doLog(jade.util.Logger.INFO, SendOrder.this.getClass().getName(), SendOrder.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("REQUEST - Orders PENDING under SUPERVISOR") + java.lang.String.valueOf(SendOrder.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" list: ")) + java.lang.String.valueOf(SendOrder.this._agentEnv.getAgent().getPendingOrders())));
-      						
-      						/* 
-      						 * Compiled from source statement at line 158
       						 * log "SUPERVISOR: "+name of agent+" received request for order from agent: " + name of sender
       						 */
       						
       						jadescript.core.Agent.doLog(jade.util.Logger.INFO, SendOrder.this.getClass().getName(), SendOrder.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("SUPERVISOR: ") + java.lang.String.valueOf(SendOrder.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" received request for order from agent: ")) + java.lang.String.valueOf(__receivedMessage.getSender().getName())));
       						
       						/* 
-      						 * Compiled from source statement at line 159
+      						 * Compiled from source statement at line 156
       						 * send message request AssignOrder(id,order) to senderAgent
       						 */
       						
       						try {
       							jadescript.util.SendMessageUtils.validatePerformative("request");
       							
-      							java.lang.Object _contentToBeSent1956530172 = BakeryOntology.AssignOrder(__PatternMatcher41252535_obj.id ,order);
+      							java.lang.Object _contentToBeSent1512791452 = BakeryOntology.AssignOrder(__PatternMatcher1491568741_obj.id ,order);
       							
-      							jadescript.core.message.Message _synthesizedMessage1956530172 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
+      							jadescript.core.message.Message _synthesizedMessage1512791452 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
       							
-      							_synthesizedMessage1956530172.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1956530172,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      							_synthesizedMessage1512791452.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1512791452,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       							
-      							_synthesizedMessage1956530172.setLanguage(__codec.getName());;
+      							_synthesizedMessage1512791452.setLanguage(__codec.getName());;
       							
-      							_synthesizedMessage1956530172.addReceiver(senderAgent);
+      							_synthesizedMessage1512791452.addReceiver(senderAgent);
       							
-      							_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1956530172, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1956530172, "request"));
+      							_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1512791452, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1512791452, "request"));
       							
-      							_agentEnv.getAgent().send(_synthesizedMessage1956530172);
+      							_agentEnv.getAgent().send(_synthesizedMessage1512791452);
       						}
       						catch(java.lang.Throwable _t) {
       							throw jadescript.core.exception.JadescriptException.wrap(_t);
@@ -559,50 +533,50 @@ public class SendOrder extends CyclicBehaviour<Supervisor> {
       					}
       					else {
       						/* 
-      						 * Compiled from source statement at line 161
+      						 * Compiled from source statement at line 158
       						 * log "NO MORE ORDERS under SUPERVISOR: "+ name of agent
       						 */
       						
       						jadescript.core.Agent.doLog(jade.util.Logger.INFO, SendOrder.this.getClass().getName(), SendOrder.this, "on request", java.lang.String.valueOf(java.lang.String.valueOf("NO MORE ORDERS under SUPERVISOR: ") + java.lang.String.valueOf(SendOrder.this.getJadescriptAgent().getName())));
       						
       						/* 
-      						 * Compiled from source statement at line 162
+      						 * Compiled from source statement at line 159
       						 * send message inform EndOfOrders to senderAgent
       						 */
       						
       						try {
       							jadescript.util.SendMessageUtils.validatePerformative("inform");
       							
-      							java.lang.Object _contentToBeSent1492576705 = BakeryOntology.EndOfOrders();
+      							java.lang.Object _contentToBeSent1096270011 = BakeryOntology.EndOfOrders();
       							
-      							jadescript.core.message.Message _synthesizedMessage1492576705 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      							jadescript.core.message.Message _synthesizedMessage1096270011 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       							
-      							_synthesizedMessage1492576705.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1492576705,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      							_synthesizedMessage1096270011.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1096270011,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       							
-      							_synthesizedMessage1492576705.setLanguage(__codec.getName());;
+      							_synthesizedMessage1096270011.setLanguage(__codec.getName());;
       							
-      							_synthesizedMessage1492576705.addReceiver(senderAgent);
+      							_synthesizedMessage1096270011.addReceiver(senderAgent);
       							
-      							_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1492576705, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1492576705, "inform"));
+      							_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1096270011, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1096270011, "inform"));
       							
-      							_agentEnv.getAgent().send(_synthesizedMessage1492576705);
+      							_agentEnv.getAgent().send(_synthesizedMessage1096270011);
       						}
       						catch(java.lang.Throwable _t) {
       							throw jadescript.core.exception.JadescriptException.wrap(_t);
       						}
       						
       						/* 
-      						 * Compiled from source statement at line 164
-      						 * deactivate this
+      						 * Compiled from source statement at line 160
+      						 * destroy this
       						 */
       						
-      						SendOrder.this.deactivate();
+      						SendOrder.this.destroy();
       					}
       				}
       			}
       			else {
       				/* 
-      				 * Compiled from source statement at line 166
+      				 * Compiled from source statement at line 162
       				 * log "not yet reported"
       				 */
       				

@@ -181,6 +181,10 @@ public class BakeryOntology extends Ontology implements BakeryOntology_Vocabular
     return new EndOfDay();
   }
 
+  public static AllPackagesReady AllPackagesReady() {
+    return new AllPackagesReady();
+  }
+
   public static SubmitPackage SubmitPackage(final PackageOfGoods packageOfGoods) {
     return new SubmitPackage(packageOfGoods);
   }
@@ -249,6 +253,7 @@ public class BakeryOntology extends Ontology implements BakeryOntology_Vocabular
     	add(new jade.content.schema.PredicateSchema(EndOfOrders), EndOfOrders.class);
     	add(new jade.content.schema.PredicateSchema(GroupEndedDay), GroupEndedDay.class);
     	add(new jade.content.schema.PredicateSchema(EndOfDay), EndOfDay.class);
+    	add(new jade.content.schema.PredicateSchema(AllPackagesReady), AllPackagesReady.class);
     	add(new jade.content.schema.AgentActionSchema(SubmitPackage), SubmitPackage.class);
     	add(new jade.content.schema.AgentActionSchema(RejectPackage), RejectPackage.class);
     	add(new jade.content.schema.AgentActionSchema(RepackedPackage), RepackedPackage.class);

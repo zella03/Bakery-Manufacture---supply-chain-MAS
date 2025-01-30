@@ -57,44 +57,51 @@ public class DelayedSupplierReady extends OneShotBehaviour<Supplier> {
     public void run() {
       try {
       	/* 
-      	 * Compiled from source statement at line 33
+      	 * Compiled from source statement at line 32
       	 * send message inform WorkerReady(aid of agent,"supplier","none") to supervisorName@
       	 */
       	
       	try {
       		jadescript.util.SendMessageUtils.validatePerformative("inform");
       		
-      		java.lang.Object _contentToBeSent787379926 = BakeryOntology.WorkerReady(DelayedSupplierReady.this.getJadescriptAgent().getAID() ,"supplier" ,"none");
+      		java.lang.Object _contentToBeSent1746830645 = BakeryOntology.WorkerReady(DelayedSupplierReady.this.getJadescriptAgent().getAID() ,"supplier" ,"none");
       		
-      		jadescript.core.message.Message _synthesizedMessage787379926 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
+      		jadescript.core.message.Message _synthesizedMessage1746830645 = new jadescript.core.message.Message(jadescript.core.message.Message.INFORM);
       		
-      		_synthesizedMessage787379926.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent787379926,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      		_synthesizedMessage1746830645.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1746830645,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       		
-      		_synthesizedMessage787379926.setLanguage(__codec.getName());;
+      		_synthesizedMessage1746830645.setLanguage(__codec.getName());;
       		
-      		_synthesizedMessage787379926.addReceiver(new jade.core.AID(java.lang.String.valueOf(DelayedSupplierReady.this._agentEnv.getAgent().getSupervisorName()), false));
+      		_synthesizedMessage1746830645.addReceiver(new jade.core.AID(java.lang.String.valueOf(DelayedSupplierReady.this._agentEnv.getAgent().getSupervisorName()), false));
       		
-      		_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage787379926, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent787379926, "inform"));
+      		_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1746830645, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1746830645, "inform"));
       		
-      		_agentEnv.getAgent().send(_synthesizedMessage787379926);
+      		_agentEnv.getAgent().send(_synthesizedMessage1746830645);
       	}
       	catch(java.lang.Throwable _t) {
       		throw jadescript.core.exception.JadescriptException.wrap(_t);
       	}
       	
       	/* 
-      	 * Compiled from source statement at line 34
+      	 * Compiled from source statement at line 33
       	 * log "SUPPLIER: "+name of agent+" READY TO WORK"
       	 */
       	
       	jadescript.core.Agent.doLog(jade.util.Logger.INFO, DelayedSupplierReady.this.getClass().getName(), DelayedSupplierReady.this, "on execute", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("SUPPLIER: ") + java.lang.String.valueOf(DelayedSupplierReady.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" READY TO WORK")));
       	
       	/* 
-      	 * Compiled from source statement at line 35
+      	 * Compiled from source statement at line 34
       	 * activate ProvidingRestock
       	 */
       	
       	new ProvidingRestock(_agentEnv.getAgent().toEnv()).activate(_agentEnv.getAgent());
+      	
+      	/* 
+      	 * Compiled from source statement at line 35
+      	 * activate WaitForEandOfDay
+      	 */
+      	
+      	new WaitForEandOfDay(_agentEnv.getAgent().toEnv()).activate(_agentEnv.getAgent());
       }
       catch(jadescript.core.exception.JadescriptException __throwable) {
       	__handleJadescriptException(__throwable);

@@ -237,10 +237,30 @@ public class Supervisor extends Agent {
     return this.supplierList;
   }
 
+  protected Integer allBakersReported = null;
+
+  public void setAllBakersReported(final Integer allBakersReported) {
+    this.allBakersReported = allBakersReported;
+  }
+
+  public Integer getAllBakersReported() {
+    return this.allBakersReported;
+  }
+
+  protected Boolean packerReported = null;
+
+  public void setPackerReported(final Boolean packerReported) {
+    this.packerReported = packerReported;
+  }
+
+  public Boolean getPackerReported() {
+    return this.packerReported;
+  }
+
   public void SplitIntoOrdersNormal(final AgentEnv<? extends Supervisor, ? extends SideEffectsFlag.WithSideEffects> _agentEnv, final JadescriptList<OrderQuantity> listOfOrders, final Integer ratio) {
     {
     	/* 
-    	 * Compiled from source statement from line 34 to line 39
+    	 * Compiled from source statement from line 37 to line 42
     	 * for i in listOfOrders do
     	 *             if quantity of i ≠ 0 do
     	 * 	            for j in 0 to ((quantity of i/ratio)-1) do
@@ -251,7 +271,7 @@ public class Supervisor extends Agent {
     	
     	for ( OrderQuantity i : listOfOrders) {
     		/* 
-    		 * Compiled from source statement from line 35 to line 39
+    		 * Compiled from source statement from line 38 to line 42
     		 * if quantity of i ≠ 0 do
     		 * 	            for j in 0 to ((quantity of i/ratio)-1) do
     		 * 	                id = (name of agent + "_" + orderCount) as text
@@ -261,7 +281,7 @@ public class Supervisor extends Agent {
     		
     		if(!java.util.Objects.equals(i.getQuantity(), 0)) {
     			/* 
-    			 * Compiled from source statement from line 36 to line 39
+    			 * Compiled from source statement from line 39 to line 42
     			 * for j in 0 to ((quantity of i/ratio)-1) do
     			 * 	                id = (name of agent + "_" + orderCount) as text
     			 * 	                add Order(id,good of i,"pending",type of i) to orderList
@@ -270,21 +290,21 @@ public class Supervisor extends Agent {
     			
     			for ( java.lang.Integer j : new jadescript.util.IntegerRange(0, ((i.getQuantity() / ratio) - 1), true, true)) {
     				/* 
-    				 * Compiled from source statement at line 37
+    				 * Compiled from source statement at line 40
     				 * id = (name of agent + "_" + orderCount) as text
     				 */
     				
     				java.lang.String id = ((java.lang.String) jadescript.util.types.Converter.convert((java.lang.String.valueOf(java.lang.String.valueOf(_agentEnv.getAgent().getName()) + java.lang.String.valueOf("_")) + java.lang.String.valueOf(Supervisor.this.getOrderCount())), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT)));
     				
     				/* 
-    				 * Compiled from source statement at line 38
+    				 * Compiled from source statement at line 41
     				 * add Order(id,good of i,"pending",type of i) to orderList
     				 */
     				
     				Supervisor.this.getOrderList().add(BakeryOntology.Order(id ,i.getGood() ,"pending" ,i.getType()));
     				
     				/* 
-    				 * Compiled from source statement at line 39
+    				 * Compiled from source statement at line 42
     				 * orderCount = orderCount + 1
     				 */
     				
@@ -294,7 +314,7 @@ public class Supervisor extends Agent {
     	}
     	
     	/* 
-    	 * Compiled from source statement at line 40
+    	 * Compiled from source statement at line 43
     	 * 
     	 *         log "Splitted orders of SUPERVISOR: "+orderList
     	 */
@@ -306,7 +326,7 @@ public class Supervisor extends Agent {
   public void SplitIntoOrdersPrivate(final AgentEnv<? extends Supervisor, ? extends SideEffectsFlag.WithSideEffects> _agentEnv, final JadescriptList<PackageOfGoods> listOfPackages) {
     {
     	/* 
-    	 * Compiled from source statement from line 43 to line 49
+    	 * Compiled from source statement from line 46 to line 52
     	 * for pcg in listOfPackages do
     	 *             for order in ordersInPackage of pcg do 
     	 * 	            if quantity of order ≠ 0 do
@@ -318,7 +338,7 @@ public class Supervisor extends Agent {
     	
     	for ( PackageOfGoods pcg : listOfPackages) {
     		/* 
-    		 * Compiled from source statement from line 44 to line 49
+    		 * Compiled from source statement from line 47 to line 52
     		 * for order in ordersInPackage of pcg do 
     		 * 	            if quantity of order ≠ 0 do
     		 * 	                for j in 0 to (quantity of order-1) do
@@ -329,7 +349,7 @@ public class Supervisor extends Agent {
     		
     		for ( OrderQuantity order : pcg.getOrdersInPackage()) {
     			/* 
-    			 * Compiled from source statement from line 45 to line 49
+    			 * Compiled from source statement from line 48 to line 52
     			 * if quantity of order ≠ 0 do
     			 * 	                for j in 0 to (quantity of order-1) do
     			 * 	                    id = (name of agent + "_" + orderCount) as text
@@ -339,7 +359,7 @@ public class Supervisor extends Agent {
     			
     			if(!java.util.Objects.equals(order.getQuantity(), 0)) {
     				/* 
-    				 * Compiled from source statement from line 46 to line 49
+    				 * Compiled from source statement from line 49 to line 52
     				 * for j in 0 to (quantity of order-1) do
     				 * 	                    id = (name of agent + "_" + orderCount) as text
     				 * 	                    add Order(id,good of order,"pending",type of order) to orderList
@@ -348,21 +368,21 @@ public class Supervisor extends Agent {
     				
     				for ( java.lang.Integer j : new jadescript.util.IntegerRange(0, (order.getQuantity() - 1), true, true)) {
     					/* 
-    					 * Compiled from source statement at line 47
+    					 * Compiled from source statement at line 50
     					 * id = (name of agent + "_" + orderCount) as text
     					 */
     					
     					java.lang.String id = ((java.lang.String) jadescript.util.types.Converter.convert((java.lang.String.valueOf(java.lang.String.valueOf(_agentEnv.getAgent().getName()) + java.lang.String.valueOf("_")) + java.lang.String.valueOf(Supervisor.this.getOrderCount())), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT), new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT)));
     					
     					/* 
-    					 * Compiled from source statement at line 48
+    					 * Compiled from source statement at line 51
     					 * add Order(id,good of order,"pending",type of order) to orderList
     					 */
     					
     					Supervisor.this.getOrderList().add(BakeryOntology.Order(id ,order.getGood() ,"pending" ,order.getType()));
     					
     					/* 
-    					 * Compiled from source statement at line 49
+    					 * Compiled from source statement at line 52
     					 * orderCount = orderCount + 1
     					 */
     					
@@ -373,7 +393,7 @@ public class Supervisor extends Agent {
     	}
     	
     	/* 
-    	 * Compiled from source statement at line 50
+    	 * Compiled from source statement at line 53
     	 * 
     	 *         log "Splitted orders of SUPERVISOR: "+orderList
     	 */
@@ -388,42 +408,42 @@ public class Supervisor extends Agent {
     java.lang.String coSupplier = jadescript.util.types.JadescriptValueAdapter.adapt(this.getArguments()[2], new jadescript.util.types.JadescriptTypeReference(jadescript.util.types.JadescriptBuiltinTypeAtom.TEXT));
     try {
     	/* 
-    	 * Compiled from source statement at line 54
+    	 * Compiled from source statement at line 57
     	 * type of agent = type
     	 */
     	
     	_agentEnv.getAgent().setType(type);
     	
     	/* 
-    	 * Compiled from source statement at line 55
+    	 * Compiled from source statement at line 58
     	 * numOfWorkers of agent = numOfWorkers
     	 */
     	
     	_agentEnv.getAgent().setNumOfWorkers(numOfWorkers);
     	
     	/* 
-    	 * Compiled from source statement at line 56
+    	 * Compiled from source statement at line 59
     	 * orderCount of agent = 0
     	 */
     	
     	_agentEnv.getAgent().setOrderCount(0);
     	
     	/* 
-    	 * Compiled from source statement at line 57
+    	 * Compiled from source statement at line 60
     	 * coSupplier of agent = coSupplier
     	 */
     	
     	_agentEnv.getAgent().setCoSupplier(coSupplier);
     	
     	/* 
-    	 * Compiled from source statement at line 58
+    	 * Compiled from source statement at line 61
     	 * log "SUPERVISOR created with arguments: "+type
     	 */
     	
     	jadescript.core.Agent.doLog(jade.util.Logger.INFO, Supervisor.this.getClass().getName(), Supervisor.this, "on create", java.lang.String.valueOf(java.lang.String.valueOf("SUPERVISOR created with arguments: ") + java.lang.String.valueOf(type)));
     	
     	/* 
-    	 * Compiled from source statement from line 60 to line 63
+    	 * Compiled from source statement from line 63 to line 66
     	 * if type of agent = "normal" do
     	 *             do SplitIntoOrdersNormal with normalOrders,1
     	 *         else do
@@ -432,7 +452,7 @@ public class Supervisor extends Agent {
     	
     	if(java.util.Objects.equals(_agentEnv.getAgent().getType(), "normal")) {
     		/* 
-    		 * Compiled from source statement at line 61
+    		 * Compiled from source statement at line 64
     		 * do SplitIntoOrdersNormal with normalOrders,1
     		 */
     		
@@ -440,7 +460,7 @@ public class Supervisor extends Agent {
     	}
     	else {
     		/* 
-    		 * Compiled from source statement at line 63
+    		 * Compiled from source statement at line 66
     		 * do SplitIntoOrdersPrivate with privateOrders
     		 */
     		
@@ -448,7 +468,7 @@ public class Supervisor extends Agent {
     	}
     	
     	/* 
-    	 * Compiled from source statement at line 64
+    	 * Compiled from source statement at line 67
     	 * 
     	 *         activate ReportingWorkers
     	 */
@@ -524,6 +544,10 @@ public class Supervisor extends Agent {
     	Supervisor.this.packer = new jade.core.AID();
     	
     	Supervisor.this.supplierList = new jadescript.util.JadescriptList<jade.core.AID>();
+    	
+    	Supervisor.this.allBakersReported = 0;
+    	
+    	Supervisor.this.packerReported = false;
     }
   }
 

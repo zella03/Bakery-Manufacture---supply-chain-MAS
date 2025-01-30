@@ -26,13 +26,13 @@ agent Supplier uses ontology BakeryOntology
         
         log "SUPPLIER'S list of supplies: "+listOfAvSupplies
         activate DelayedSupplierReady after "PT2S" as duration
-        #activate ProvidingRestock
 
 one shot behavior DelayedSupplierReady for agent Supplier uses ontology BakeryOntology
     on execute do
         send message inform WorkerReady(aid of agent,"supplier","none") to supervisorName@
         log "SUPPLIER: "+name of agent+" READY TO WORK"
         activate ProvidingRestock
+        activate WaitForEandOfDay
 
 cyclic behaviour ProvidingRestock for agent Supplier uses ontology BakeryOntology
     property itemsToProvide as list of IngredientQuantity
@@ -85,3 +85,9 @@ cyclic behaviour CurrentlyRestocking for agent Supplier uses ontology BakeryOnto
         log "Sorry but SUPPLIER: "+name of agent+" is restocking supplies"
         send message inform SupplierRunOutSupply(bakerWhileProparing) to sender
         
+cyclic behaviour WaitForEandOfDay for agent Supplier uses ontology BakeryOntology
+    on message EndOfDay do
+        destroy ProvidingRestock
+        destroy CurrentlyRestocking
+        destroy GoForSupplies
+        destroy this 

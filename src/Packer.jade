@@ -23,7 +23,7 @@ cyclic behaviour WaitForListWithPackages for agent Packer uses ontology BakeryOn
         packageList = pcgList
         log "PACKER list of packages: "+packageList
         activate WaitAndPackOrders
-        deactivate this
+        destroy this
 
 cyclic behaviour WaitAndPackOrders for agent Packer uses ontology BakeryOntology
 
@@ -44,6 +44,7 @@ cyclic behaviour WaitAndPackOrders for agent Packer uses ontology BakeryOntology
                     
                     for pcg in timeForPackage do
                         if packageId of pcg = packageId of packageToPack do
+                            #log "start time: "+ prepTime of pcg+ " finish time: "+now as duration+" diff: "+ (now - prepTime of pcg) as duration
                             prepTime of pcg = (now - prepTime of pcg) as duration
                             break
             
@@ -58,8 +59,6 @@ cyclic behaviour WaitAndPackOrders for agent Packer uses ontology BakeryOntology
             return false
             
     on execute do
-        if length of packageList = 0 do
-            deactivate this
             
         if length of ordersReadyToPack ≠ 0 do
             for packageToPack in packageList do
@@ -88,9 +87,18 @@ cyclic behaviour WaitAndPackOrders for agent Packer uses ontology BakeryOntology
                     send message inform PackageStatus(pcg) to supervisorName@
                     remove pcg from packageList
                 
-                log "TIme of packages: "+timeForPackage
                 finishedPackages = [] of PackageOfGoods
                   
     on message request GoodToPack(order) do
         log "PACKER got an order to pack"
         add order to ordersReadyToPack
+        
+    on message inform AllPackagesReady do
+        activate WaitEndDay
+        destroy this
+        
+        
+cyclic behaviour WaitEndDay for agent Packer uses ontology BakeryOntology
+    on message EndOfDay do
+        send message inform PackerRaport(timeForPackage) to supervisorName@
+        destroy this 

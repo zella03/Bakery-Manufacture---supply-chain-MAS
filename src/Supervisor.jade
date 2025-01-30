@@ -29,6 +29,9 @@ agent Supervisor uses ontology BakeryOntology
     property packer as aid
     property supplierList as list of aid
     
+    property allBakersReported as integer
+    property packerReported as boolean
+    
     
     procedure SplitIntoOrdersNormal with listOfOrders as list of OrderQuantity,ratio as integer do
         for i in listOfOrders do
@@ -64,12 +67,11 @@ agent Supervisor uses ontology BakeryOntology
         activate ReportingWorkers
 
 cyclic behaviour ReportingWorkers for agent Supervisor uses ontology BakeryOntology
-    #property count as integer
     property allReported as boolean
     property packerReady as boolean
     property supplierReady as boolean
+    
     on create do
-        #count = 0
         otherGroupEnded = false
         allReported = false
         if type = "private" do
@@ -84,14 +86,12 @@ cyclic behaviour ReportingWorkers for agent Supervisor uses ontology BakeryOntol
 	       for worker in listOfBakers do
 	           send message inform AgentsReported to workerId of worker
 	       activate SendOrder
-	       deactivate this	   
+	       destroy this	   
         
     on message inform WorkerReady(id,worker,workerType) do
         senderAgent = sender of message
         if worker = "baker" do
 	       add WorkerReady(senderAgent,worker,workerType) to listOfBakers
-	       #log "BAKERS which reported - ready to work: "+listOfBakers
-	       #count = count + 1
 	    else if worker = "packer" do
 	       packer of agent = senderAgent
 	       packerReady = true
@@ -151,17 +151,13 @@ cyclic behaviour SendOrder for agent Supervisor uses ontology BakeryOntology
 			       orderStatus = OrderStatus(id of order, status of order)
 		           remove order from orderList
 		           add orderStatus to pendingOrders
-		            
-		           log "REQUEST - Orders to make under SUPERVISOR"+ name of agent+" list: "+orderList
-		           log "REQUEST - Orders PENDING under SUPERVISOR"+ name of agent+" list: "+pendingOrders
 		        
 			       log "SUPERVISOR: "+name of agent+" received request for order from agent: " + name of sender
 			       send message request AssignOrder(id,order) to senderAgent
 			    else do
 			       log "NO MORE ORDERS under SUPERVISOR: "+ name of agent
 			       send message inform EndOfOrders to senderAgent
-			       # info że koniec i nie ma się więcej pytać -> ale trzeba sprawdzić dla każdego
-			       deactivate this
+			       destroy this
 		else do
 		  log "not yet reported"
 
@@ -187,25 +183,21 @@ cyclic behaviour WaitingForFinishedOrders for agent Supervisor uses ontology Bak
         
     on execute do
         if type = "normal" and allOrdersFinished and length of orderList = 0 and meNotEnded do
-            log "Ended+sending -- entered here: "+coSupplier+" __ "+coSupplier@
             send message inform GroupEndedDay to coSupplier@
             meNotEnded = false
         else if type = "normal" and allOrdersFinished and length of orderList = 0 and otherGroupEnded do
-            log "hi from sending end of the dayy"
+            activate FinishRaports
+            
             for baker in listOfBakers do
                 send message inform EndOfDay to workerId of baker
-            if length of supplierList ≠ 0 do #if means its the supplier2
+            if length of supplierList ≠ 0 do #it means its the supplier2
 	            for supplier in supplierList do
 	                send message inform EndOfDay to supplier
 	            send message inform EndOfDay to packer
-            activate FinishRaports
-            deactivate this
+            destroy this
             
-            #i tutaj wysyłanie info do wszyyystkich że halo halo koniec dnia
-        
     on message inform GroupEndedDay do
         otherGroupEnded = true
-        log "Talking to co supp-- entered here"
     
     on message inform OrderStatus(orderId,orderStatus) do
         senderAgent = sender of message
@@ -214,15 +206,11 @@ cyclic behaviour WaitingForFinishedOrders for agent Supervisor uses ontology Bak
 	            if orderId of i = orderId do
 	                status of i = orderStatus
 	                break
-	        log "FINISHING - Orders to make under SUPERVISOR"+ name of agent+" list: "+orderList
-	        log "FINISHING - Orders PENDING under SUPERVISOR"+ name of agent+" list: "+pendingOrders
+	        log "FINISHING - Orders to make under SUPERVISOR"+ name of agent+"\n list: "+orderList
+	        log "FINISHING - Orders PENDING under SUPERVISOR"+ name of agent+"\n list: "+pendingOrders
 	        
-	        
-	        log "type: "+type+" allOrdersFinished: "+allOrdersFinished+" orderList: "+orderList+" meNotEnded: "+meNotEnded
-	        #send message request_when (RedoOrder(orderId,"No need"),OrderCorrect) to senderAgent
 	        send message request RedoOrder(orderId,"No need") to senderAgent
         else do
-            #send message request_when (RedoOrder(orderId,"Order not done correctly"),OrderRedoRequired) to senderAgent
             send message request RedoOrder(orderId,"Order not done correctly") to senderAgent
         count = count + 1
         
@@ -234,17 +222,49 @@ cyclic behaviour WaitingForFinishedOrders for agent Supervisor uses ontology Bak
                 status of pcg = status of orderPacked
                 break
         
-        log "Ready packages: "+privateOrders
+        log "Packages to prepare with status: "+privateOrders
         
         for pcg in privateOrders do
             if status of pcg ≠ "finished" do
+                allPacked = false
                 break
             else do
                 allPacked = true
                 
         if allPacked do
             log "ALL packages packed"
+            send message inform AllPackagesReady to packer
             
 cyclic behaviour FinishRaports for agent Supervisor uses ontology BakeryOntology
+    
     on create do
-        log "Hello in finish repo"
+        log "SUPERVISOR waiting for final reports"
+        allBakersReported = 0
+        if length of supplierList ≠ 0 do #means that this is Supervisor2
+            packerReported = false
+        else do
+            packerReported = true
+             
+    on execute do
+        if allBakersReported = numOfWorkers and packerReported do
+            log "END OF WORK"
+            destroy this
+        # if all reported zakończ wszystko!!
+        
+    on message inform BakerRaportInfo(id,succRestockByColl,succRestockBySupp,ordersToRedo,ordersDone,stock) do
+        senderAgent = sender of message
+        log "RAPORT OF: "+name of agent+" for BAKER: "+name of senderAgent
+            + "\n Num of successful necessary assistance of colleagues: "+succRestockByColl
+            + "\n Num of successful necessary restocks from suppliers: "+succRestockBySupp
+            + "\n Orders done: "+ordersDone+" and orders needed to be redone: "+ordersToRedo
+            + "\n Stock left: "+stock
+            
+        allBakersReported = allBakersReported + 1
+    
+    on message inform PackerRaport(timeForPackage) do
+        log "RAPORT OF: "+name of agent+" for PACKER: "+ name of packer
+            + "\n Packages with their prep time: "+PackerRaport(timeForPackage)
+            
+        packerReported = true
+    
+    

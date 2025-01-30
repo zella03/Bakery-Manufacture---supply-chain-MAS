@@ -79,7 +79,7 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
   public JadescriptList<IngredientQuantity> canPrepareOrder(final AgentEnv<? extends Baker, ? extends SideEffectsFlag.WithSideEffects> _agentEnv, final Good good) {
     {
     	/* 
-    	 * Compiled from source statement from line 369 to line 374
+    	 * Compiled from source statement from line 353 to line 358
     	 * for ingredientToProduce in ingredients of good do
     	 *             for item in stock do
     	 *                 if ingredientName of item = ingredientName of ingredientToProduce do
@@ -90,7 +90,7 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
     	
     	for ( IngredientQuantity ingredientToProduce : good.getIngredients()) {
     		/* 
-    		 * Compiled from source statement from line 370 to line 374
+    		 * Compiled from source statement from line 354 to line 358
     		 * for item in stock do
     		 *                 if ingredientName of item = ingredientName of ingredientToProduce do
     		 *                     if quantity of item < quantity of ingredientToProduce do
@@ -100,7 +100,7 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
     		
     		for ( IngredientQuantity item : PrepareOrder.this._agentEnv.getAgent().getStock()) {
     			/* 
-    			 * Compiled from source statement from line 371 to line 374
+    			 * Compiled from source statement from line 355 to line 358
     			 * if ingredientName of item = ingredientName of ingredientToProduce do
     			 *                     if quantity of item < quantity of ingredientToProduce do
     			 *                         ingredientLack = IngredientQuantity(ingredientName of ingredientToProduce,(quantity of ingredientToProduce-quantity of item))
@@ -109,7 +109,7 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
     			
     			if(java.util.Objects.equals(item.getIngredientName(), ingredientToProduce.getIngredientName())) {
     				/* 
-    				 * Compiled from source statement from line 372 to line 374
+    				 * Compiled from source statement from line 356 to line 358
     				 * if quantity of item < quantity of ingredientToProduce do
     				 *                         ingredientLack = IngredientQuantity(ingredientName of ingredientToProduce,(quantity of ingredientToProduce-quantity of item))
     				 *                         add ingredientLack to ingredientsNeeded_lack
@@ -117,14 +117,14 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
     				
     				if(item.getQuantity() < ingredientToProduce.getQuantity()) {
     					/* 
-    					 * Compiled from source statement at line 373
+    					 * Compiled from source statement at line 357
     					 * ingredientLack = IngredientQuantity(ingredientName of ingredientToProduce,(quantity of ingredientToProduce-quantity of item))
     					 */
     					
     					IngredientQuantity ingredientLack = BakeryOntology.IngredientQuantity(ingredientToProduce.getIngredientName() ,(ingredientToProduce.getQuantity() - item.getQuantity()));
     					
     					/* 
-    					 * Compiled from source statement at line 374
+    					 * Compiled from source statement at line 358
     					 * add ingredientLack to ingredientsNeeded_lack
     					 */
     					
@@ -135,7 +135,7 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
     	}
     	
     	/* 
-    	 * Compiled from source statement at line 375
+    	 * Compiled from source statement at line 359
     	 * 
     	 *         return ingredientsNeeded_lack
     	 */
@@ -147,7 +147,7 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
   public Boolean needRestoreStock(final AgentEnv<? extends Baker, ? extends SideEffectsFlag.WithSideEffects> _agentEnv) {
     {
     	/* 
-    	 * Compiled from source statement from line 378 to line 380
+    	 * Compiled from source statement from line 362 to line 364
     	 * for item in stock do
     	 *             if quantity of item <3 do
     	 *                 return true
@@ -155,14 +155,14 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
     	
     	for ( IngredientQuantity item : PrepareOrder.this._agentEnv.getAgent().getStock()) {
     		/* 
-    		 * Compiled from source statement from line 379 to line 380
+    		 * Compiled from source statement from line 363 to line 364
     		 * if quantity of item <3 do
     		 *                 return true
     		 */
     		
     		if(item.getQuantity() < 3) {
     			/* 
-    			 * Compiled from source statement at line 380
+    			 * Compiled from source statement at line 364
     			 * return true
     			 */
     			
@@ -171,7 +171,7 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
     	}
     	
     	/* 
-    	 * Compiled from source statement at line 381
+    	 * Compiled from source statement at line 365
     	 * 
     	 *         return false
     	 */
@@ -183,7 +183,7 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
   public void useOfIngredients(final AgentEnv<? extends Baker, ? extends SideEffectsFlag.WithSideEffects> _agentEnv, final Good good) {
     {
     	/* 
-    	 * Compiled from source statement from line 384 to line 387
+    	 * Compiled from source statement from line 368 to line 371
     	 * for ingredientToProduce in ingredients of good do
     	 *             for item in stock do
     	 *                 if ingredientName of item = ingredientName of ingredientToProduce do
@@ -192,7 +192,7 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
     	
     	for ( IngredientQuantity ingredientToProduce : good.getIngredients()) {
     		/* 
-    		 * Compiled from source statement from line 385 to line 387
+    		 * Compiled from source statement from line 369 to line 371
     		 * for item in stock do
     		 *                 if ingredientName of item = ingredientName of ingredientToProduce do
     		 *                     quantity of item = quantity of item - quantity of ingredientToProduce
@@ -200,14 +200,14 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
     		
     		for ( IngredientQuantity item : PrepareOrder.this._agentEnv.getAgent().getStock()) {
     			/* 
-    			 * Compiled from source statement from line 386 to line 387
+    			 * Compiled from source statement from line 370 to line 371
     			 * if ingredientName of item = ingredientName of ingredientToProduce do
     			 *                     quantity of item = quantity of item - quantity of ingredientToProduce
     			 */
     			
     			if(java.util.Objects.equals(item.getIngredientName(), ingredientToProduce.getIngredientName())) {
     				/* 
-    				 * Compiled from source statement at line 387
+    				 * Compiled from source statement at line 371
     				 * quantity of item = quantity of item - quantity of ingredientToProduce
     				 */
     				
@@ -221,7 +221,7 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
   public void clearNeededIngredients(final AgentEnv<? extends Baker, ? extends SideEffectsFlag.WithSideEffects> _agentEnv) {
     {
     	/* 
-    	 * Compiled from source statement from line 390 to line 392
+    	 * Compiled from source statement from line 374 to line 376
     	 * if length of ingredientsNeeded_lack ≠ 0 do
     	 * 	        for i in ingredientsNeeded_lack do
     	 * 	            remove i from ingredientsNeeded_lack
@@ -229,14 +229,14 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
     	
     	if(!java.util.Objects.equals(PrepareOrder.this.getIngredientsNeeded_lack().size(), 0)) {
     		/* 
-    		 * Compiled from source statement from line 391 to line 392
+    		 * Compiled from source statement from line 375 to line 376
     		 * for i in ingredientsNeeded_lack do
     		 * 	            remove i from ingredientsNeeded_lack
     		 */
     		
     		for ( IngredientQuantity i : PrepareOrder.this.getIngredientsNeeded_lack()) {
     			/* 
-    			 * Compiled from source statement at line 392
+    			 * Compiled from source statement at line 376
     			 * remove i from ingredientsNeeded_lack
     			 */
     			
@@ -252,7 +252,7 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
     __initializeProperties();
     try {
     	/* 
-    	 * Compiled from source statement at line 396
+    	 * Compiled from source statement at line 380
     	 * order of this = order
     	 */
     	
@@ -273,7 +273,7 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
     super.doOnActivate();
     try {
     	/* 
-    	 * Compiled from source statement from line 399 to line 402
+    	 * Compiled from source statement from line 383 to line 386
     	 * for recipeOfGood in recipeBook do
     	 *             if name of recipeOfGood = good of order do
     	 *                 goodToPrepare = recipeOfGood
@@ -282,7 +282,7 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
     	
     	for ( Good recipeOfGood : PrepareOrder.this._agentEnv.getAgent().getRecipeBook()) {
     		/* 
-    		 * Compiled from source statement from line 400 to line 402
+    		 * Compiled from source statement from line 384 to line 386
     		 * if name of recipeOfGood = good of order do
     		 *                 goodToPrepare = recipeOfGood
     		 *                 break
@@ -290,14 +290,14 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
     		
     		if(java.util.Objects.equals(recipeOfGood.getName(), PrepareOrder.this.getOrder().getGood())) {
     			/* 
-    			 * Compiled from source statement at line 401
+    			 * Compiled from source statement at line 385
     			 * goodToPrepare = recipeOfGood
     			 */
     			
     			PrepareOrder.this.setGoodToPrepare(recipeOfGood);
     			
     			/* 
-    			 * Compiled from source statement at line 402
+    			 * Compiled from source statement at line 386
     			 * break
     			 */
     			
@@ -306,7 +306,7 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
     	}
     	
     	/* 
-    	 * Compiled from source statement at line 403
+    	 * Compiled from source statement at line 387
     	 * 
     	 *         ingredientsNeeded_lack = canPrepareOrder(goodToPrepare)
     	 */
@@ -327,92 +327,86 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
     public void run() {
       try {
       	/* 
-      	 * Compiled from source statement from line 406 to line 427
+      	 * Compiled from source statement from line 390 to line 405
       	 * if length of ingredientsNeeded_lack = 0 and status of order = "toPrepare" do
-      	 *             #ingredientsNeeded_lack = [] of IngredientQuantity
       	 *             do chnageStatus with id of order,"preparing"
       	 *             status of order = "preparing"
-      	 * 	        log "Agent: "+name of agent +" preparing: " + good of order
+      	 * 	        log "BAKER: "+name of agent +" preparing: " + good of order
       	 * 	        
       	 * 	        do useOfIngredients with goodToPrepare
-      	 * 	        log "Current state of stock: "+stock+" of agent "+ name of agent
+      	 * 	        log "BAKER'S: "+ name of agent + " current state of stock after preparing: "+stock
       	 * 	        if needRestoreStock do
-      	 * 	           log "send message to supplier"#######################################################################################
+      	 * 	           log "LOW STOCK - try to restock supplies"
       	 * 	           for supplier in listOfSuppliers do
       	 * 	               activate DelayedRestockQuestion(supplier,order,false) after "PT2S" as duration
-      	 * 	               #log "BAKER need RESTOCK. ask "+supplier+" having stock: "+stock
-      	 * 	               #send message request NeedRestock(aid, stock) to supplier@
       	 * 	        activate BakingOrderBehavior(order,bakingTime of goodToPrepare) after (preparationTime of goodToPrepare) as duration
       	 * 	    else if length of ingredientsNeeded_lack != 0 and status of order = "toPrepare" do
-      	 * 	       #log "Not enough ingredients in stock"
-      	 * 	       #send message to supplier with ingredientsNeeded information#################################################################
       	 * 	       for coworker in listOfCoworkers do
-      	 * 	           #checkedLackOfIngredients = true
       	 * 	           send message request AskForHelpColleague(aid,ingredientsNeeded_lack)to coworker@
-      	 * 	           activate HandleIngredientsShortage(ingredientsNeeded_lack,order)
+      	 * 	           activate HandleIngredientsShortage
       	 */
       	
       	if(java.util.Objects.equals(PrepareOrder.this.getIngredientsNeeded_lack().size(), 0) && java.util.Objects.equals(PrepareOrder.this.getOrder().getStatus(), "toPrepare")) {
       		/* 
-      		 * Compiled from source statement at line 408
+      		 * Compiled from source statement at line 391
       		 * do chnageStatus with id of order,"preparing"
       		 */
       		
       		PrepareOrder.this._agentEnv.getAgent().chnageStatus(_agentEnv.getAgent().toEnv() ,PrepareOrder.this.getOrder().getId() ,"preparing");
       		
       		/* 
-      		 * Compiled from source statement at line 409
+      		 * Compiled from source statement at line 392
       		 * status of order = "preparing"
       		 */
       		
       		PrepareOrder.this.getOrder().setStatus("preparing");
       		
       		/* 
-      		 * Compiled from source statement at line 410
-      		 * log "Agent: "+name of agent +" preparing: " + good of order
+      		 * Compiled from source statement at line 393
+      		 * log "BAKER: "+name of agent +" preparing: " + good of order
       		 */
       		
-      		jadescript.core.Agent.doLog(jade.util.Logger.INFO, PrepareOrder.this.getClass().getName(), PrepareOrder.this, "on execute", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Agent: ") + java.lang.String.valueOf(PrepareOrder.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" preparing: ")) + java.lang.String.valueOf(PrepareOrder.this.getOrder().getGood())));
+      		jadescript.core.Agent.doLog(jade.util.Logger.INFO, PrepareOrder.this.getClass().getName(), PrepareOrder.this, "on execute", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER: ") + java.lang.String.valueOf(PrepareOrder.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" preparing: ")) + java.lang.String.valueOf(PrepareOrder.this.getOrder().getGood())));
       		
       		/* 
-      		 * Compiled from source statement at line 412
+      		 * Compiled from source statement at line 395
       		 * do useOfIngredients with goodToPrepare
       		 */
       		
       		PrepareOrder.this.useOfIngredients(_agentEnv.getAgent().toEnv() ,PrepareOrder.this.getGoodToPrepare());
       		
       		/* 
-      		 * Compiled from source statement at line 413
-      		 * log "Current state of stock: "+stock+" of agent "+ name of agent
+      		 * Compiled from source statement at line 396
+      		 * log "BAKER'S: "+ name of agent + " current state of stock after preparing: "+stock
       		 */
       		
-      		jadescript.core.Agent.doLog(jade.util.Logger.INFO, PrepareOrder.this.getClass().getName(), PrepareOrder.this, "on execute", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("Current state of stock: ") + java.lang.String.valueOf(PrepareOrder.this._agentEnv.getAgent().getStock())) + java.lang.String.valueOf(" of agent ")) + java.lang.String.valueOf(PrepareOrder.this.getJadescriptAgent().getName())));
+      		jadescript.core.Agent.doLog(jade.util.Logger.INFO, PrepareOrder.this.getClass().getName(), PrepareOrder.this, "on execute", java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf(java.lang.String.valueOf("BAKER'S: ") + java.lang.String.valueOf(PrepareOrder.this.getJadescriptAgent().getName())) + java.lang.String.valueOf(" current state of stock after preparing: ")) + java.lang.String.valueOf(PrepareOrder.this._agentEnv.getAgent().getStock())));
       		
       		/* 
-      		 * Compiled from source statement from line 414 to line 417
+      		 * Compiled from source statement from line 397 to line 400
       		 * if needRestoreStock do
-      		 * 	           log "send message to supplier"#######################################################################################
+      		 * 	           log "LOW STOCK - try to restock supplies"
       		 * 	           for supplier in listOfSuppliers do
       		 * 	               activate DelayedRestockQuestion(supplier,order,false) after "PT2S" as duration
       		 */
       		
       		if(PrepareOrder.this.needRestoreStock(_agentEnv.getAgent().toEnv())) {
       			/* 
-      			 * Compiled from source statement at line 415
-      			 * log "send message to supplier"
+      			 * Compiled from source statement at line 398
+      			 * log "LOW STOCK - try to restock supplies"
       			 */
       			
-      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, PrepareOrder.this.getClass().getName(), PrepareOrder.this, "on execute", java.lang.String.valueOf("send message to supplier"));
+      			jadescript.core.Agent.doLog(jade.util.Logger.INFO, PrepareOrder.this.getClass().getName(), PrepareOrder.this, "on execute", java.lang.String.valueOf("LOW STOCK - try to restock supplies"));
       			
       			/* 
-      			 * Compiled from source statement from line 416 to line 417
+      			 * Compiled from source statement from line 399 to line 400
       			 * for supplier in listOfSuppliers do
       			 * 	               activate DelayedRestockQuestion(supplier,order,false) after "PT2S" as duration
       			 */
       			
       			for ( java.lang.String supplier : PrepareOrder.this._agentEnv.getAgent().getListOfSuppliers()) {
       				/* 
-      				 * Compiled from source statement at line 417
+      				 * Compiled from source statement at line 400
       				 * activate DelayedRestockQuestion(supplier,order,false) after "PT2S" as duration
       				 */
       				
@@ -421,10 +415,8 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
       		}
       		
       		/* 
-      		 * Compiled from source statement at line 420
+      		 * Compiled from source statement at line 401
       		 * 
-      		 * 	               #log "BAKER need RESTOCK. ask "+supplier+" having stock: "+stock
-      		 * 	               #send message request NeedRestock(aid, stock) to supplier@
       		 * 	        activate BakingOrderBehavior(order,bakingTime of goodToPrepare) after (preparationTime of goodToPrepare) as duration
       		 */
       		
@@ -432,46 +424,45 @@ public class PrepareOrder extends OneShotBehaviour<Baker> {
       	}
       	else if(!java.util.Objects.equals(PrepareOrder.this.getIngredientsNeeded_lack().size(), 0) && java.util.Objects.equals(PrepareOrder.this.getOrder().getStatus(), "toPrepare")) {
       		/* 
-      		 * Compiled from source statement from line 424 to line 427
+      		 * Compiled from source statement from line 403 to line 405
       		 * for coworker in listOfCoworkers do
-      		 * 	           #checkedLackOfIngredients = true
       		 * 	           send message request AskForHelpColleague(aid,ingredientsNeeded_lack)to coworker@
-      		 * 	           activate HandleIngredientsShortage(ingredientsNeeded_lack,order)
+      		 * 	           activate HandleIngredientsShortage
       		 */
       		
       		for ( java.lang.String coworker : PrepareOrder.this._agentEnv.getAgent().getListOfCoworkers()) {
       			/* 
-      			 * Compiled from source statement at line 426
+      			 * Compiled from source statement at line 404
       			 * send message request AskForHelpColleague(aid,ingredientsNeeded_lack)to coworker@
       			 */
       			
       			try {
       				jadescript.util.SendMessageUtils.validatePerformative("request");
       				
-      				java.lang.Object _contentToBeSent182821968 = BakeryOntology.AskForHelpColleague(PrepareOrder.this._agentEnv.getAgent().getAID() ,PrepareOrder.this.getIngredientsNeeded_lack());
+      				java.lang.Object _contentToBeSent1891279896 = BakeryOntology.AskForHelpColleague(PrepareOrder.this._agentEnv.getAgent().getAID() ,PrepareOrder.this.getIngredientsNeeded_lack());
       				
-      				jadescript.core.message.Message _synthesizedMessage182821968 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
+      				jadescript.core.message.Message _synthesizedMessage1891279896 = new jadescript.core.message.Message(jadescript.core.message.Message.REQUEST);
       				
-      				_synthesizedMessage182821968.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent182821968,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
+      				_synthesizedMessage1891279896.setOntology(jadescript.util.SendMessageUtils.getDeclaringOntology(_contentToBeSent1891279896,BakeryOntology.getInstance(),BakeryOntology.getInstance()).getName());;
       				
-      				_synthesizedMessage182821968.setLanguage(__codec.getName());;
+      				_synthesizedMessage1891279896.setLanguage(__codec.getName());;
       				
-      				_synthesizedMessage182821968.addReceiver(new jade.core.AID(java.lang.String.valueOf(coworker), false));
+      				_synthesizedMessage1891279896.addReceiver(new jade.core.AID(java.lang.String.valueOf(coworker), false));
       				
-      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage182821968, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent182821968, "request"));
+      				_agentEnv.getAgent().getContentManager().fillContent(_synthesizedMessage1891279896, jadescript.content.onto.MessageContent.prepareContent((jade.content.ContentElement) _contentToBeSent1891279896, "request"));
       				
-      				_agentEnv.getAgent().send(_synthesizedMessage182821968);
+      				_agentEnv.getAgent().send(_synthesizedMessage1891279896);
       			}
       			catch(java.lang.Throwable _t) {
       				throw jadescript.core.exception.JadescriptException.wrap(_t);
       			}
       			
       			/* 
-      			 * Compiled from source statement at line 427
-      			 * activate HandleIngredientsShortage(ingredientsNeeded_lack,order)
+      			 * Compiled from source statement at line 405
+      			 * activate HandleIngredientsShortage
       			 */
       			
-      			new HandleIngredientsShortage(_agentEnv.getAgent().toEnv() ,PrepareOrder.this.getIngredientsNeeded_lack() ,PrepareOrder.this.getOrder()).activate(_agentEnv.getAgent());
+      			new HandleIngredientsShortage(_agentEnv.getAgent().toEnv()).activate(_agentEnv.getAgent());
       		}
       	}
       }
