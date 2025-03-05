@@ -10,3 +10,5 @@ Project is implemented in <b>JadeScript</b> and the environment consists of 4 di
 </ul>
 <br>
 <b>A workday is finished when all baked items are prepared, packed, and delivered to the supervisor.</b> The project demonstrates the importance of agent-based cooperation in supply chain management, ensuring efficiency, adaptability, and resilience in handling real-world manufacturing constraints.
+<br><br>
+Whole report under "Project_report_Bakery.pdf" file.
